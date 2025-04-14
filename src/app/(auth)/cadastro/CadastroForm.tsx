@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import { inputStyle } from "@/styles/forms";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface cadastroForm {
@@ -11,144 +12,243 @@ interface cadastroForm {
   email: string;
   password: string;
   confirmar_password: string;
+  termos: boolean;
+  receber_email: boolean;
 }
 
 const CadastroForm: React.FC = () => {
+  const [step, setStep] = useState(1);
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<cadastroForm>();
 
-  // Função de submit
+  const password = watch("password");
+
   const onSubmit: SubmitHandler<cadastroForm> = (data) => {
-    alert(data);
-    console.log(data);
+    if (step < 2) {
+      setStep(step + 1);
+    } else {
+      console.log("Dados enviados:", data);
+      alert("Cadastro realizado com sucesso!");
+    }
   };
 
-  const input_style = "bg-gray-200 rounded-md px-2 py-1 text-gray-500";
-
   return (
-    <div className="flex flex-col items-center justify-center mt-2 p-10">
-      <div className="text-left justify-start">
+    <div className="flex flex-col items-center justify-center p-6">
+      {/* Header */}
+      <div className="w-full max-w-md">
         <h1 className="text-2xl font-bold">
           Cadastro <span className="text-orange-500">Cliente</span>
         </h1>
         <p className="text-sm text-gray-500">simples e rápido</p>
       </div>
 
+      {/* Step bar */}
+      <div className="w-full max-w-md flex justify-between mt-6 mb-4">
+        <div
+          className={`w-1/2 h-1 rounded ${
+            step >= 1 ? "bg-orange-500" : "bg-gray-300"
+          }`}
+        ></div>
+        <div
+          className={`w-1/2 h-1 rounded ${
+            step >= 2 ? "bg-orange-500" : "bg-gray-300"
+          } ml-1`}
+        ></div>
+      </div>
+
+      {/* Form */}
       <form
-        className="flex flex-col items-center justify-center gap-7 mt-5
-      "
         onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 w-full max-w-md"
       >
-        <div id="step1" className="hidden">
-          <div>
-            <p>Primeiro Nome</p>
-            <input
-              type="text"
-              id="nome"
-              className={input_style}
-              placeholder="digite seu primeiro nome"
-              {...register("nome", { required: "Nome é obrigatório" })}
-            />
-            {errors.nome && <p>{errors.nome.message}</p>}
-          </div>
+        {step === 1 && (
+          <div className="space-y-4">
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm text-gray-700 font-semibold">
+                Primeiro Nome
+              </label>
+              <input
+                type="text"
+                placeholder="Digite seu primeiro nome"
+                {...register("nome", { required: "Nome é obrigatório" })}
+                className={inputStyle}
+              />
+              {errors.nome && (
+                <p className="text-red-500 text-sm">{errors.nome.message}</p>
+              )}
+            </div>
 
-          <div>
-            <p>Apelido</p>
-            <input
-              type="text"
-              id="aplido"
-              placeholder="digite seu aplido"
-              className={input_style}
-              {...register("aplido", { required: "Aplido é obrigatório" })}
-            />
-            {errors.aplido && <p>{errors.aplido.message}</p>}
-          </div>
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm text-gray-700 font-semibold">
+                Apelido
+              </label>
+              <input
+                type="text"
+                placeholder="Apelido"
+                {...register("aplido", { required: "Apelido é obrigatório" })}
+                className={inputStyle}
+              />
+              {errors.aplido && (
+                <p className="text-red-500 text-sm">{errors.aplido.message}</p>
+              )}
+            </div>
 
-          <div>
-            <p>Data de Nascimento</p>
-            <input
-              type="date"
-              id="data_nascimento"
-              className={input_style}
-              {...register("data_nascimento", {
-                required: "Data Nascimento é obrigatório",
-              })}
-            />
-            {errors.data_nascimento && <p>{errors.data_nascimento.message}</p>}
-          </div>
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm text-gray-700 font-semibold">
+                Data de nascimento
+              </label>
+              <input
+                type="date"
+                {...register("data_nascimento", {
+                  required: "Data de nascimento é obrigatória",
+                })}
+                className={inputStyle}
+              />
+              {errors.data_nascimento && (
+                <p className="text-red-500 text-sm">
+                  {errors.data_nascimento.message}
+                </p>
+              )}
+            </div>
 
-          <div>
-            <p>Telemóvel</p>
-            <div>
-              <select
-                name="indicativo"
-                id="indicativo"
-                className={input_style}
-              ></select>
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm text-gray-700 font-semibold">
+                Telefone
+              </label>
               <input
                 type="number"
-                id="telemovel"
-                className={input_style}
+                placeholder="Telefone"
                 {...register("telefone", {
                   required: "Telefone é obrigatório",
                 })}
+                className={inputStyle}
               />
-              {errors.telefone && <p>{errors.telefone.message}</p>}
+              {errors.telefone && (
+                <p className="text-red-500 text-sm">
+                  {errors.telefone.message}
+                </p>
+              )}
             </div>
           </div>
+        )}
+
+        {step === 2 && (
+          <div className="space-y-4">
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm text-gray-700 font-semibold">
+                Email
+              </label>
+              <input
+                type="email"
+                placeholder="Email"
+                {...register("email", {
+                  required: "Email é obrigatório",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Email inválido",
+                  },
+                })}
+                className={inputStyle}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm text-gray-700 font-semibold">
+                Palavra-passe
+              </label>
+              <input
+                type="password"
+                placeholder="Palavra-passe"
+                {...register("password", {
+                  required: "Palavra-passe é obrigatória",
+                  minLength: {
+                    value: 6,
+                    message: "Mínimo de 6 caracteres",
+                  },
+                })}
+                className={inputStyle}
+              />
+              {errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm text-gray-700 font-semibold">
+                Confirmar palavra-passe
+              </label>
+              <input
+                type="password"
+                placeholder="Confirmar palavra-passe"
+                {...register("confirmar_password", {
+                  required: "Confirmação é obrigatória",
+                  validate: (value) =>
+                    value === password || "As palavras-passe não coincidem",
+                })}
+                className={inputStyle}
+              />
+              {errors.confirmar_password && (
+                <p className="text-red-500 text-sm">
+                  {errors.confirmar_password.message}
+                </p>
+              )}
+
+              <div className="flex items-start gap-2 mt-5">
+                <input
+                  type="checkbox"
+                  {...register("termos", { required: true })}
+                  className="mt-1"
+                />
+                <p className="text-sm text-gray-600">
+                  Concordas com os{" "}
+                  <span className="font-semibold">Termos de Serviço</span>
+                </p>
+              </div>
+
+              <div className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  {...register("receber_email")}
+                  className="mt-1"
+                />
+                <p className="text-sm text-gray-600">
+                  Queres receber email das nossas principais promoções,
+                  descontos e novidades
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Botões */}
+        <div className="flex justify-between mt-4">
+          {step > 1 && (
+            <button
+              type="button"
+              onClick={() => setStep(step - 1)}
+              className="px-4 py-2 rounded-md bg-gray-300 hover:bg-gray-400 text-gray-800"
+            >
+              Voltar
+            </button>
+          )}
+
+          <button
+            type="submit"
+            className="px-6 py-2 rounded-full bg-orange-400 hover:bg-orange-500 text-white font-semibold ml-auto"
+          >
+            {step === 1 ? "Próximo" : "Cadastrar"}
+          </button>
         </div>
-
-        <div id="step2">
-          <div>
-            <p>Email</p>
-            <input
-              type="email"
-              id="email"
-              className={input_style}
-              placeholder="Digite seu email"
-              {...register("email", { required: "email é obrigatório" })}
-            />
-            {errors.email && <p>{errors.email.message}</p>}
-          </div>
-
-          <div>
-            <p>Password</p>
-            <input
-              type="password"
-              id="password"
-              className={input_style}
-              placeholder="digite sua password"
-              {...register("password", { required: "Password é obrigatório" })}
-            />
-            {errors.password && <p>{errors.password.message}</p>}
-          </div>
-
-          <div>
-            <p>Confirmar Password</p>
-            <input
-              type="password"
-              id="confirmar_password"
-              className={input_style}
-              placeholder="Confirme sua password"
-              {...register("confirmar_password", {
-                required: "Confirmar Password é obrigatório",
-              })}
-            />
-            {errors.confirmar_password && (
-              <p>{errors.confirmar_password.message}</p>
-            )}
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          className="my-5 px-5 py-2 bg-orange-400 hover:bg-orange-700 text-gray-500 rounded-md"
-        >
-          próximo
-        </button>
       </form>
     </div>
   );
