@@ -21,7 +21,7 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
     console.log("Dados enviados:", data);
-
+    //TODO: adicionar try...catch para mitigar erros
     const res = await fetch(url + "login", {
       method: "POST",
       headers: {

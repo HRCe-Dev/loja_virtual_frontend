@@ -33,6 +33,8 @@ const CadastroForm: React.FC = () => {
     if (step < 2) {
       setStep(step + 1);
     } else {
+      //TODO: adicionar try...catch para mitigar erros
+
       console.log("Dados enviados:", data);
       const res = await fetch(url + "cadastro", {
         method: "POST",
