@@ -5,6 +5,7 @@ import BannerCadastro from "../cadastro/BannerCadastro";
 import { inputStyle } from "@/styles/forms";
 import Link from "next/link";
 import { CircleUser, Facebook } from "lucide-react";
+import { url } from "@/api/url";
 
 interface loginForm {
   email: string;
@@ -18,9 +19,27 @@ export default function Login() {
     formState: { errors },
   } = useForm<loginForm>();
 
-  const onSubmit: SubmitHandler<loginForm> = (data) => {
+  const onSubmit: SubmitHandler<loginForm> = async (data) => {
     console.log("Dados enviados:", data);
-    alert("Cadastro realizado com sucesso!");
+
+    const res = await fetch(url + "login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...data }),
+    });
+
+    if (res.ok) {
+      alert("Login efectuado com sucesso");
+      const data = await res.json();
+      console.log(data);
+    } else if (res.status === 401) {
+      const errorData = await res.json();
+      alert(errorData?.message);
+    } else {
+      alert("Erro desconhecido");
+    }
   };
 
   return (

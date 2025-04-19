@@ -5,8 +5,7 @@ const Footer: React.FC = () => {
     <footer className="bg-gray-800 text-white py-5 text-center">
       <div className="max-w-screen-xl mx-auto px-4">
         <p className="mb-3">
-          © {new Date().getFullYear()} Loja Virtual. Todos os direitos
-          reservados.
+          © {new Date().getFullYear()} HRCe Store. Todos os direitos reservados.
         </p>
         <nav>
           <a href="/sobre" className="text-white hover:underline mx-2">

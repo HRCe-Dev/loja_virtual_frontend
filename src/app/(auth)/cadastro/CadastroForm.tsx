@@ -1,5 +1,6 @@
 "use client";
 
+import { url } from "@/api/url";
 import { inputStyle } from "@/styles/forms";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -28,12 +29,26 @@ const CadastroForm: React.FC = () => {
 
   const password = watch("password");
 
-  const onSubmit: SubmitHandler<cadastroForm> = (data) => {
+  const onSubmit: SubmitHandler<cadastroForm> = async (data) => {
     if (step < 2) {
       setStep(step + 1);
     } else {
       console.log("Dados enviados:", data);
-      alert("Cadastro realizado com sucesso!");
+      const res = await fetch(url + "cadastro", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...data }),
+      });
+
+      const dados = await res.json();
+
+      if (res.ok) {
+        alert("Cadastro realizado com sucesso!");
+      } else {
+        alert(dados?.message);
+      }
     }
   };
 
