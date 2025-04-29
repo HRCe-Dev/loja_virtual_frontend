@@ -4,3 +4,7 @@ export interface Produto {
   preco: number;
   imagem_url: string;
 }
+
+export interface ProdutoPromocao extends Produto {
+  desconto: number;
+}

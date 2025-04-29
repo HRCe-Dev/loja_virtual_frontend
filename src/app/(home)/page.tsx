@@ -5,6 +5,7 @@ import fetchProdutosMaisVendidos from "./fetchProdutosMaisVendidos";
 import { NewsletterForm } from "@/componentes/NewsletterForm";
 import MenuCategorias from "@/componentes/MenuCategorias";
 import SeccaoMarker from "./SeccaoMarker";
+import Promocoes from "@/componentes/Promocoes/Promocoes";
 
 export default async function Home() {
   const produtos: Produto[] = [
@@ -91,6 +92,12 @@ export default async function Home() {
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
         </div>
+      </div>
+
+      {/*Produtos em Promoção */}
+      <div className="mt-10">
+        <SeccaoMarker>Produtos em Promoção</SeccaoMarker>
+        <Promocoes />
       </div>
 
       {/*Produtos Mais Vendidos*/}
