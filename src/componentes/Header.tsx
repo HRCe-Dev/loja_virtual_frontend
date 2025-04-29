@@ -4,7 +4,7 @@ import { Search, ShoppingCart } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="flex flex-col md:flex-row justify-between items-center p-4 bg-gray-100 border-b border-gray-300 gap-4">
+    <header className="flex flex-col md:flex-row justify-between items-center p-4 border-b border-gray-300 gap-4">
       {/* Logo */}
       <div className="flex items-center justify-center md:justify-start w-full md:w-auto">
         <Link href="/">
@@ -20,15 +20,15 @@ const Header = () => {
 
       {/* Search bar */}
       <div className="w-full md:w-1/2">
-        <div className="flex items-center bg-white rounded-lg px-3 py-2 w-full shadow-sm">
+        <div className="flex items-center  text-gray-700 bg-white rounded-lg px-3 py-2 w-full shadow-sm hover:shadow-orange-500 hover:text-orange-500">
           <input
             type="text"
             name="searchbar"
             id="searchbar"
             placeholder="O que estás à procura?"
-            className="w-full ml-2 outline-none text-sm"
+            className="w-full ml-2 outline-none text-sm text-gray-700"
           />
-          <Search className="text-gray-700 ml-2" size={22} />
+          <Search className=" ml-2" size={22} />
         </div>
       </div>
 

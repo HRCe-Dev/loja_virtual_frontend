@@ -24,7 +24,7 @@ export default function BannerCarousel() {
   };
 
   return (
-    <div className="relative  mx-auto mt-8">
+    <div className="relative w-full mx-auto">
       {/* Slide */}
       <div className="rounded-xl h-100 flex items-center justify-center bg-gray-700 text-gray-300 text-3xl font-bold transition-all duration-500">
         {slides[current].content}

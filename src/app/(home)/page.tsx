@@ -3,6 +3,8 @@ import BannerCarousel from "./BannerCarrosel";
 import { Produto } from "@/types/Produto";
 import fetchProdutosMaisVendidos from "./fetchProdutosMaisVendidos";
 import { NewsletterForm } from "@/componentes/NewsletterForm";
+import MenuCategorias from "@/componentes/MenuCategorias";
+import SeccaoMarker from "./SeccaoMarker";
 
 export default async function Home() {
   const produtos: Produto[] = [
@@ -71,7 +73,8 @@ export default async function Home() {
   const produtosMaisVendidos = (await fetchProdutosMaisVendidos()) as Produto[];
 
   return (
-    <div className="mb-100 mx-10 mt-4">
+    <div className="flex flex-col gap-10 mb-30 mx-10 mt-4">
+      <MenuCategorias />
       <h1 className="font-bold text-center text-xl text-gray-600">
         A SUA MELHOR ESCOLHA COMEÇA AQUI
       </h1>
@@ -79,9 +82,10 @@ export default async function Home() {
 
       {/*Produtos TOP*/}
       <div className="mt-10">
-        <h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
+        {/*<h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
           Produtos TOP
-        </h1>
+        </h1>*/}
+        <SeccaoMarker>Produtos TOP</SeccaoMarker>
         <div className="grid grid-cols-4 gap-4 mt-5">
           {produtos.map((prod, index) => (
             <ProdutoCard key={prod.id} produto={prod} />
@@ -91,9 +95,10 @@ export default async function Home() {
 
       {/*Produtos Mais Vendidos*/}
       <div className="mt-10">
-        <h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
+        {/*<h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
           Produtos Mais Vendidos
-        </h1>
+        </h1>*/}
+        <SeccaoMarker>Produtos Mais Vendidos</SeccaoMarker>
         <div className="grid grid-cols-4 gap-4 mt-5">
           {produtosMaisVendidos.map((prod, index) => (
             <ProdutoCard key={prod.id} produto={prod} />
