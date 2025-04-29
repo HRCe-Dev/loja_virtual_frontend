@@ -2,6 +2,7 @@ import ProdutoCard from "@/componentes/ProdutoCard";
 import BannerCarousel from "./BannerCarrosel";
 import { Produto } from "@/types/Produto";
 import fetchProdutosMaisVendidos from "./fetchProdutosMaisVendidos";
+import { NewsletterForm } from "@/componentes/NewsletterForm";
 
 export default async function Home() {
   const produtos: Produto[] = [
@@ -98,6 +99,10 @@ export default async function Home() {
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
         </div>
+      </div>
+
+      <div>
+        <NewsletterForm />
       </div>
     </div>
   );
