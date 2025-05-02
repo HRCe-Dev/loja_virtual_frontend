@@ -88,7 +88,7 @@ export default async function Home() {
         </h1>*/}
         <SeccaoMarker>Produtos TOP</SeccaoMarker>
         <div className="grid grid-cols-4 gap-4 mt-5">
-          {produtos.map((prod, index) => (
+          {produtos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
         </div>
@@ -107,7 +107,7 @@ export default async function Home() {
         </h1>*/}
         <SeccaoMarker>Produtos Mais Vendidos</SeccaoMarker>
         <div className="grid grid-cols-4 gap-4 mt-5">
-          {produtosMaisVendidos.map((prod, index) => (
+          {produtosMaisVendidos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
         </div>

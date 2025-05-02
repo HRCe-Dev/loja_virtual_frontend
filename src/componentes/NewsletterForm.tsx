@@ -18,7 +18,7 @@ export function NewsletterForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     reset,
   } = useForm<NewsletterFormData>({
     resolver: zodResolver(newsletterSchema),

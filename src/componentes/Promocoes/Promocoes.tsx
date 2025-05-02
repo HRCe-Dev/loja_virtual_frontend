@@ -2,7 +2,6 @@ import { ProdutoPromocao } from "@/types/Produto";
 import React from "react";
 import fetchPromocoes from "./fetchPromocoes";
 import PromocoesCard from "./PromocoesCard";
-import SeccaoMarker from "@/app/(home)/SeccaoMarker";
 
 const Promocoes: React.FC = async () => {
   const promocoes: ProdutoPromocao[] = await fetchPromocoes();

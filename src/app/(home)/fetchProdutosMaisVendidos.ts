@@ -10,7 +10,7 @@ const fetchProdutosMaisVendidos = async () => {
       throw new Error(data?.message);
     }
 
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     if (error instanceof Error) {
