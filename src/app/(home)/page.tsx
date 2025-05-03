@@ -1,4 +1,4 @@
-import ProdutoCard from "@/componentes/ProdutoCard";
+import ProdutoCard from "@/componentes/produtoCard2";
 import BannerCarousel from "./BannerCarrosel";
 import { Produto } from "@/types/Produto";
 import fetchProdutosMaisVendidos from "./fetchProdutosMaisVendidos";
