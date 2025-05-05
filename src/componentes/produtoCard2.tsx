@@ -1,5 +1,7 @@
 import { Produto } from "@/types/Produto";
 import Image from "next/image";
+import { Heart } from "lucide-react";
+import Link from "next/link";
 
 interface ProdutoCardProps {
   produto: Produto;
@@ -7,7 +9,18 @@ interface ProdutoCardProps {
 
 const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
   return (
-    <div className="w-64 px-3 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300">
+    <Link
+      href={"/produto/" + produto.id}
+      className="group relative w-64 px-3 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300"
+    >
+      {/* Botão de Like (Lista de Desejo) */}
+      <button
+        className="absolute top-2 right-2 z-10 bg-white p-1 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        title="Adicionar à Lista de Desejos"
+      >
+        <Heart className="w-5 h-5 text-gray-500 hover:text-red-500" />
+      </button>
+
       {/*Imagem */}
       <div className="relative w-full h-48 overflow-hidden">
         <Image
@@ -41,11 +54,11 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
 
       {/*btn de adicionar ao carrinho */}
       <div>
-        <button className="w-full mt-2 mb-2  bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400">
+        <button className="w-full mt-2 mb-2 bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400">
           Adicionar ao Carrinho
         </button>
       </div>
-    </div>
+    </Link>
   );
 };
 

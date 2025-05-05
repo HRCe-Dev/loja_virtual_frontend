@@ -1,3 +1,5 @@
+"use client";
+
 import { ProdutoCarrinho } from "@/types/Produto";
 import { useState } from "react";
 
@@ -31,14 +33,14 @@ const SeletorQuantidade: React.FC = () => {
     <div className="flex items-center gap-2">
       <button
         onClick={() => setQtd((prev) => prev - 1)}
-        className="bg-gray-300 text-black px-2 py-1 rounded hover:bg-gray-400"
+        className="bg-gray-300 text-black px-2 py-1 rounded-full hover:bg-gray-400"
       >
         −
       </button>
       <span className="min-w-[32px] text-center">{qtd}</span>
       <button
         onClick={() => setQtd((prev) => prev + 1)}
-        className="bg-gray-300 text-black px-2 py-1 rounded hover:bg-gray-400"
+        className="bg-gray-300 text-black px-2 py-1 rounded-full hover:bg-gray-400"
       >
         +
       </button>
