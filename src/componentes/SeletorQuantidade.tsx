@@ -31,20 +31,28 @@ const SeletorQuantidade: React.FC = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <button
-        onClick={() => setQtd((prev) => prev - 1)}
-        className="bg-gray-300 text-black px-2 py-1 rounded-full hover:bg-gray-400"
-      >
-        −
-      </button>
+      <BtnQtn onClick={() => setQtd((prev) => prev - 1)}>-</BtnQtn>
+
       <span className="min-w-[32px] text-center">{qtd}</span>
-      <button
-        onClick={() => setQtd((prev) => prev + 1)}
-        className="bg-gray-300 text-black px-2 py-1 rounded-full hover:bg-gray-400"
-      >
-        +
-      </button>
+
+      <BtnQtn onClick={() => setQtd((prev) => prev + 1)}>+</BtnQtn>
     </div>
+  );
+};
+
+interface btnProps {
+  onClick: () => void;
+  children: React.ReactNode;
+}
+
+const BtnQtn: React.FC<btnProps> = ({ onClick, children }) => {
+  return (
+    <button
+      onClick={onClick}
+      className="w-7 h-7 text-center bg-gray-300 text-black  rounded-full hover:bg-gray-400 shadow-md  group-hover:opacity-100 transition-opacity duration-300"
+    >
+      {children}
+    </button>
   );
 };
 

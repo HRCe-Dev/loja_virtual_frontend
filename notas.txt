@@ -1,0 +1,2 @@
+ - aplicar no layout, no header o mb, e no footer o mt, no main o margin x mx.
+ e tirar os margin nos raizes de todas as pages
