@@ -2,47 +2,38 @@
 
 import { Produto } from "@/types/Produto";
 import { useListaDesejo } from "./listadesejo.api";
-import ProdutoCard from "./ProdutoCard";
 import { Produtos } from "@/util/produtosTeste";
+import ProdutoCard from "@/componentes/produtoCard2";
+import { ProdutoListaLg } from "@/componentes/ProdutoLista";
+import SeccaoMarker from "../(home)/SeccaoMarker";
 
 export default function ListaDesejo() {
   //const { produtos, loading, erro } = useListaDesejo();
 
   const produtos: Produto[] = Produtos;
-
-  //TODO: implementar checkout
-  const handleComprar = (produto_id: string) => {
-    alert("Implementacao do checkout futuramente");
-  };
-
-  const handleAdicionarCarrinho = (produto_id: string) => {
-    alert("ja ja am t implemental");
-  };
-
-  const removerdaLista = (produto_id: string) => {
-    alert("ja ja eme t implementod");
-  };
+  const ProdutosSemelhantes: Produto[] = Produtos;
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-6">Lista de Desejos</h1>
+    <div className="m-10">
+      <div className="p-4 m-4 border-b-3 border-gray-300 ">
+        <h1 className="text-3xl font-bold text-center">Lista de Desejos</h1>
+      </div>
 
-      {produtos.length === 0 ? (
-        <p className="text-gray-600">Sua lista de desejos está vazia.</p>
-      ) : (
-        <ul className="space-y-1">
-          {produtos.map((produto) => (
-            <li key={produto.id} className="flex items-center p-4 bg-white ">
-              <ProdutoCard
-                handleAdicionarCarrinho={handleAdicionarCarrinho}
-                handleComprar={handleComprar}
-                handleRemoverListaDesejo={removerdaLista}
-                produto={produto}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+      <ProdutoListaLg>
+        {produtos &&
+          produtos.map((produto) => <ProdutoCard produto={produto} />)}{" "}
+      </ProdutoListaLg>
+
+      {/* TODO: produtos relacionados*/}
+      <div className="mt-12 flex flex-col gap-5">
+        <SeccaoMarker>Produtos Relacionados</SeccaoMarker>
+        <ProdutoListaLg>
+          {ProdutosSemelhantes &&
+            ProdutosSemelhantes.slice(0, 4).map((prod) => (
+              <ProdutoCard key={prod.id} produto={prod} />
+            ))}
+        </ProdutoListaLg>
+      </div>
     </div>
   );
 }

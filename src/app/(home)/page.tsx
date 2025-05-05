@@ -7,6 +7,7 @@ import MenuCategorias from "@/componentes/MenuCategorias";
 import SeccaoMarker from "./SeccaoMarker";
 import Promocoes from "@/componentes/Promocoes/Promocoes";
 import { Produtos } from "@/util/produtosTeste";
+import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 
 export default async function Home() {
   const produtos: Produto[] = Produtos;
@@ -27,11 +28,11 @@ export default async function Home() {
           Produtos TOP
         </h1>*/}
         <SeccaoMarker>Produtos TOP</SeccaoMarker>
-        <div className="grid grid-cols-4 gap-4 mt-5">
+        <ProdutoListaLg>
           {produtos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
-        </div>
+        </ProdutoListaLg>
       </div>
 
       {/*Produtos em Promoção */}
@@ -46,11 +47,11 @@ export default async function Home() {
           Produtos Mais Vendidos
         </h1>*/}
         <SeccaoMarker>Produtos Mais Vendidos</SeccaoMarker>
-        <div className="grid grid-cols-4 gap-4 mt-5">
+        <ProdutoListaLg>
           {produtosMaisVendidos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
-        </div>
+        </ProdutoListaLg>
       </div>
 
       <div>
