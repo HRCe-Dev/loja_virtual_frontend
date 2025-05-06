@@ -3,10 +3,8 @@
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
 import { ProdutoCarrinho } from "@/types/Produto";
 import React from "react";
-import {
-  BtnListaDesejo,
-  BtnTrash,
-} from "@/componentes/Buttons/ButtonListaDesejo";
+import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
+import { BtnTrash } from "@/componentes/Buttons/Buttons";
 
 interface carrinhoCardProps {
   produto: ProdutoCarrinho;
@@ -31,7 +29,7 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({ produto }) => {
       </div>
       <div className=" flex flex-row gap-5 items-center ml-10 ">
         {/* acoes*/}
-        <BtnListaDesejo />
+        <BtnListaDesejo tipo={1} produto_id={produto.id} />
         <SeletorQuantidade />
         <BtnTrash
           onClick={() => {

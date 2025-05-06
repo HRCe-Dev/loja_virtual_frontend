@@ -12,6 +12,7 @@ import SeccaoMarker from "@/app/(home)/SeccaoMarker";
 import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
 import { Produto } from "@/types/Produto";
 import ProdutoCard from "@/componentes/produtoCard2";
+import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
 
 const ProdutoPage = async ({ params }: { params: { id: string } }) => {
   const produto_id = params.id;
@@ -43,16 +44,16 @@ const ProdutoPage = async ({ params }: { params: { id: string } }) => {
             <div className="w-1/2 flex flex-col gap-5 mx-10 ">
               {/*nome, preco, addlista de desejo, qtd, addcart, buynow, entrega rapida, troca e devolucoes */}
               <h1 className="text-3xl font-bold">{produto.nome}</h1>
-              <div className="flex flex-row gap-10 border-b-1 border-gray-400 mb-4 mx-2">
+              <div className="flex flex-row gap-10 border-b-1 border-gray-400 mb-4 mx-2 justify-between ">
                 <h3 className="text-xl font-bold  ">
                   {produto.preco}
                   <span className="text-sm ">$CVE</span>
                 </h3>
                 {/*TODO: considerar se o produto estiver em promoção*/}
-                <button className="flex items-center justify-center gap-1 py-1 px-2 text-sm hover:bg-gray-200 hover:border-1 border-orange-500 rounded-md">
-                  <Heart />
-                  Adicionar Lista Desejo
-                </button>
+
+                <div className="mr-20">
+                  <BtnListaDesejo produto_id={produto.id} tipo={3} />
+                </div>
               </div>
 
               <div className="flex flex-row  gap-2 items-center mb-2">

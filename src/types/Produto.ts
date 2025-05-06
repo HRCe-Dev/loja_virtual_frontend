@@ -41,3 +41,8 @@ interface Subcategoria {
   nome: string;
   descricao?: string;
 }
+
+export interface Carrinho {
+  produto_id: string;
+  qtd: number;
+}
