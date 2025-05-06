@@ -4,16 +4,23 @@ import { ProdutoCarrinho } from "@/types/Produto";
 import { Produtos } from "@/util/produtosTeste";
 import { ShoppingCart } from "lucide-react";
 import CarrinhoProdutoCart from "./CarrinhoProdutoCart";
+import { useState } from "react";
 
 export default function carrinhoPage() {
-  const carrinho: ProdutoCarrinho[] = Produtos.map((produto) => {
-    return {
-      ...produto,
-      qtd: 5,
-      estoque: 10,
-      updated_at: new Date(),
-    };
-  });
+  const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>(
+    Produtos.map((produto) => {
+      return {
+        ...produto,
+        qtd: 5,
+        estoque: 10,
+        updated_at: new Date(),
+      };
+    })
+  );
+
+  const removerCarrinho = async (produto_id: string) => {
+    setCarrinho((prev) => prev.filter((produto) => produto.id !== produto_id));
+  };
 
   const total = carrinho.reduce((acc, prod) => acc + prod.preco * prod.qtd, 0);
 
@@ -31,7 +38,11 @@ export default function carrinhoPage() {
       <div className="flex flex-col gap-5 mt-10 ">
         {carrinho &&
           carrinho.map((produto) => (
-            <CarrinhoProdutoCart key={produto.id} produto={produto} />
+            <CarrinhoProdutoCart
+              removerProduto={removerCarrinho}
+              key={produto.id}
+              produto={produto}
+            />
           ))}
       </div>
 

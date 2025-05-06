@@ -8,9 +8,13 @@ import { BtnTrash } from "@/componentes/Buttons/Buttons";
 
 interface carrinhoCardProps {
   produto: ProdutoCarrinho;
+  removerProduto: (produto_id: string) => void;
 }
 
-const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({ produto }) => {
+const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
+  produto,
+  removerProduto,
+}) => {
   return (
     <div className="px-10 mx-auto flex flex-row items-center justify-center gap-10 border border-gray-300 rounded-lg ">
       <div>
@@ -33,7 +37,7 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({ produto }) => {
         <SeletorQuantidade />
         <BtnTrash
           onClick={() => {
-            alert("removendo item do carrinho de compras");
+            removerProduto(produto.id);
           }}
           title="Remover item do carrinho"
         />

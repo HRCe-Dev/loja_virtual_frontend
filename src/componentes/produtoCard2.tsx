@@ -1,8 +1,8 @@
 import { Produto } from "@/types/Produto";
 import Image from "next/image";
-import { Heart } from "lucide-react";
 import Link from "next/link";
 import { BtnListaDesejo } from "./Buttons/ButtonListaDesejo";
+import { BtnAdicionarCarrinho } from "./Buttons/ButtonCarrinho";
 
 interface ProdutoCardProps {
   produto: Produto;
@@ -50,9 +50,7 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
 
       {/*btn de adicionar ao carrinho */}
       <div>
-        <button className="w-full mt-2 mb-2 bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400">
-          Adicionar ao Carrinho
-        </button>
+        <BtnAdicionarCarrinho produto_id={produto.id} />
       </div>
     </Link>
   );
