@@ -2,17 +2,20 @@
 
 import { atualizarCarrinho } from "@/app/carrinho/carrinho";
 import { useEffect, useRef, useState } from "react";
+import { boolean } from "zod";
 
 interface seletorProps {
   produto_id: string;
   qtd_?: number;
   estoque?: number;
+  carrinho?: boolean;
 }
 
 const SeletorQuantidade: React.FC<seletorProps> = ({
   produto_id,
   qtd_ = 1,
   estoque = 5,
+  carrinho = false,
 }) => {
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
   const [qtd, setQtd] = useState<number>(qtd_);
@@ -38,7 +41,7 @@ const SeletorQuantidade: React.FC<seletorProps> = ({
 
   // Efeito que vai aguardar para enviar a atualização para o servidor
   useEffect(() => {
-    if (!mudouPorInteracao.current) return;
+    if (!mudouPorInteracao.current || !carrinho) return;
 
     if (tempoDeEspera) clearTimeout(tempoDeEspera); // Limpa o timer anterior
 

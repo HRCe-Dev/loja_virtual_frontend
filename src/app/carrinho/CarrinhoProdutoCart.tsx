@@ -46,6 +46,7 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
           qtd_={produto.qtd}
           estoque={produto.estoque}
           produto_id={produto.id}
+          carrinho={true}
         />
         <BtnTrash
           onClick={() => {
