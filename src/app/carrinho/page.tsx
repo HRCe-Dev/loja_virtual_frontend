@@ -79,17 +79,17 @@ export default function carrinhoPage() {
         </div>
       )}
 
-      <div className=" flex flex-row mt-20 border-t-4 border-gray-300 p-5 items-center  justify-between sticky bottom-0 bg-white shadow-lg z-10">
-        {/*pre checkout */}
-        <div className="ml-10">
-          <p className="text-2xl font-bold ">Total:</p>
+      <div className="flex flex-col sm:flex-row mt-20 border-t-4 border-gray-300 p-5 items-center justify-between sticky bottom-0 bg-white shadow-lg z-10">
+        {/* Pre checkout */}
+        <div className="ml-4 sm:ml-10 w-full sm:w-auto">
+          <p className="text-2xl font-bold">Total:</p>
           <p className="text-xl font-bold text-gray-500 ml-4">
             {total}
             <span>$CVE</span>
           </p>
         </div>
-        <div className="mr-20">
-          <button className="text-xl font-bold text-white rounded-xl bg-orange-500 px-3 py-2 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-1">
+        <div className="w-full sm:w-auto flex justify-center sm:justify-end mt-4 sm:mt-0 sm:mr-20">
+          <button className="text-xl font-bold text-white rounded-xl bg-orange-500 px-6 py-3 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-2 w-full sm:w-auto">
             Checkout
           </button>
         </div>
