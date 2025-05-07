@@ -42,7 +42,11 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
       <div className="flex flex-row gap-5 items-center sm:ml-10 mt-4 sm:mt-0 pb-5 sm:pb-0">
         {/* acoes */}
         <BtnListaDesejo tipo={1} produto_id={produto.id} />
-        <SeletorQuantidade />
+        <SeletorQuantidade
+          qtd_={produto.qtd}
+          estoque={produto.estoque}
+          produto_id={produto.id}
+        />
         <BtnTrash
           onClick={() => {
             removerProduto(produto.id);
