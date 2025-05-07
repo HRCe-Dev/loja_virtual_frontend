@@ -9,11 +9,13 @@ import { BtnTrash } from "@/componentes/Buttons/Buttons";
 interface carrinhoCardProps {
   produto: ProdutoCarrinho;
   removerProduto: (produto_id: string) => void;
+  btnLoading?: boolean;
 }
 
 const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
   produto,
   removerProduto,
+  btnLoading,
 }) => {
   return (
     <div className="px-10 mx-auto flex flex-row items-center justify-center gap-10 border border-gray-300 rounded-lg ">
@@ -23,7 +25,9 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
       </div>
       <div className="flex flex-col">
         {/*dados: nome, opcoes, preco */}
-        <h2 className="text-xl font-bold">{produto.nome}</h2>
+        <h2 className="text-xl font-bold w-70 overflow-hidden text-ellipsis line-clamp-2">
+          {produto.nome}
+        </h2>
 
         <p className="text-sm text-gray-400">Color: Black | Size: 50cm</p>
         <h3 className="text-lg font-bold text-gray-800 mt-2">
@@ -40,6 +44,7 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
             removerProduto(produto.id);
           }}
           title="Remover item do carrinho"
+          disable={btnLoading}
         />
       </div>
     </div>

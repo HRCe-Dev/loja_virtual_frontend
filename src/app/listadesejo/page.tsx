@@ -7,12 +7,14 @@ import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import SeccaoMarker from "../(home)/SeccaoMarker";
 import { useEffect, useState } from "react";
 import { obterProdutosListaDesejo } from "./listadesejo";
+import Loading from "@/componentes/Loading";
+import Error from "@/componentes/Error";
 
 export default function ListaDesejo() {
   //TODO: remover produto de lista de desejo
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [Error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
   const ProdutosSemelhantes: Produto[] = Produtos;
@@ -36,23 +38,11 @@ export default function ListaDesejo() {
         <h1 className="text-3xl font-bold text-center">Lista de Desejos</h1>
       </div>
 
-      {loading && (
-        <div>
-          <h1 className="text-3xl font-bold text-orange-500 text-center">
-            CARREGANDO OS PRODUTOS ...
-          </h1>
-        </div>
-      )}
+      {loading && <Loading />}
 
-      {Error && (
-        <div>
-          <h1 className="text-3xl font-bold text-orange-500 text-center">
-            ERRO EM CARREGAR OS PRODUTOS ...
-          </h1>
-        </div>
-      )}
+      {error && <Error />}
 
-      {!Error && !loading && (
+      {!error && !loading && (
         <ProdutoListaLg>
           {produtos &&
             produtos.map((produto) => (

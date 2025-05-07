@@ -4,6 +4,7 @@ import React from "react";
 interface btnProps0 {
   onClick?: () => void;
   title?: string;
+  disable?: boolean;
 }
 
 interface btnProps extends btnProps0 {
@@ -59,12 +60,13 @@ export const ButtonNoBg: React.FC<btnProps> = ({
   );
 };
 
-export const BtnTrash: React.FC<btnProps0> = ({ onClick, title }) => {
+export const BtnTrash: React.FC<btnProps0> = ({ onClick, title, disable }) => {
   return (
     <button
       className=" bg-white p-1 rounded-full shadow-md  group-hover:opacity-100 transition-opacity duration-300"
       title={title}
       onClick={onClick}
+      disabled={disable}
     >
       <Trash className="w-5 h-5 text-gray-500 hover:text-red-500" />
     </button>

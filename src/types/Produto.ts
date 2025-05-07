@@ -8,7 +8,7 @@ export interface Produto {
 
 export interface ProdutoCarrinho extends Produto {
   qtd: number;
-  updated_at: Date;
+  updated_at?: Date;
 }
 
 export interface ProdutoPromocao extends Produto {

@@ -1,13 +1,20 @@
 "use client";
 
-import { ProdutoCarrinho } from "@/types/Produto";
+import { Produto, ProdutoCarrinho } from "@/types/Produto";
 import { Produtos } from "@/util/produtosTeste";
 import { ShoppingCart } from "lucide-react";
 import CarrinhoProdutoCart from "./CarrinhoProdutoCart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { obterProdutosCarrinho, removerCarrinho } from "./carrinho";
+import Loading from "@/componentes/Loading";
+import Error from "@/componentes/Error";
 
 export default function carrinhoPage() {
-  const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>(
+  const [btnLoading, setbtnLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+  const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>([]);
+  /*const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>(
     Produtos.map((produto) => {
       return {
         ...produto,
@@ -16,10 +23,29 @@ export default function carrinhoPage() {
         updated_at: new Date(),
       };
     })
-  );
+  );*/
 
-  const removerCarrinho = async (produto_id: string) => {
-    setCarrinho((prev) => prev.filter((produto) => produto.id !== produto_id));
+  useEffect(() => {
+    const fetchCarrinho = async () => {
+      setLoading(true);
+      const produtos = await obterProdutosCarrinho();
+      if (produtos) setCarrinho(produtos);
+      else setError(true);
+      setLoading(false);
+    };
+
+    fetchCarrinho();
+  }, []);
+
+  const onClickRemover = async (produto_id: string) => {
+    setbtnLoading(true);
+    if (await removerCarrinho(produto_id)) {
+      setCarrinho((prev) =>
+        prev.filter((produto) => produto.id !== produto_id)
+      );
+    }
+
+    setbtnLoading(false);
   };
 
   const total = carrinho.reduce((acc, prod) => acc + prod.preco * prod.qtd, 0);
@@ -35,18 +61,25 @@ export default function carrinhoPage() {
           </span>
         </p>
       </div>
-      <div className="flex flex-col gap-5 mt-10 ">
-        {carrinho &&
-          carrinho.map((produto) => (
-            <CarrinhoProdutoCart
-              removerProduto={removerCarrinho}
-              key={produto.id}
-              produto={produto}
-            />
-          ))}
-      </div>
+      {loading && <Loading />}
 
-      <div className="w-ful flex flex-row mt-20 border-t-4 border-gray-300 p-5 items-center  justify-between sticky bottom-0 bg-white shadow-lg z-10">
+      {!loading && error && <Error />}
+
+      {!loading && !error && (
+        <div className="flex flex-col gap-5 mt-10 ">
+          {carrinho &&
+            carrinho.map((produto) => (
+              <CarrinhoProdutoCart
+                removerProduto={onClickRemover}
+                btnLoading={btnLoading}
+                key={produto.id}
+                produto={produto}
+              />
+            ))}
+        </div>
+      )}
+
+      <div className=" flex flex-row mt-20 border-t-4 border-gray-300 p-5 items-center  justify-between sticky bottom-0 bg-white shadow-lg z-10">
         {/*pre checkout */}
         <div className="ml-10">
           <p className="text-2xl font-bold ">Total:</p>

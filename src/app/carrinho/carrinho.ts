@@ -1,4 +1,5 @@
-import { Carrinho, ProdutoCarrinho } from "@/types/Produto";
+import fetchProdutosLista from "@/api/fetchProdutosLista";
+import { Carrinho, Produto, ProdutoCarrinho } from "@/types/Produto";
 
 const ITEM = "carrinho";
 
@@ -7,6 +8,25 @@ const obterCarrinho = (): Carrinho[] => {
   const carrinhoStr = localStorage.getItem(ITEM);
   const carrinho: Carrinho[] = carrinhoStr ? JSON.parse(carrinhoStr) : [];
   return carrinho;
+};
+
+export const obterProdutosCarrinho = async (): Promise<
+  ProdutoCarrinho[] | null
+> => {
+  const carrinho = obterCarrinho();
+
+  const produtos = await fetchProdutosLista(carrinho);
+
+  if (!produtos) return null;
+
+  const out: ProdutoCarrinho[] = produtos.map((prod) => {
+    return {
+      ...prod,
+      qtd: carrinho.find((item) => item.produto_id === prod.id)?.qtd || 1,
+    };
+  });
+
+  return out;
 };
 
 export const adicionarCarrinho = async (
