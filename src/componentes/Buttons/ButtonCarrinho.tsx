@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  adicionarCarrinho,
-  removerCarrinho,
-  verificarCarrinho,
-} from "@/app/carrinho/carrinho";
+import { adicionarCarrinho, verificarCarrinho } from "@/app/carrinho/carrinho";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -26,7 +22,10 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
     verifyCarrinho();
   }, []);
 
-  const onClick = async () => {
+  const onClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
     setLoading(true);
     if (!noCarrinho) {
       setNoCarrinho(await adicionarCarrinho(produto_id, 1));
@@ -39,7 +38,7 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
     return (
       <button
         className="w-full mt-2 mb-2 bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400"
-        onClick={() => onClick()}
+        onClick={(e) => onClick(e)}
         disabled={loading}
       >
         Adicionar ao Carrinho
@@ -50,6 +49,10 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
       <button
         className="w-full mt-2 mb-2 bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400"
         disabled={loading}
+        onClick={(e: React.MouseEvent) => {
+          e.stopPropagation();
+          e.preventDefault();
+        }}
       >
         {/*TODO: Corrigir isto, nao pode ter link dentro de link */}
         {/*<Link href="/carrinho">Ver Carrinho</Link>*/}

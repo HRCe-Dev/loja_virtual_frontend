@@ -31,7 +31,9 @@ export const BtnListaDesejo: React.FC<btnLikeProps> = ({
     fetchLikedStatus();
   }, []);
 
-  const onClickLike = async () => {
+  const onClickLike = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (isLiked) {
       setLiked(!(await removerListaDesejo(produto_id)));
     } else {
@@ -44,7 +46,7 @@ export const BtnListaDesejo: React.FC<btnLikeProps> = ({
       <button
         className=" bg-white p-1 rounded-full shadow-md  group-hover:opacity-100 transition-opacity duration-300"
         title="Adicionar à Lista de Desejos"
-        onClick={() => onClickLike()}
+        onClick={(e) => onClickLike(e)}
       >
         <Heart
           className={`w-5 h-5 text-gray-500 hover:text-red-500 ${
@@ -56,7 +58,7 @@ export const BtnListaDesejo: React.FC<btnLikeProps> = ({
   } else if (tipo === 2) {
     return (
       <button
-        onClick={() => onClickLike()}
+        onClick={(e) => onClickLike(e)}
         className={`absolute top-2 right-2 z-10 
   bg-white p-1 rounded-full shadow-md ${
     isLiked ? "" : "opacity-0"
@@ -73,7 +75,7 @@ export const BtnListaDesejo: React.FC<btnLikeProps> = ({
   } else if (tipo === 3) {
     return (
       <button
-        onClick={() => onClickLike()}
+        onClick={(e) => onClickLike(e)}
         className="flex items-center justify-center gap-1 py-1 px-2 text-sm hover:bg-gray-200 hover:border-1 border-orange-500 rounded-md"
       >
         <Heart className={` ${isLiked ? "fill-black" : ""}`} />
@@ -82,5 +84,3 @@ export const BtnListaDesejo: React.FC<btnLikeProps> = ({
     );
   }
 };
-
-
