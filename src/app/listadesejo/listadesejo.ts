@@ -1,3 +1,6 @@
+import fetchProdutosLista from "@/api/fetchProdutosLista";
+import { Carrinho, Produto } from "@/types/Produto";
+
 const ITEM = "listadesejo";
 
 const obterListaDesejo = (): string[] => {
@@ -7,6 +10,15 @@ const obterListaDesejo = (): string[] => {
     ? JSON.parse(listadesejoStr)
     : [];
   return listadesejo;
+};
+
+export const obterProdutosListaDesejo = async (): Promise<Produto[] | null> => {
+  const lista = obterListaDesejo().map((prod) => {
+    return { produto_id: prod };
+  });
+  const produtos = await fetchProdutosLista(lista);
+
+  return produtos;
 };
 
 export const adicionarListaDesejo = async (
