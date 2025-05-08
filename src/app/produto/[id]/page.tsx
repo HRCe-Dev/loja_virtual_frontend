@@ -13,12 +13,25 @@ import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
 import { Produto } from "@/types/Produto";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
+import {url } from "@/api/url"
 
 interface PageProps {
   id: string;
 }
 
-const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
+
+export async function generateStaticParams() {
+  const produtos = await fetch(url+"produtos/all") 
+    .then(res => res.json());
+
+  return produtos.map((produto: { id: number | string }) => ({
+    id: produto.id.toString(),
+  }));
+}
+
+
+
+const ProdutoPage  = async ({ params }: { params: Promise<PageProps> }) => {
   const { id: produto_id } = await params;
   const produto = await fetchProductDetalhes(produto_id);
   const ProdutosSemelhantes: Produto[] = await fetchProdutosMaisVendidos();

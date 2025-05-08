@@ -1,0 +1,9 @@
+name = "hrceloja"
+compatibility_date = "2025-05-02"
+
+[build]
+command = "npm run build" 
+directory = "./out"  
+
+[assets]
+directory = "./out"  
