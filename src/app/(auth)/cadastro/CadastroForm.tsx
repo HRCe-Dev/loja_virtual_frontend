@@ -1,6 +1,7 @@
 "use client";
 
 import { url } from "@/api/url";
+import SeletorEndereco from "@/componentes/Pop_ups/Seletor_Endereco/Seletor_Endereco";
 import { inputStyle } from "@/styles/forms";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -19,6 +20,8 @@ interface cadastroForm {
 
 const CadastroForm: React.FC = () => {
   const [step, setStep] = useState(1);
+
+  const [modalOpen, setModalOpen] = useState<boolean>(true);
 
   const {
     register,
@@ -267,6 +270,15 @@ const CadastroForm: React.FC = () => {
           </button>
         </div>
       </form>
+
+      {modalOpen && (
+        <SeletorEndereco
+          isOpen={modalOpen}
+          onClose={() => {
+            setModalOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -6,71 +6,9 @@ import { NewsletterForm } from "@/componentes/NewsletterForm";
 import MenuCategorias from "@/componentes/MenuCategorias";
 import SeccaoMarker from "./SeccaoMarker";
 import Promocoes from "@/componentes/Promocoes/Promocoes";
+import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 
 export default async function Home() {
-  const produtos: Produto[] = [
-    {
-      id: 1,
-      nome: "Produto 1",
-      preco: 10.0,
-      imagem_url: "/produtos/Desktop_Lenovo.jpg",
-    },
-    {
-      id: 2,
-      nome: "Produto 2",
-      preco: 20.0,
-      imagem_url: "/produtos/Monitor_Gaming.png",
-    },
-    {
-      id: 3,
-      nome: "Produto 3",
-      preco: 30.0,
-      imagem_url: "/produtos/Monitor_Gaming.png",
-    },
-    {
-      id: 4,
-      nome: "Produto 4",
-      preco: 40.0,
-      imagem_url: "/produtos/Monitor_Gaming.png",
-    },
-    {
-      id: 5,
-      nome: "Produto 5",
-      preco: 50.0,
-      imagem_url: "/produtos/Monitor_Gaming.png",
-    },
-    {
-      id: 6,
-      nome: "Produto 6",
-      preco: 60.0,
-      imagem_url: "/produtos/UPS CyberPower interactiva_GreenPower.png",
-    },
-    {
-      id: 7,
-      nome: "Produto 7",
-      preco: 70.0,
-      imagem_url: "/produtos/UPS CyberPower interactiva_GreenPower.png",
-    },
-    {
-      id: 8,
-      nome: "Produto 8",
-      preco: 80.0,
-      imagem_url: "/produtos/UPS CyberPower interactiva_GreenPower.png",
-    },
-    {
-      id: 9,
-      nome: "Produto 9",
-      preco: 90.0,
-      imagem_url: "/produtos/UPS CyberPower interactiva_GreenPower.png",
-    },
-    {
-      id: 10,
-      nome: "Produto 10",
-      preco: 100.0,
-      imagem_url: "/produtos/Desktop_Lenovo.jpg",
-    },
-  ];
-
   const produtosMaisVendidos = (await fetchProdutosMaisVendidos()) as Produto[];
 
   return (
@@ -87,11 +25,11 @@ export default async function Home() {
           Produtos TOP
         </h1>*/}
         <SeccaoMarker>Produtos TOP</SeccaoMarker>
-        <div className="grid grid-cols-4 gap-4 mt-5">
-          {produtos.map((prod) => (
+        <ProdutoListaLg>
+          {produtosMaisVendidos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
-        </div>
+        </ProdutoListaLg>
       </div>
 
       {/*Produtos em Promoção */}
@@ -106,11 +44,11 @@ export default async function Home() {
           Produtos Mais Vendidos
         </h1>*/}
         <SeccaoMarker>Produtos Mais Vendidos</SeccaoMarker>
-        <div className="grid grid-cols-4 gap-4 mt-5">
+        <ProdutoListaLg>
           {produtosMaisVendidos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
-        </div>
+        </ProdutoListaLg>
       </div>
 
       <div>

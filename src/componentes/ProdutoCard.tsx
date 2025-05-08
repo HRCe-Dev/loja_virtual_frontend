@@ -1,6 +1,8 @@
 import { Produto } from "@/types/Produto";
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
+import { BtnListaDesejo } from "./Buttons/ButtonListaDesejo";
+import { BtnAdicionarCarrinho } from "./Buttons/ButtonCarrinho";
 
 interface ProdutoCardProps {
   produto: Produto;
@@ -8,35 +10,49 @@ interface ProdutoCardProps {
 
 const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
   return (
-    <div className="w-64 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300">
-      {/* Espaço para imagem do produto (não mostrada no exemplo) */}
-      <div className="h-40 bg-gray-100 flex items-center justify-center">
-        {/*<span className="text-gray-400">Imagem do produto</span> */}
+    <Link
+      href={"/produto/" + produto.id}
+      className="group relative w-64 px-3 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300"
+    >
+      {/* Botão de Like (Lista de Desejo) */}
+      <BtnListaDesejo produto_id={produto.id} tipo={2} />
+
+      {/*Imagem */}
+      <div className="relative w-full h-48 overflow-hidden">
         <Image
           src={produto.imagem_url}
           alt={produto.nome}
-          width={800}
-          height={800}
+          fill
+          className="object-cover"
         />
       </div>
 
-      <div className="p-4">
-        {/* Nome do produto */}
-        <h2 className="text-lg font-bold text-gray-800 mb-1 uppercase">
-          {produto.nome}
-        </h2>
-        {/* Preço */}
-        <p className="text-2xl font-bold text-gray-900 mb-4">
-          {produto.preco}
-          <span className="text-sm">$00CVE</span>
-        </p>
+      {/* indicação da loja */}
+      <p className="text-sm font-bold text-[#FB943E]">Vendido por HRCe</p>
 
-        {/* Botão de compra */}
-        <button className="w-full bg-[#FB943E] hover:bg-orange-800 text-white font-bold py-2 px-4 rounded transition-colors duration-300 uppercase">
-          Comprar agora
+      {/*Preco */}
+      <h3 className="text-2xl mt-2 font-bold ">
+        {produto.preco}
+        <span className="text-sm">$CVE</span>
+      </h3>
+
+      {/*nome + descricao do produto */}
+      <h2 className="text-xl text-gray-500 line-clamp-2 min-h-[3.5rem]">
+        {produto.nome}
+      </h2>
+
+      {/*btn de comprar agora */}
+      <div>
+        <button className="w-full mt-2 bg-[#FB943E] text-white py-2 px-3 rounded-xl hover:bg-orange-200 hover:text-gray-500">
+          Comprar Agora
         </button>
       </div>
-    </div>
+
+      {/*btn de adicionar ao carrinho */}
+      <div>
+        <BtnAdicionarCarrinho produto_id={produto.id} />
+      </div>
+    </Link>
   );
 };
 

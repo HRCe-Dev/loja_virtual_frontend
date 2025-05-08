@@ -51,7 +51,7 @@ const Header = () => {
           <Link href="/login" className="text-blue-500 text-sm hover:underline">
             Login/SignIn
           </Link>
-          <Link href="/cart">
+          <Link href="/carrinho">
             <ShoppingCart className="text-gray-700" size={22} />
           </Link>
         </nav>
