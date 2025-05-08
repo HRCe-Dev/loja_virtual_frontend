@@ -1,4 +1,4 @@
-import ProdutoCard from "@/componentes/produtoCard2";
+import ProdutoCard from "@/componentes/ProdutoCard";
 import BannerCarousel from "./BannerCarrosel";
 import { Produto } from "@/types/Produto";
 import fetchProdutosMaisVendidos from "./fetchProdutosMaisVendidos";
@@ -6,12 +6,9 @@ import { NewsletterForm } from "@/componentes/NewsletterForm";
 import MenuCategorias from "@/componentes/MenuCategorias";
 import SeccaoMarker from "./SeccaoMarker";
 import Promocoes from "@/componentes/Promocoes/Promocoes";
-import { Produtos } from "@/util/produtosTeste";
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 
 export default async function Home() {
-  const produtos: Produto[] = Produtos;
-
   const produtosMaisVendidos = (await fetchProdutosMaisVendidos()) as Produto[];
 
   return (
@@ -29,7 +26,7 @@ export default async function Home() {
         </h1>*/}
         <SeccaoMarker>Produtos TOP</SeccaoMarker>
         <ProdutoListaLg>
-          {produtos.map((prod) => (
+          {produtosMaisVendidos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
         </ProdutoListaLg>

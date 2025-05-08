@@ -2,7 +2,6 @@
 
 import { atualizarCarrinho } from "@/app/carrinho/carrinho";
 import { useEffect, useRef, useState } from "react";
-import { boolean } from "zod";
 
 interface seletorProps {
   produto_id: string;
@@ -17,7 +16,6 @@ const SeletorQuantidade: React.FC<seletorProps> = ({
   estoque = 5,
   carrinho = false,
 }) => {
-  const [btnLoading, setBtnLoading] = useState<boolean>(false);
   const [qtd, setQtd] = useState<number>(qtd_);
   const [tempoDeEspera, setTempoDeEspera] = useState<NodeJS.Timeout | null>(
     null

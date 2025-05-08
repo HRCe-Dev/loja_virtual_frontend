@@ -18,6 +18,7 @@ export const obterProdutosCarrinho = async (): Promise<
     const produtos = (await res.json()) as ProdutoCarrinho[];
     return produtos;
   } catch (error) {
+    console.error(error);
     return null;
   }
 };

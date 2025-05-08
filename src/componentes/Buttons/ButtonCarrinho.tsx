@@ -1,7 +1,6 @@
 "use client";
 
 import { adicionarCarrinho, verificarCarrinho } from "@/app/carrinho/carrinho";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 interface btnProps {

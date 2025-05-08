@@ -5,13 +5,8 @@ import {
   adicionarListaDesejo,
   verifyInListaDesejo,
 } from "@/app/listadesejo/listadesejo";
-import { Heart, Trash } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
-
-interface btnProps {
-  onClick: () => void;
-  title?: string;
-}
 
 interface btnLikeProps {
   produto_id: string;

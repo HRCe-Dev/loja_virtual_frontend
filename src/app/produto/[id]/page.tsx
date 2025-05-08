@@ -1,7 +1,7 @@
 import ProductGallery from "@/componentes/PhotoGallery";
 import fetchProductDetalhes from "./produtoDetalhes.api";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
-import { Heart, ShoppingCart, Truck, Repeat } from "lucide-react";
+import { ShoppingCart, Truck, Repeat } from "lucide-react";
 import {
   ButtonLaranja,
   ButtonNoBg,
@@ -11,11 +11,15 @@ import DescricaoProduto from "./DescricaoProduto";
 import SeccaoMarker from "@/app/(home)/SeccaoMarker";
 import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
 import { Produto } from "@/types/Produto";
-import ProdutoCard from "@/componentes/produtoCard2";
+import ProdutoCard from "@/componentes/ProdutoCard";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
 
-const ProdutoPage = async ({ params }: { params: { id: string } }) => {
-  const produto_id = params.id;
+interface PageProps {
+  id: string;
+}
+
+const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
+  const { id: produto_id } = await params;
   const produto = await fetchProductDetalhes(produto_id);
   const ProdutosSemelhantes: Produto[] = await fetchProdutosMaisVendidos();
 
@@ -57,7 +61,7 @@ const ProdutoPage = async ({ params }: { params: { id: string } }) => {
               </div>
 
               <div className="flex flex-row  gap-2 items-center mb-2">
-                <SeletorQuantidade />
+                <SeletorQuantidade produto_id={produto.id} />
                 <p className="text-sm font-bold">
                   {produto.estoque || 1} Disponível
                 </p>

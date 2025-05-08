@@ -1,5 +1,5 @@
 import fetchProdutosLista from "@/api/fetchProdutosLista";
-import { Carrinho, Produto, ProdutoCarrinho } from "@/types/Produto";
+import { Carrinho, ProdutoCarrinho } from "@/types/Produto";
 
 const ITEM = "carrinho";
 

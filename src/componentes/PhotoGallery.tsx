@@ -27,12 +27,6 @@ interface productGaleryProps {
 }
 
 const ProductGallery: React.FC<productGaleryProps> = ({ imagem_url, nome }) => {
-  const images = [
-    "/images/product-1.png",
-    "/images/product-2.png",
-    "/images/product-3.png",
-    "/images/product-4.png",
-  ];
 
   // Placeholder image URL from Pexels - blue geometric shape similar to the design
   //const placeholderImage =

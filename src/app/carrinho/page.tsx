@@ -1,7 +1,6 @@
 "use client";
 
-import { Produto, ProdutoCarrinho } from "@/types/Produto";
-import { Produtos } from "@/util/produtosTeste";
+import { ProdutoCarrinho } from "@/types/Produto";
 import { ShoppingCart } from "lucide-react";
 import CarrinhoProdutoCart from "./CarrinhoProdutoCart";
 import { useEffect, useState } from "react";
@@ -9,7 +8,7 @@ import { obterProdutosCarrinho, removerCarrinho } from "./carrinho";
 import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
 
-export default function carrinhoPage() {
+export default function CarrinhoPage() {
   const [btnLoading, setbtnLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);

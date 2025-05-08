@@ -1,5 +1,5 @@
 interface descripProps {
-  descricaoText: string | null;
+  descricaoText?: string | null;
 }
 
 const DescricaoProduto: React.FC<descripProps> = ({ descricaoText }) => {
