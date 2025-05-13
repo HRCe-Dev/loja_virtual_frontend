@@ -1,23 +1,22 @@
-"use client";
+'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckout } from '@/context/CheckoutContext';
-import AccountForm from '@/app/checkout/Form/AccountForm';
+import DeliveryForm from '@/app/checkout/Form/DeliveryForm';
 import Wrapper from '@/app/checkout/Form/Wrapper';
 
-export default function CheckoutIndex() {
+export default function DeliveryPage() {
   const { data } = useCheckout();
   const router = useRouter();
 
   useEffect(() => {
-    // Se usuário já cadastrou dados, pula direto para entrega
-    if (data.user) router.push('/checkout/entrega');
+    // Se não tem usuário, volta para cadastro
+    if (!data.user) router.push('/checkout');
   }, [data.user, router]);
 
   return (
-    <Wrapper step={1}>
-      <AccountForm />
+    <Wrapper step={2}>
+      <DeliveryForm />
     </Wrapper>
   );
 }
-

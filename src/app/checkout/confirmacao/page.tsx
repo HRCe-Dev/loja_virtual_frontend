@@ -1,23 +1,23 @@
-"use client";
+'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckout } from '@/context/CheckoutContext';
-import AccountForm from '@/app/checkout/Form/AccountForm';
+import Confirmation from '@/app/checkout/Form/ConfirmationForm';
 import Wrapper from '@/app/checkout/Form/Wrapper';
 
-export default function CheckoutIndex() {
+export default function ConfirmationPage() {
   const { data } = useCheckout();
   const router = useRouter();
 
   useEffect(() => {
-    // Se usuário já cadastrou dados, pula direto para entrega
-    if (data.user) router.push('/checkout/entrega');
-  }, [data.user, router]);
+    if (!data.paymentMethod) {
+      router.push('/checkout/pagamento');
+    }
+  }, [data.paymentMethod, router]);
 
   return (
-    <Wrapper step={1}>
-      <AccountForm />
+    <Wrapper step={4}>
+      <Confirmation />
     </Wrapper>
   );
 }
-
