@@ -2,6 +2,7 @@ import ProductGallery from "@/componentes/PhotoGallery";
 import fetchProductDetalhes from "./produtoDetalhes.api";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
 import { ShoppingCart, Truck, Repeat } from "lucide-react";
+import AvaliacoesPage from "./AvaliacoesPage";
 import {
   ButtonLaranja,
   ButtonNoBg,
@@ -120,6 +121,10 @@ const ProdutoPage  = async ({ params }: { params: Promise<PageProps> }) => {
               <ProdutoCard key={prod.id} produto={prod} />
             ))}
         </div>
+      </div>
+      <SeccaoMarker>Avaliações do Porduto</SeccaoMarker>
+      <div className="mx-auto text-center mt-10">
+        <AvaliacoesPage />
       </div>
     </div>
   );
