@@ -1,18 +1,14 @@
-'use client';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useCheckout } from '@/context/CheckoutContext';
-import DeliveryForm from '@/app/checkout/Form/DeliveryForm';
-import Wrapper from '@/app/checkout/Form/Wrapper';
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import DeliveryForm from "@/app/checkout/Form/DeliveryForm";
+import Wrapper from "@/app/checkout/Form/Wrapper";
+import useVerifyLogin from "../UseVerifyLogin";
 
 export default function DeliveryPage() {
-  const { data } = useCheckout();
-  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    // Se não tem usuário, volta para cadastro
-    if (!data.user) router.push('/checkout');
-  }, [data.user, router]);
+  useVerifyLogin(setLoading, []);
 
   return (
     <Wrapper step={2}>

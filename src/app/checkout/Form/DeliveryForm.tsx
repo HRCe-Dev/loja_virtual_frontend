@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { useCheckout } from "@/context/CheckoutContext";
 
 const schema = z.object({
   island: z.string().min(1, "Obrigatório"),
@@ -17,7 +16,6 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function DeliveryForm() {
-  const { setData } = useCheckout();
   const router = useRouter();
 
   const {
@@ -27,15 +25,6 @@ export default function DeliveryForm() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FormData) => {
-    setData({
-      address: {
-        country: "Cabo Verde",
-        island: data.island,
-        city: data.city,
-        zone: data.zone,
-      },
-      deliveryMethod: data.deliveryMethod,
-    });
     router.push("/checkout/pagamento");
   };
 
@@ -49,10 +38,17 @@ export default function DeliveryForm() {
       {/* Endereço */}
       <div className="border border-gray-300 p-4 rounded mb-6">
         <label className="block text-sm mb-1">País</label>
-        <input className="input w-full border border-gray-300 rounded-md px-3 py-2 " value="Cabo Verde" readOnly />
+        <input
+          className="input w-full border border-gray-300 rounded-md px-3 py-2 "
+          value="Cabo Verde"
+          readOnly
+        />
 
         <label className="block text-sm mt-4 mb-1">Ilha</label>
-        <select {...register("island")} className="input w-full border border-gray-300 rounded-md px-3 py-2 ">
+        <select
+          {...register("island")}
+          className="input w-full border border-gray-300 rounded-md px-3 py-2 "
+        >
           <option value="">Selecione a ilha</option>
           <option value="Santiago">Santiago</option>
           <option value="São Vicente">São Vicente</option>
@@ -61,7 +57,10 @@ export default function DeliveryForm() {
         <p className="text-red-500 text-sm">{errors.island?.message}</p>
 
         <label className="block text-sm mt-4 mb-1">Cidade</label>
-        <select {...register("city")} className="input w-full border border-gray-300 rounded-md px-3 py-2 ">
+        <select
+          {...register("city")}
+          className="input w-full border border-gray-300 rounded-md px-3 py-2 "
+        >
           <option value="">Selecione a cidade</option>
           <option value="Praia">Praia</option>
           {/* ...mais opções */}
@@ -69,7 +68,10 @@ export default function DeliveryForm() {
         <p className="text-red-500 text-sm">{errors.city?.message}</p>
 
         <label className="block text-sm mt-4 mb-1">Zona</label>
-        <select {...register("zone")} className="input w-full  border border-gray-300 rounded-md px-3 py-2">
+        <select
+          {...register("zone")}
+          className="input w-full  border border-gray-300 rounded-md px-3 py-2"
+        >
           <option value="">Selecione a zona</option>
           <option value="tarrafal">Tarrafal</option>
           {/* ...opções dinâmicas */}
@@ -135,13 +137,13 @@ export default function DeliveryForm() {
         </p>
       </div>
       <div className="flex justify-end mt-6">
-      {/* Botão */}
-      <button
-        type="submit"
-        className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-1/2 py-2 rounded-md mt-6 transition "
-      >
-        Continuar para Pagamento →
-      </button>
+        {/* Botão */}
+        <button
+          type="submit"
+          className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-1/2 py-2 rounded-md mt-6 transition "
+        >
+          Continuar para Pagamento →
+        </button>
       </div>
     </form>
   );

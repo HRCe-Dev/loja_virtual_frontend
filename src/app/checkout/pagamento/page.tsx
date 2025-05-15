@@ -1,19 +1,16 @@
-'use client';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useCheckout } from '@/context/CheckoutContext';
-import PaymentForm from '@/app/checkout/Form/PaymentForm';
-import Wrapper from '@/app/checkout/Form/Wrapper';
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCheckout } from "@/context/CheckoutContext";
+import PaymentForm from "@/app/checkout/Form/PaymentForm";
+import Wrapper from "@/app/checkout/Form/Wrapper";
+import useVerifyLogin from "../UseVerifyLogin";
 
 export default function PaymentPage() {
-  const { data } = useCheckout();
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!data.address || !data.deliveryMethod) {
-      router.push('/checkout/entrega');
-    }
-  }, [data.address, data.deliveryMethod, router]);
+  useVerifyLogin(setLoading, []);
 
   return (
     <Wrapper step={3} wide>

@@ -1,36 +1,39 @@
-'use client';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useRouter } from 'next/navigation';
-import { useCheckout } from '@/context/CheckoutContext';
+"use client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
 
-const schema = z.object({
-  firstName: z.string().min(1, 'Obrigatório'),
-  lastName: z.string().min(1, 'Obrigatório'),
-  phone: z.string().min(8, 'Telefone inválido'),
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'Mínimo 6 caracteres'),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'Senhas não coincidem',
-  path: ['confirmPassword'],
-});
+const schema = z
+  .object({
+    firstName: z.string().min(1, "Obrigatório"),
+    lastName: z.string().min(1, "Obrigatório"),
+    phone: z.string().min(8, "Telefone inválido"),
+    email: z.string().email("Email inválido"),
+    password: z.string().min(6, "Mínimo 6 caracteres"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Senhas não coincidem",
+    path: ["confirmPassword"],
+  });
 
 type FormData = z.infer<typeof schema>;
 
 export default function AccountForm() {
-  const { setData } = useCheckout();
   const router = useRouter();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
   const onSubmit = (data: FormData) => {
     const { confirmPassword, ...user } = data;
-    setData({ user });
-    router.push('/checkout/entrega');
+    router.push("/checkout/entrega");
   };
 
   return (
@@ -44,26 +47,30 @@ export default function AccountForm() {
         <div className="w-1/2">
           <label className="block text-sm mb-1">Primeiro Nome</label>
           <input
-            {...register('firstName')}
+            {...register("firstName")}
             className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
           />
-          <p className="text-red-500 text-sm mt-1">{errors.firstName?.message}</p>
+          <p className="text-red-500 text-sm mt-1">
+            {errors.firstName?.message}
+          </p>
         </div>
 
         <div className="w-1/2">
           <label className="block text-sm mb-1">Apelido</label>
           <input
-            {...register('lastName')}
+            {...register("lastName")}
             className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
           />
-          <p className="text-red-500 text-sm mt-1">{errors.lastName?.message}</p>
+          <p className="text-red-500 text-sm mt-1">
+            {errors.lastName?.message}
+          </p>
         </div>
       </div>
 
       <div className="mt-4">
         <label className="block text-sm mb-1">Telefone</label>
         <input
-          {...register('phone')}
+          {...register("phone")}
           className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
         />
         <p className="text-red-500 text-sm mt-1">{errors.phone?.message}</p>
@@ -72,7 +79,7 @@ export default function AccountForm() {
       <div className="mt-4">
         <label className="block text-sm mb-1">Email</label>
         <input
-          {...register('email')}
+          {...register("email")}
           className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
         />
         <p className="text-red-500 text-sm mt-1">{errors.email?.message}</p>
@@ -82,7 +89,7 @@ export default function AccountForm() {
         <label className="block text-sm mb-1">Palavra-passe</label>
         <input
           type="password"
-          {...register('password')}
+          {...register("password")}
           className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
         />
         <p className="text-red-500 text-sm mt-1">{errors.password?.message}</p>
@@ -92,10 +99,12 @@ export default function AccountForm() {
         <label className="block text-sm mb-1">Confirmar Palavra-passe</label>
         <input
           type="password"
-          {...register('confirmPassword')}
+          {...register("confirmPassword")}
           className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
         />
-        <p className="text-red-500 text-sm mt-1">{errors.confirmPassword?.message}</p>
+        <p className="text-red-500 text-sm mt-1">
+          {errors.confirmPassword?.message}
+        </p>
       </div>
 
       <button

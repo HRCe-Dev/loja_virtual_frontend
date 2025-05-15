@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { useCheckout } from "@/context/CheckoutContext";
 import { FaUser, FaPhone, FaMapMarkerAlt, FaCreditCard } from "react-icons/fa";
 import { HiOutlinePencil } from "react-icons/hi2";
 
@@ -16,7 +15,6 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function PaymentForm() {
-  const { setData, data } = useCheckout();
   const router = useRouter();
 
   const {
@@ -26,12 +24,14 @@ export default function PaymentForm() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (formData: FormData) => {
-    setData({ paymentMethod: formData.paymentMethod });
     router.push("/checkout/confirmacao");
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-7xl mx-auto px-4 md:px-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full max-w-7xl mx-auto px-4 md:px-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-6"
+    >
       {/* Coluna esquerda */}
       <div className="md:col-span-2 space-y-3 ">
         {/* Dados de Entrega */}
@@ -39,20 +39,27 @@ export default function PaymentForm() {
           <div className="space-y-2 text-sm text-gray-700">
             <div className="flex items-center gap-2">
               <FaUser className="text-gray-500" />
-              <span>{data.user?.firstName} {data.user?.lastName}</span>
+              <span>
+                {"@Primeiro Nome"} {"@Aplido"}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <FaPhone className="text-gray-500" />
-              <span>{data.user?.phone}</span>
+              <span>{"@+238 595 42 55"}</span>
             </div>
             <div className="flex items-center gap-2">
               <FaMapMarkerAlt className="text-gray-500" />
               <span>
-                {data.address?.zone}, {data.address?.city}, {data.address?.island}
+                {"data.address?.zone"}, {"data.address?.city"},{" "}
+                {"data.address?.island"}
               </span>
             </div>
           </div>
-          <button type="button" onClick={() => router.push("/checkout/entrega")} className="text-orange-500 text-sm flex items-start gap-1">
+          <button
+            type="button"
+            onClick={() => router.push("/checkout/entrega")}
+            className="text-orange-500 text-sm flex items-start gap-1"
+          >
             <HiOutlinePencil /> Editar
           </button>
         </div>
@@ -63,7 +70,11 @@ export default function PaymentForm() {
 
           <label className="flex items-center justify-between border border-gray-300 rounded p-3 cursor-pointer">
             <div className="flex items-center gap-2">
-              <input type="radio" value="vinti4" {...register("paymentMethod")} />
+              <input
+                type="radio"
+                value="vinti4"
+                {...register("paymentMethod")}
+              />
               <FaCreditCard className="text-orange-500" />
               <span>Vinti4</span>
             </div>
@@ -71,12 +82,18 @@ export default function PaymentForm() {
 
           <label className="flex items-center justify-between border border-gray-300 rounded p-3 cursor-pointer">
             <div className="flex items-center gap-2">
-              <input type="radio" value="transfer" {...register("paymentMethod")} />
+              <input
+                type="radio"
+                value="transfer"
+                {...register("paymentMethod")}
+              />
               <span>Transferência Bancária</span>
             </div>
           </label>
 
-          <p className="text-red-500 text-sm">{errors.paymentMethod?.message}</p>
+          <p className="text-red-500 text-sm">
+            {errors.paymentMethod?.message}
+          </p>
         </div>
       </div>
 
@@ -98,7 +115,7 @@ export default function PaymentForm() {
           <div className="text-gray-500 text-xs">1 x 2.000$00</div>
         </div>
 
-        <hr  className="border-t border-gray-300"/>
+        <hr className="border-t border-gray-300" />
 
         <div className="text-sm text-gray-700 space-y-1">
           <div className="flex justify-between">
@@ -115,7 +132,7 @@ export default function PaymentForm() {
           </div>
         </div>
 
-        <hr className="border-t border-gray-300"/>
+        <hr className="border-t border-gray-300" />
 
         <div className="flex justify-between font-semibold">
           <span>Total</span>
