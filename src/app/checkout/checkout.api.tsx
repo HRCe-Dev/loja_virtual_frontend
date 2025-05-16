@@ -4,6 +4,7 @@ import { fetchWithAuth } from "@/api/fetch_auth";
 import { url } from "@/api/url";
 import { MetodoEnvio } from "@/types/MetodoEnvioTypes";
 import { useEffect } from "react";
+import { obterCarrinho } from "../carrinho/carrinho";
 
 //obter metodos de envio
 export function useGetMetodosEnvio(
@@ -35,14 +36,21 @@ export function useGetMetodosEnvio(
   }, dependencies);
 }
 
-export async function realizarCheckout(): Promise<string | null> {
+export async function realizarCheckout(pedidoData: {
+  endereco_id: number;
+  metodo_entrega_id: string;
+}): Promise<string | null> {
   try {
+    console.log(JSON.stringify(pedidoData));
+
+    const carrinho = obterCarrinho();
+
     const res = await fetchWithAuth(url + "protected/checkout", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ nome: "Gabriel" }),
+      body: JSON.stringify({ ...pedidoData, itens_pedido: carrinho }),
     });
 
     const data = await res.json();

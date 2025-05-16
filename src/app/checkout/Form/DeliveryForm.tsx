@@ -36,7 +36,10 @@ export default function DeliveryForm() {
 
     alert(JSON.stringify(data));
 
-    await realizarCheckout();
+    await realizarCheckout({
+      endereco_id: 1,
+      metodo_entrega_id: data.deliveryMethod,
+    });
     router.push("/checkout/pagamento");
   };
 

@@ -3,7 +3,7 @@ import { Carrinho, ProdutoCarrinho } from "@/types/Produto";
 
 const ITEM = "carrinho";
 
-const obterCarrinho = (): Carrinho[] => {
+export const obterCarrinho = (): Carrinho[] => {
   //obter carrinho
   const carrinhoStr = localStorage.getItem(ITEM);
   const carrinho: Carrinho[] = carrinhoStr ? JSON.parse(carrinhoStr) : [];
