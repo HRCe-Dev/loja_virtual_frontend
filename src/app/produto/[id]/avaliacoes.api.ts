@@ -1,3 +1,4 @@
+import { fetchWithAuth } from "@/api/fetch_auth";
 import { url } from "@/api/url";
 import { Avaliacoes } from "@/types/AvaliacoesTypes";
 import { useEffect } from "react";
@@ -20,7 +21,7 @@ export const useGetAvaliacoes = (
         const data = (await res.json()) as Avaliacoes;
 
         if (res.ok) {
-          alert(JSON.stringify(data));
+          //alert(JSON.stringify(data));
           setAvaliacoes(data);
         } else {
           throw Error("Erro em obter avaliações");
@@ -39,7 +40,39 @@ export const useGetAvaliacoes = (
 
 //carregar mais avaliacoes
 
-//criar avaliacao
+//fazer avaliacao
+export const fazerAvaliacao = async (
+  produto_id: string,
+  estrelas: number,
+  comentario?: string
+): Promise<boolean> => {
+  try {
+    const res = await fetchWithAuth(url + "protected/avaliacao", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        produto_id,
+        estrelas,
+        comentario,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (res.status === 201) {
+      alert(JSON.stringify(data));
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error(error);
+    alert("Erro em enviar avaliação");
+    return false;
+  }
+};
 
 //responder avalicao
 

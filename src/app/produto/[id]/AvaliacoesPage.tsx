@@ -2,7 +2,7 @@
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import AvaliarModal from "./AvaliacoesModal";
-import { useGetAvaliacoes } from "./avaliacoes.api";
+import { fazerAvaliacao, useGetAvaliacoes } from "./avaliacoes.api";
 import { useParams } from "next/navigation";
 import { Avaliacoes } from "@/types/AvaliacoesTypes";
 import formatDataOuHora from "@/util/formatarTimeStamp";
@@ -25,39 +25,16 @@ export default function AvaliacoesPage() {
     { stars: 1, percent: 1 },
   ];
 
-  const [reviews, setReviews] = useState([
-    {
-      user: "Maria Silva",
-      date: "03 Mai, 2025",
-      rating: 5,
-      text: "Cliente foi impecável. Recomendo fortemente!",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-      likes: 0,
-    },
-    {
-      user: "João Santos",
-      date: "01 Mai, 2025",
-      rating: 4,
-      text: "Muito satisfeito com a compra.",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-      likes: 89,
-    },
-  ]);
+  const handlePublicar = async (rating: number, message: string) => {
+    const publicar = await fazerAvaliacao(produto_id, rating, message);
+    //setReviews((prev) => [novaReview, ...prev]);
 
-  const handlePublicar = (rating: number, message: string) => {
-    const novaReview = {
-      user: "Você",
-      date: new Date().toLocaleDateString("pt-PT"),
-      rating,
-      text: message,
-      avatar: "https://randomuser.me/api/portraits",
-      likes: 0,
-    };
-    setReviews((prev) => [novaReview, ...prev]);
+    if (publicar) {
+      //TODO: add na tela
+    }
   };
 
-  const [visible, setVisible] = useState(2);
-
+  //TODO: mostrar nada para nenhuma avaliacao
   return (
     <>
       {avaliacoes && (
@@ -69,7 +46,7 @@ export default function AvaliacoesPage() {
                 Avaliação Geral
               </h1>
               <div className="flex gap-4">
-                <p className="text-4xl font-bold">4.8</p>
+                <p className="text-4xl font-bold">{avaliacoes.media}</p>
                 <div className="text-sm text-gray-500 mt-2">
                   <div>
                     <div className="flex text-yellow-400 text-sm">
@@ -164,16 +141,14 @@ export default function AvaliacoesPage() {
           </div>
 
           {/* Botão Carregar Mais */}
-          {visible < reviews.length && (
-            <div className="flex justify-center">
-              <button
-                className="bg-orange-400 text-white px-6 py-2 rounded hover:bg-orange-500 transition text-sm font-medium"
-                onClick={() => setVisible((prev) => prev + 2)}
-              >
-                Carregar mais avaliações
-              </button>
-            </div>
-          )}
+          <div className="flex justify-center">
+            <button
+              className="bg-orange-400 text-white px-6 py-2 rounded hover:bg-orange-500 transition text-sm font-medium"
+              onClick={() => {}}
+            >
+              Carregar mais avaliações
+            </button>
+          </div>
         </section>
       )}
     </>
