@@ -11,6 +11,7 @@ export async function fetchWithAuth(
     "Content-Type": "application/json",
   };
 
+  //TODO: colocar url/protected logo aqui
   const response = await fetch(input, {
     ...options,
     headers,
