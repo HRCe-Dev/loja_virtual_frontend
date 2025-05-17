@@ -2,6 +2,7 @@ import ProductGallery from "@/componentes/PhotoGallery";
 import fetchProductDetalhes from "./produtoDetalhes.api";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
 import { ShoppingCart, Truck, Repeat } from "lucide-react";
+import AvaliacoesPage from "./AvaliacoesPage";
 import {
   ButtonLaranja,
   ButtonNoBg,
@@ -13,25 +14,21 @@ import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
 import { Produto } from "@/types/Produto";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
-import {url } from "@/api/url"
+import { url } from "@/api/url";
 
 interface PageProps {
   id: string;
 }
 
-
 export async function generateStaticParams() {
-  const produtos = await fetch(url+"produtos/all") 
-    .then(res => res.json());
+  const produtos = await fetch(url + "produtos/all").then((res) => res.json());
 
   return produtos.map((produto: { id: number | string }) => ({
     id: produto.id.toString(),
   }));
 }
 
-
-
-const ProdutoPage  = async ({ params }: { params: Promise<PageProps> }) => {
+const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
   const { id: produto_id } = await params;
   const produto = await fetchProductDetalhes(produto_id);
   const ProdutosSemelhantes: Produto[] = await fetchProdutosMaisVendidos();
@@ -119,6 +116,12 @@ const ProdutoPage  = async ({ params }: { params: Promise<PageProps> }) => {
             ProdutosSemelhantes.slice(0, 4).map((prod) => (
               <ProdutoCard key={prod.id} produto={prod} />
             ))}
+        </div>
+      </div>
+      <div className="my-10">
+        <SeccaoMarker>Avaliações do Produto</SeccaoMarker>
+        <div className="mx-auto text-center">
+          <AvaliacoesPage />
         </div>
       </div>
     </div>
