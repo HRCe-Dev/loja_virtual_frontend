@@ -1,6 +1,7 @@
 "use client";
 
 import { adicionarCarrinho, verificarCarrinho } from "@/app/carrinho/carrinho";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface btnProps {
@@ -10,6 +11,7 @@ interface btnProps {
 export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
   const [noCarrinho, setNoCarrinho] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     const verifyCarrinho = async () => {
@@ -51,6 +53,7 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
         onClick={(e: React.MouseEvent) => {
           e.stopPropagation();
           e.preventDefault();
+          router.push("/checkout");
         }}
       >
         {/*TODO: Corrigir isto, nao pode ter link dentro de link */}
