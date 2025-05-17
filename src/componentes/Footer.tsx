@@ -16,8 +16,8 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex flex-col items-center justify-center  w-full ">
-              <Link href="https://hrcelda.com">
+            <div className="flex flex-col gap-2  w-full ">
+              <Link href="https://hrcelda.com" className="flex">
                 <Image
                   src="/HRC - Branca.svg"
                   alt="hrce logo"

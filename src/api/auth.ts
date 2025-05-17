@@ -5,6 +5,10 @@ export const verifyAuth = async (): Promise<boolean> => {
   try {
     const out = localStorage.getItem("token") !== null;
 
+    if (!out) {
+      window.location.href = "/login?next=checkout-entrega";
+    }
+
     return out;
   } catch (error) {
     console.error(error);
