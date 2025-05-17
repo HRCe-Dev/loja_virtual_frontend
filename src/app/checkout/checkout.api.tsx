@@ -5,6 +5,7 @@ import { url } from "@/api/url";
 import { MetodoEnvio } from "@/types/MetodoEnvioTypes";
 import { useEffect } from "react";
 import { obterCarrinho } from "../carrinho/carrinho";
+import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 
 //obter metodos de envio
 export function useGetMetodosEnvio(
@@ -57,12 +58,74 @@ export async function realizarCheckout(pedidoData: {
     alert(JSON.stringify(data));
 
     if ((await res.status) === 201) {
-      return "id d checkout";
+      return data.pedido_id;
     }
 
     return null;
   } catch (error) {
     console.error(error);
     return null;
+  }
+}
+
+export function useGetPedidoDados(
+  pedido_id: string,
+  setPedidoData: React.Dispatch<React.SetStateAction<PedidoDados1 | null>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+  dependencies: React.DependencyList = []
+) {
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+
+      const res = await fetchWithAuth(
+        url + "protected/checkout/meuspedidos/" + pedido_id
+      );
+
+      if (!res.ok) {
+        setError("Erro em obter dados do pedido");
+      }
+
+      const dados: PedidoDados1 = await res.json();
+
+      setPedidoData(dados);
+
+      alert(JSON.stringify(dados));
+
+      setLoading(false);
+    };
+
+    getData();
+  }, dependencies);
+}
+
+export async function pagarPedido(
+  pedido_id: string,
+  metodo_pagamento: string
+): Promise<boolean> {
+  try {
+    const res = await fetchWithAuth(
+      url + "protected/checkout/pagamento/" + pedido_id,
+      {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ metodo_pagamento }),
+      }
+    );
+
+    const data = await res.json();
+
+    alert(JSON.stringify(data));
+
+    if (res.status === 201) {
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    return false;
   }
 }
