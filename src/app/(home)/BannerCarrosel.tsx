@@ -8,7 +8,7 @@ const slides = [
   {
     id: 1,
     imageUrl:
-      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747475118/hrce/home_banners/banner01.jpg",
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747475118/hrce/home_banners/banner1.jpg",
     alt: "Banner 1",
   },
   {
