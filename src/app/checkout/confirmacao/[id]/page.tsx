@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCheckout } from "@/context/CheckoutContext";
 import Confirmation from "@/app/checkout/Form/ConfirmationForm";
 import Wrapper from "@/app/checkout/Form/Wrapper";
-import useVerifyLogin from "../UseVerifyLogin";
+import useVerifyLogin from "../../UseVerifyLogin";
 
 export default function ConfirmationPage() {
   const [loading, setLoading] = useState<boolean>(false);

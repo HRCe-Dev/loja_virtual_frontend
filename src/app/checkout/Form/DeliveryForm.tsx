@@ -34,8 +34,6 @@ export default function DeliveryForm() {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
 
-    alert(JSON.stringify(data));
-
     const pedido_id = await realizarCheckout({
       endereco_id: 1,
       metodo_entrega_id: Number(data.deliveryMethod),
@@ -43,6 +41,7 @@ export default function DeliveryForm() {
 
     if (pedido_id) router.push("/checkout/pagamento/" + pedido_id);
 
+    //TODO: mostrar erros
     setError("Erro em realizar checkout");
   };
 

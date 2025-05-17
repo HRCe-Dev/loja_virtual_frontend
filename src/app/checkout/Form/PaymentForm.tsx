@@ -37,7 +37,7 @@ export default function PaymentForm() {
     setLoading(true);
 
     if (await pagarPedido(pedido_id, formData.paymentMethod))
-      router.push("/checkout/confirmacao");
+      router.push("/checkout/confirmacao/" + pedido_id);
 
     setLoading(false);
     setError("Erro em efectuar pagamento");
@@ -143,7 +143,7 @@ export default function PaymentForm() {
               </div>
               <div className="flex justify-between">
                 <span>IVA (15%)</span>
-                <span>{pedidoData.total * 0.15}$00 CVE</span>
+                <span>0$00 CVE</span>
               </div>
             </div>
 
@@ -152,7 +152,7 @@ export default function PaymentForm() {
             <div className="flex justify-between font-semibold">
               <span>Total</span>
               <span>
-                {(pedidoData.total * 1.15 + pedidoData.custo_envio).toFixed(0)}
+                {(pedidoData.total + pedidoData.custo_envio).toFixed(0)}
                 $00 CVE
               </span>
             </div>
