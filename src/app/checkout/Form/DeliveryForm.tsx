@@ -38,10 +38,12 @@ export default function DeliveryForm() {
 
     const pedido_id = await realizarCheckout({
       endereco_id: 1,
-      metodo_entrega_id: data.deliveryMethod,
+      metodo_entrega_id: Number(data.deliveryMethod),
     });
 
-    if (pedido_id) router.push("/checkout/pagamento?pedido_id=" + pedido_id);
+    if (pedido_id) router.push("/checkout/pagamento/" + pedido_id);
+
+    setError("Erro em realizar checkout");
   };
 
   return (

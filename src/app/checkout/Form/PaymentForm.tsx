@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FaUser, FaPhone, FaMapMarkerAlt, FaCreditCard } from "react-icons/fa";
 import { HiOutlinePencil } from "react-icons/hi2";
 import { useState } from "react";
@@ -18,7 +18,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function PaymentForm() {
-  const pedido_id = "3d4fe575-7de1-4a06-97a4-9b3e4f14ee77";
+  const params = useParams();
+  const pedido_id = params?.id as string;
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [pedidoData, setPedidoData] = useState<PedidoDados1 | null>(null);
@@ -117,7 +118,7 @@ export default function PaymentForm() {
 
             <div className="text-sm text-gray-700 space-y-1">
               {pedidoData.itens_pedido.map((prod) => (
-                <div>
+                <div key={prod.produto_id}>
                   <div className="flex justify-between">
                     <span>{prod.nome}</span>
                     <span>{prod.preco * prod.qtd}$00 CVE</span>

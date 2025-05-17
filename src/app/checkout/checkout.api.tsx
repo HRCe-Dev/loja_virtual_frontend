@@ -39,11 +39,9 @@ export function useGetMetodosEnvio(
 
 export async function realizarCheckout(pedidoData: {
   endereco_id: number;
-  metodo_entrega_id: string;
+  metodo_entrega_id: number;
 }): Promise<string | null> {
   try {
-    console.log(JSON.stringify(pedidoData));
-
     const carrinho = obterCarrinho();
 
     const res = await fetchWithAuth(url + "protected/checkout", {
@@ -55,7 +53,6 @@ export async function realizarCheckout(pedidoData: {
     });
 
     const data = await res.json();
-    alert(JSON.stringify(data));
 
     if ((await res.status) === 201) {
       return data.pedido_id;
@@ -64,6 +61,7 @@ export async function realizarCheckout(pedidoData: {
     return null;
   } catch (error) {
     console.error(error);
+    console.log(JSON.stringify(error));
     return null;
   }
 }
@@ -91,7 +89,7 @@ export function useGetPedidoDados(
 
       setPedidoData(dados);
 
-      alert(JSON.stringify(dados));
+      //alert(JSON.stringify(dados));
 
       setLoading(false);
     };
