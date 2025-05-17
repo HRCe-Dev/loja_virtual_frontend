@@ -1,14 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
-  { id: 1, content: "ZONA DE BANNER 1" },
-  { id: 2, content: "ZONA DE BANNER 2" },
-  { id: 3, content: "ZONA DE BANNER 3" },
-  { id: 4, content: "ZONA DE BANNER 4" },
-  { id: 5, content: "ZONA DE BANNER 5" },
+  {
+    id: 1,
+    imageUrl:
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747475118/hrce/home_banners/banner01.jpg",
+    alt: "Banner 1",
+  },
+  {
+    id: 2,
+    imageUrl:
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747475119/hrce/home_banners/banner02.jpg",
+    alt: "Banner 2",
+  },
+  // Adicione mais aqui
 ];
 
 export default function BannerCarousel() {
@@ -24,10 +33,17 @@ export default function BannerCarousel() {
   };
 
   return (
-    <div className="relative w-full mx-auto">
+    <div className="relative w-full mx-auto overflow-hidden">
       {/* Slide */}
-      <div className="rounded-xl h-100 flex items-center justify-center bg-gray-700 text-gray-300 text-3xl font-bold transition-all duration-500">
-        {slides[current].content}
+      <div className="relative w-full h-64 md:h-100 rounded-xl bg-gray-100">
+        <Image
+          src={slides[current].imageUrl}
+          alt={slides[current].alt}
+          fill
+          className="object-cover rounded-xl transition-all duration-500"
+          sizes="100vw"
+          priority
+        />
       </div>
 
       {/* Setas */}
