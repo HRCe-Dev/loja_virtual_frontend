@@ -6,13 +6,13 @@ export default function Cadastro() {
   return (
     <>
       <div className="flex">
-        <div className=" w-1/2 ">
+        <div className="hidden md:block w-1/2 ">
           <BannerCadastro />
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <CadastroForm />
 
-          <p className="text-sm text-gray-700 text-center mt-15">
+          <p className="text-sm text-gray-700 text-center mt-16">
             Já tens uma conta?{" "}
             <Link
               className="text-orange-500 hover:text-orange-900"

@@ -136,7 +136,7 @@ const CadastroForm: React.FC = () => {
               )}
             </div>
 
-            <div className="flex flex-col space-y-1">
+ -           <div className="flex flex-col space-y-1">
               <label className="text-sm text-gray-700 font-semibold">
                 Telefone
               </label>

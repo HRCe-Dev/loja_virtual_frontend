@@ -44,23 +44,23 @@ export default function Login() {
 
   return (
     <>
-      <div className="flex flex-row">
-        <BannerCadastro />
+      <div className="flex flex-col md:flex-row min-h-screen w-full">
+        <div className="w-full md:w-1/2">
+          <BannerCadastro />
+        </div>
+        
 
-        <main className="flex flex-col mx-auto items-center p-6 w-1/2 mt-10 ">
-          <div
-            className="flex flex-col gap-1 my-4
-           "
-          >
+        <main className="w-full md:w-1/2 flex flex-col p-10">
+          <div className="text-center md:text-left my-4">
             <h1 className="text-2xl font-bold">
               Página <span className="text-orange-500"> login</span>
             </h1>
-            <p className="text-sm">Loga para ver suas compras</p>
+            <p className="text-sm text-gray-600">Loga para ver suas compras</p>
           </div>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 w-full max-w-md "
+            className="flex flex-col gap-4 w-full max-w-md mx-auto "
           >
             <div className="flex flex-col space-y-1">
               <label className="text-sm text-gray-700 font-semibold">
@@ -108,21 +108,21 @@ export default function Login() {
 
             <button
               type="submit"
-              className="mt-10 px-6 py-2 w-full rounded-full bg-orange-400 hover:bg-orange-500 text-white font-semibold mx-auto"
+              className="mt-6 px-6 py-2 w-full rounded-full bg-orange-400 hover:bg-orange-500 text-white font-semibold"
             >
               Login
             </button>
           </form>
 
-          <div className="mt-5">
-            <div className="flex items-center w-full">
-              <div className="flex-grow border-t border-gray-200"></div>
+          <div className="mt-6 text-cente">
+            <div className="flex items-center justify-center gap-4 text-gray-500">
+              <div className="border-t border-gray-200"></div>
               <span className="mx-4 text-sm text-gray-500">login via</span>
-              <div className="flex-grow border-t border-gray-200"></div>
+              <div className="flex-grow border-t border-gray-200 w-1/4"></div>
             </div>
 
             {/* Botões sociais */}
-            <div className="flex gap-4 items-center mx-auto justify-center my-4">
+            <div className="flex gap-4 justify-center mt-4">
               <button
                 title="Clique para fazer login com sua conta do Google"
                 className="border border-gray-300 rounded-full p-3 hover:shadow-md transition"

@@ -8,8 +8,10 @@ interface listaProps {
 //mostra todos os dados em children
 export const ProdutoListaLg: React.FC<listaProps> = ({ children }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+    <div className="overflow-x-auto scrollbar-hide">
+    <div className="flex md:grid md:grid-cols-4 gap-4 w-max md:w-full">
       {children}
+    </div>
     </div>
   );
 };
