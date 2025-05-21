@@ -51,6 +51,7 @@ const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
             <div className="w-1/2">
               {/*Galeria */}{" "}
               <ProductGallery
+                produto_id={produto.id}
                 imagem_url={produto.imagem_url}
                 nome={produto.nome}
               />
