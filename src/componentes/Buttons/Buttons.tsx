@@ -19,7 +19,7 @@ export const ButtonLaranja: React.FC<btnProps> = ({
   return (
     <button
       onClick={onClick}
-      className="flex flex-row items-center justify-center gap-2 py-1 px-2 bg-orange-500 text-lg font-bold text-white rounded-lg hover:bg-orange-700"
+      className="flex flex-row items-center justify-center gap-2 md:gap-4 py-1 px-2 md:py-3 md:px-6 bg-orange-500 text-lg font-bold text-white rounded-lg hover:bg-orange-700"
       title={title}
     >
       {children}
@@ -52,7 +52,7 @@ export const ButtonNoBg: React.FC<btnProps> = ({
   return (
     <button
       onClick={onClick}
-      className="flex flex-row  items-center justify-center gap-2 py-1 px-4 font-bold text-sm hover:bg-gray-200 hover:border-1 border-orange-500 rounded-md"
+      className="flex flex-row  items-center justify-center md:gap-4 py-1 px-4 font-bold text-sm sm:text-lg md:text-xl hover:bg-gray-200 hover:border-1 border-orange-500 rounded-md"
       title={title}
     >
       {children}

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-     "node": ">=20.9.0"
+    "node": ">=20.9.0"
   },
   "scripts": {
     "dev": "next dev --turbopack",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@tailwindcss/typography": "^0.5.16",
     "lucide-react": "^0.488.0",
     "next": "15.2.4",
     "react": "^19.0.0",

@@ -50,20 +50,20 @@ export default function Login() {
         </div>
         
 
-        <main className="w-full md:w-1/2 flex flex-col p-10">
-          <div className="text-center md:text-left my-4">
-            <h1 className="text-2xl font-bold">
+        <main className="w-full md:w-1/2 flex flex-col  gap-20 px-8 py-6 md:py-46 md:px-16 lg:px-24 min-h-screen">
+          <div className="text-center md:text-left my-2">
+            <h1 className="text-3xl md:text-4xl font-bold">
               Página <span className="text-orange-500"> login</span>
             </h1>
-            <p className="text-sm text-gray-600">Loga para ver suas compras</p>
+            <p className="text-base md:text-lg text-gray-600 md:mt-4">Loga para ver suas compras</p>
           </div>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 w-full max-w-md mx-auto "
+            className="flex flex-col gap-4 w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto"
           >
             <div className="flex flex-col space-y-1">
-              <label className="text-sm text-gray-700 font-semibold">
+              <label className="text-base md:text-lg text-gray-700 font-semibold">
                 Email
               </label>
               <input
@@ -84,7 +84,7 @@ export default function Login() {
             </div>
 
             <div className="flex flex-col space-y-1">
-              <label className="text-sm text-gray-700 font-semibold">
+              <label className="text-base md:text-lg text-gray-700 font-semibold">
                 Palavra-passe
               </label>
               <input
@@ -108,17 +108,17 @@ export default function Login() {
 
             <button
               type="submit"
-              className="mt-6 px-6 py-2 w-full rounded-full bg-orange-400 hover:bg-orange-500 text-white font-semibold"
+              className="mt-6 px-6 py-2 md:mt-10 md:px-8 md:py-4 w-full rounded-full bg-orange-400 hover:bg-orange-500 text-white font-semibold"
             >
               Login
             </button>
           </form>
 
-          <div className="mt-6 text-cente">
-            <div className="flex items-center justify-center gap-4 text-gray-500">
-              <div className="border-t border-gray-200"></div>
-              <span className="mx-4 text-sm text-gray-500">login via</span>
-              <div className="flex-grow border-t border-gray-200 w-1/4"></div>
+          <div className="mt-6 text-center space-y-4">
+            <div className="flex items-center justify-center text-gray-500 gap-2">
+              <div className="h-px bg-gray-300 flex-grow" />
+              <span className="text-base md:text-lg whitespace-nowrap">Login via</span>
+              <div className="h-px bg-gray-300 flex-grow" />
             </div>
 
             {/* Botões sociais */}
@@ -137,7 +137,7 @@ export default function Login() {
               </button>
             </div>
 
-            <p className="text-sm text-gray-700">
+            <p className="text-base md:text-lg text-gray-700">
               Não tens uma conta?{" "}
               <Link
                 className="text-orange-500 hover:text-orange-900"

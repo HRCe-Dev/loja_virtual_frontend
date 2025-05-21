@@ -1,34 +1,61 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const slides = [
-  { id: 1, content: "ZONA DE BANNER 1" },
-  { id: 2, content: "ZONA DE BANNER 2" },
-  { id: 3, content: "ZONA DE BANNER 3" },
-  { id: 4, content: "ZONA DE BANNER 4" },
-  { id: 5, content: "ZONA DE BANNER 5" },
+interface Slide {
+  id: number;
+  desktop: string;
+  tablet: string;
+  mobile: string;
+}
+
+const slides: Slide[] = [
+  {
+    id: 1,
+    desktop: "/1920_600-entrega24.svg",
+    tablet: "/1024_600-entrega24 (2).svg",
+    mobile: "/768_300-entrega24.svg",
+  },
+  {
+    id: 2,
+    desktop: "/1920_600-devoiluções.svg",
+    tablet: "/1024_600-devoluções.svg",
+    mobile: "/768_300-devoiluções.svg",
+  },
 ];
 
 export default function BannerCarousel() {
   const [current, setCurrent] = useState(0);
-  const total = slides.length;
+  const [screenWidth, setScreenWidth] = useState(0);
 
-  const goToPrev = () => {
-    setCurrent((prev) => (prev === 0 ? total - 1 : prev - 1));
+  useEffect(() => {
+    const updateSize = () => setScreenWidth(window.innerWidth);
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  const getImage = (slide: Slide): string => {
+    if (screenWidth < 668) return slide.mobile;
+    if (screenWidth < 1024) return slide.tablet;
+    return slide.desktop;
   };
 
-  const goToNext = () => {
-    setCurrent((prev) => (prev === total - 1 ? 0 : prev + 1));
-  };
+  const goToPrev = () =>
+    setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  const goToNext = () =>
+    setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
 
   return (
-    <div className="relative w-full mx-auto">
+    <div className="relative min-w-full overflow-hidden">
       {/* Slide */}
-      <div className="rounded-xl h-100 flex items-center justify-center bg-gray-700 text-gray-300 text-3xl font-bold transition-all duration-500">
-        {slides[current].content}
-      </div>
+      <div
+        className="h-[500px] bg-cover bg-center transition-all duration-500"
+        style={{
+          backgroundImage: `url(${getImage(slides[current])})`,
+        }}
+      />
 
       {/* Setas */}
       <button
