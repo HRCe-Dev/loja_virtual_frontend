@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <header className="w-full">
       {/* Top Orange Bar */}
-      <div className="bg-[#FF7700] w-full px-4 sm:px-6 lg:px-16 py-3 flex flex-col md:flex-row items-center justify-between gap-4 lg:py-8">
+      <div className="bg-[#FF7700] w-full px-4 sm:px-6 lg:px-16 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center w-full md:w-auto justify-between">
           <Link href="/">
@@ -24,7 +24,7 @@ const Header = () => {
               src="\HRC - Branca.svg"
               alt="Logo HRC"
               width={120}
-              height={60}
+              height={40}
               className="h-auto"
             />
           </Link>
@@ -76,7 +76,7 @@ const Header = () => {
       {/* Bottom Category Menu */}
       <div className="bg-[#043873] text-white">
         {/* Categorias - apenas desktop */}
-        <div className="hidden md:flex items-center justify-center gap-8 lg:gap-20 text-md lg:text-xl font-medium px-4 sm:px-6 lg:px-10 py-2 lg:py-4 max-w-7xl mx-auto">
+        <div className="hidden md:flex items-center justify-center gap-8 lg:gap-20 text-md font-medium px-4 sm:px-6 lg:px-10 py-1 max-w-7xl mx-auto">
           {categorias.map((cat, i) => (
             <button
               key={i}
