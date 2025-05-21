@@ -3,7 +3,6 @@ import BannerCarousel from "./BannerCarrosel";
 import { Produto } from "@/types/Produto";
 import fetchProdutosMaisVendidos from "./fetchProdutosMaisVendidos";
 import { NewsletterForm } from "@/componentes/NewsletterForm";
-import MenuCategorias from "@/componentes/MenuCategorias";
 import SeccaoMarker from "./SeccaoMarker";
 import Promocoes from "@/componentes/Promocoes/Promocoes";
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
