@@ -12,13 +12,13 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
   return (
     <Link
       href={"/produto/" + produto.id}
-      className="group relative w-64 px-3 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300"
+      className="group relative w-full px-3 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300"
     >
       {/* Botão de Like (Lista de Desejo) */}
       <BtnListaDesejo produto_id={produto.id} tipo={2} />
 
       {/*Imagem */}
-      <div className="relative w-full h-48 overflow-hidden">
+      <div className="relative w-full aspect-[4/3] overflow-hidden">
         <Image
           src={produto.imagem_url}
           alt={produto.nome}

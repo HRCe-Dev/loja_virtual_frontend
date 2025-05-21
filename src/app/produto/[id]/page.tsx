@@ -37,12 +37,12 @@ const ProdutoPage  = async ({ params }: { params: Promise<PageProps> }) => {
   const ProdutosSemelhantes: Produto[] = await fetchProdutosMaisVendidos();
 
   return (
-    <div className="mx-10">
+    <div className="mx-6 md:mx-10 lg:mx-20 xl:mx-40 2xl:mx-60 mt-4 mb-10">
       {produto && (
         <div>
           {/*Categoria / Subcategoria */}
           <div className="my-10 group text-lg font-bold hover:text-orange-500 transition-colors duration-200">
-            <p className="text-gray-700 group-hover:text-orange-500">
+            <p className="text-gray-700 group-hover:text-orange-500 text-lg sm:text-xl md:text-3xl text-center md:text-left">
               {produto.categoria.nome} /{" "}
               <span className=" group-hover:text-orange-500">
                 {produto.subcategoria.nome}
@@ -50,44 +50,44 @@ const ProdutoPage  = async ({ params }: { params: Promise<PageProps> }) => {
             </p>
           </div>
 
-          <div className="flex">
-            <div className="w-1/2">
+          <div className="flex flex-col lg:flex-row gap-10">
+            <div className=" w-full lg:w-1/2">
               {/*Galeria */}{" "}
               <ProductGallery
                 imagem_url={produto.imagem_url}
                 nome={produto.nome}
               />
             </div>
-            <div className="w-1/2 flex flex-col gap-5 mx-10 ">
+            <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:mx-10 px-4 lg:my-10">
               {/*nome, preco, addlista de desejo, qtd, addcart, buynow, entrega rapida, troca e devolucoes */}
-              <h1 className="text-3xl font-bold">{produto.nome}</h1>
-              <div className="flex flex-row gap-10 border-b-1 border-gray-400 mb-4 mx-2 justify-between ">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">{produto.nome}</h1>
+              <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center border-b border-gray-400 mb-4">
                 <h3 className="text-xl font-bold  ">
                   {produto.preco}
                   <span className="text-sm ">$CVE</span>
                 </h3>
                 {/*TODO: considerar se o produto estiver em promoção*/}
 
-                <div className="mr-20">
+                <div className="mt-2 smmt-0">
                   <BtnListaDesejo produto_id={produto.id} tipo={3} />
                 </div>
               </div>
 
-              <div className="flex flex-row  gap-2 items-center mb-2">
+              <div className="flex flex-row flex-wrap gap-2 items-center mb-2">
                 <SeletorQuantidade produto_id={produto.id} />
-                <p className="text-sm font-bold">
+                <p className="text-sm md:text-xl font-bold">
                   {produto.estoque || 1} Disponível
                 </p>
               </div>
 
-              <div className="flex flex-col gap-2 ">
+              <div className="flex flex-col sm:flex-row gap-4 ">
                 <ButtonLaranja>
                   Adicionar <ShoppingCart />
                 </ButtonLaranja>
                 <ButtonWhite>Comprar agora</ButtonWhite>
               </div>
 
-              <div className="mt-5 flex mx-20 justify-between">
+              <div className="mt-5 flex sm:flex-row gap-4 sm:justify-between  sm:items-center">
                 <ButtonNoBg>
                   {" "}
                   <Truck /> Entrega Rápida
@@ -101,7 +101,7 @@ const ProdutoPage  = async ({ params }: { params: Promise<PageProps> }) => {
             </div>
           </div>
 
-          <div className="mx-auto text-center mt-10">
+          <div className="my-10 md:my-20 px-2 sm:px-6 md:px-20 lg:px-40 xl:px-60 text-left">
             {/*Descricao*/}
             <DescricaoProduto
               descricaoText={produto ? produto.descricao : null}
@@ -110,15 +110,17 @@ const ProdutoPage  = async ({ params }: { params: Promise<PageProps> }) => {
         </div>
       )}
 
-      <div className="my-10">
+      <div className="flex flex-col gap-10 px-4 md:px-10 mt-4 mb-10">
         {/*produtos semelhantes */}
 
         <SeccaoMarker>Produtos Semelhantes</SeccaoMarker>
-        <div className="grid grid-cols-4 mt-3 ">
-          {ProdutosSemelhantes &&
-            ProdutosSemelhantes.slice(0, 4).map((prod) => (
-              <ProdutoCard key={prod.id} produto={prod} />
-            ))}
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="flex md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-max md:w-full">
+            {ProdutosSemelhantes &&
+              ProdutosSemelhantes.slice(0, 4).map((prod) => (
+                <ProdutoCard key={prod.id} produto={prod} />
+              ))}
+          </div>
         </div>
       </div>
     </div>
