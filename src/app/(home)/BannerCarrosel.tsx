@@ -57,6 +57,7 @@ export default function BannerCarousel() {
         }}
       />
 
+
       {/* Setas */}
       <button
         onClick={goToPrev}

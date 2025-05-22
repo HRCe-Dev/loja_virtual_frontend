@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import { trackingProdutos } from "@/api/analytics.api";
+import React, { useEffect, useState } from "react";
 
 interface ThumbnailProps {
   src: string;
@@ -22,12 +23,16 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ src, active, onClick }) => {
 };
 
 interface productGaleryProps {
+  produto_id: string;
   imagem_url: string;
   nome: string;
 }
 
-const ProductGallery: React.FC<productGaleryProps> = ({ imagem_url, nome }) => {
-
+const ProductGallery: React.FC<productGaleryProps> = ({
+  produto_id,
+  imagem_url,
+  nome,
+}) => {
   // Placeholder image URL from Pexels - blue geometric shape similar to the design
   //const placeholderImage =
   // "https://images.pexels.com/photos/5011647/pexels-photo-5011647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
@@ -35,6 +40,12 @@ const ProductGallery: React.FC<productGaleryProps> = ({ imagem_url, nome }) => {
   const placeholderImage = imagem_url;
 
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (produto_id) {
+      trackingProdutos(produto_id);
+    }
+  }, []);
 
   return (
     <div className="flex flex-col md:flex-row">

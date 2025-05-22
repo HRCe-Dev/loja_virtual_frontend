@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { obterProdutosCarrinho, removerCarrinho } from "./carrinho";
 import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
+import Link from "next/link";
 
 export default function CarrinhoPage() {
   const [btnLoading, setbtnLoading] = useState<boolean>(false);
@@ -89,7 +90,7 @@ export default function CarrinhoPage() {
         </div>
         <div className="w-full sm:w-auto flex justify-center sm:justify-end mt-4 sm:mt-0 sm:mr-20">
           <button className="text-xl font-bold text-white rounded-xl bg-orange-500 px-6 py-3 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-2 w-full sm:w-auto">
-            Checkout
+            <Link href="/checkout/entrega">Checkout</Link>
           </button>
         </div>
       </div>

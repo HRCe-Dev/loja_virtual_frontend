@@ -3,7 +3,7 @@ import { Carrinho, ProdutoCarrinho } from "@/types/Produto";
 
 const ITEM = "carrinho";
 
-const obterCarrinho = (): Carrinho[] => {
+export const obterCarrinho = (): Carrinho[] => {
   //obter carrinho
   const carrinhoStr = localStorage.getItem(ITEM);
   const carrinho: Carrinho[] = carrinhoStr ? JSON.parse(carrinhoStr) : [];
@@ -46,7 +46,7 @@ export const adicionarCarrinho = async (
     //guardar no localstorage
     localStorage.setItem(ITEM, JSON.stringify(carrinho));
 
-    alert(JSON.stringify(carrinho));
+    //alert(JSON.stringify(carrinho));
 
     return true;
   } catch (error) {
@@ -67,7 +67,7 @@ export const removerCarrinho = async (produto_id: string): Promise<boolean> => {
     //salvar no local storage
     localStorage.setItem(ITEM, JSON.stringify(novoCarrinho));
 
-    alert(JSON.stringify(novoCarrinho));
+    //alert(JSON.stringify(novoCarrinho));
 
     return true;
   } catch (error) {
@@ -90,7 +90,7 @@ export const atualizarCarrinho = async (
     //salvar
     localStorage.setItem(ITEM, JSON.stringify(novoCarrinho));
 
-    alert(JSON.stringify(novoCarrinho));
+    //alert(JSON.stringify(novoCarrinho));
 
     return true;
   } catch (error) {
@@ -108,6 +108,17 @@ export const verificarCarrinho = async (
     return carrinho.some((prod) => prod.produto_id === produto_id);
   } catch (error) {
     console.log(error);
+    return false;
+  }
+};
+
+export const esvaziarCarrinho = async (): Promise<boolean> => {
+  try {
+    localStorage.removeItem(ITEM);
+    // TODO: apagar no backend
+    return true;
+  } catch (error) {
+    console.error(error);
     return false;
   }
 };

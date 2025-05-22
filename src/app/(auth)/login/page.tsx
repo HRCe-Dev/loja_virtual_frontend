@@ -33,6 +33,14 @@ export default function Login() {
     if (res.ok) {
       alert("Login efectuado com sucesso");
       const data = await res.json();
+
+      console.log(JSON.stringify(data));
+
+      //guardar token
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
       console.log(data);
     } else if (res.status === 401) {
       const errorData = await res.json();
