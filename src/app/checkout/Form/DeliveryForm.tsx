@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MetodoEnvio } from "@/types/MetodoEnvioTypes";
 import { realizarCheckout, useGetMetodosEnvio } from "../checkout.api";
 import Loading from "@/componentes/Loading";
