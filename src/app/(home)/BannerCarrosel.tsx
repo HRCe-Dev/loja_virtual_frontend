@@ -57,7 +57,7 @@ export default function BannerCarousel() {
     <div className="relative min-w-full overflow-hidden">
       {/* Slide */}
       <div
-        className="h-[400px] sm:h-[348px] bg-cover bg-center transition-all duration-500"
+        className="h-[400px] sm:h-[400px] 3xl:h-[600px] bg-cover bg-center transition-all duration-500"
         style={{
           backgroundImage: `url(${getImage(slides[current])})`,
         }}

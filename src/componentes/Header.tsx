@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, ShoppingCart, Menu, User, MapPin } from "lucide-react";
 import { useObterIlhas } from "@/api/localizacao.api";
-import { useState } from "react";
+import { useState,useRef, useEffect } from "react";
+import { Search, ShoppingCart, Menu, User, MapPin, ChevronDown } from "lucide-react";
+
 
 const categorias = [
   "Categoria",
@@ -14,14 +15,55 @@ const categorias = [
   "Mais",
 ];
 
-const Header = () => {
+const Header = () => 
   const [ilhas, setIlhas] = useState<string[]>([]);
   useObterIlhas(setIlhas);
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [ilhasOpen, setIlhasOpen] = useState(false);
+
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const ilhasRef = useRef<HTMLDivElement | null>(null);
+
+
+  // Fecha menus ao clicar fora
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as Node;
+
+      const clickedOutsideMenu = menuRef.current && !menuRef.current.contains(target);
+      const clickedOutsideIlhas = ilhasRef.current && !ilhasRef.current.contains(target);
+
+      if (menuOpen && clickedOutsideMenu) {
+        setMenuOpen(false);
+      }
+      if (ilhasOpen && clickedOutsideIlhas) {
+        setIlhasOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen, ilhasOpen]);
+
+  // Toggle menus com exclusividade
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+    setIlhasOpen(false);
+  };
+
+  const toggleIlhas = () => {
+    setIlhasOpen((prev) => !prev);
+    setMenuOpen(false);
+  };
+
+
   return (
-    <header className="w-full">
+    <header className="w-full relative">
       {/* Top Orange Bar */}
-      <div className="bg-[#FF7700] w-full px-4 sm:px-6 lg:px-16 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-[#FF7700] w-full px-4 sm:px-6 lg:px-16 py-2 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center w-full md:w-auto justify-between">
           <Link href="/">
@@ -35,23 +77,29 @@ const Header = () => {
           </Link>
 
           {/* Mobile Icons */}
-          <div className="flex md:hidden gap-3">
-            <User className="text-white" />
-            <ShoppingCart className="text-white" />
-            <Menu className="text-white" />
+          <div className="flex md:hidden gap-3 relative">
+            <Link href="/login">
+              <User className="text-white" />
+            </Link>
+            <Link href="/carrinho">
+              <ShoppingCart className="text-white" />
+            </Link>
+            <button onClick={() => setMenuOpen(!menuOpen)}>
+              <Menu className="text-white" />
+            </button>
           </div>
         </div>
 
         {/* Search bar */}
-        <div className="w-full md:w-2/5 lg:w-1/3 flex">
-          <div className="flex items-center bg-white rounded-l-lg px-3 py-2 shadow-s w-full">
+        <div className="w-full flex md:px-10">
+          <div className="flex items-center bg-white rounded-l-lg px-3  py-2 shadow-s md:w-9/10 w-full">
             <input
               type="text"
               placeholder="Procura aqui seu produto"
               className="w-full outline-none text-sm text-gray-700"
             />
           </div>
-          <div className="flex items-center bg-[#043873] rounded-e-lg px:3 py-2 shadow-sm w-1/5">
+          <div className="flex items-center bg-[#265674] rounded-e-lg px-5 md:px-3 py-3 shadow-sm md:w-1/10">
             <button className="flex items-center justify-center w-full h-full">
               <Search className="text-white" size={22} />
             </button>
@@ -81,9 +129,9 @@ const Header = () => {
       </div>
 
       {/* Bottom Category Menu */}
-      <div className="bg-[#043873] text-white">
+      <div className="bg-[#265674] text-white">
         {/* Categorias - apenas desktop */}
-        <div className="hidden md:flex items-center justify-center gap-8 lg:gap-20 text-md font-medium px-4 sm:px-6 lg:px-10 py-1 max-w-7xl mx-auto">
+        <div className="hidden md:flex items-center justify-center gap-8 lg:gap-20 text-md font-medium px-4 sm:px-6 lg:px-10 py-3 max-w-7xl mx-auto">
           {categorias.map((cat, i) => (
             <button
               key={i}
@@ -102,10 +150,45 @@ const Header = () => {
             <MapPin className="text-white w-4 h-4" />
             Santiago
           </span>
-
-          <Menu className="text-white" />
+          <button onClick={() => setIlhasOpen(!ilhasOpen)}>
+            <ChevronDown className="text-white" />
+          </button>
         </div>
       </div>
+
+    {/* Mobile Menu de Categorias */}
+      {menuOpen && (
+        <div
+          ref={menuRef}
+          className="md:hidden absolute top-14 right-4 w-1/2 bg-white shadow-lg z-50 px-4 py-3 space-y-2 text-sm"
+        >
+          {categorias.map((cat, i) => (
+            <button
+              key={i}
+              className="block w-full text-left text-gray-800 hover:text-orange-500"
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Mobile Menu de Ilhas */}
+      {ilhasOpen && (
+        <div
+          ref={ilhasRef}
+          className="md:hidden absolute left-0 right-0 top-[100%] bg-white shadow-lg z-50 px-4 py-3 space-y-2 text-sm"
+        >
+          {["Santiago", "Santo Antão", "São Nicolau", "Boa Vista"].map((ilha, i) => (
+            <button
+              key={i}
+              className="block w-full text-left text-gray-800 hover:text-orange-500"
+            >
+              {ilha}
+            </button>
+          ))}
+        </div>
+      )}
     </header>
   );
 };
