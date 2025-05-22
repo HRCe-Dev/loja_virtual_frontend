@@ -3,6 +3,8 @@
 import { url } from "@/api/url";
 import SeletorEndereco from "@/componentes/Pop_ups/Seletor_Endereco/Seletor_Endereco";
 import { inputStyle } from "@/styles/forms";
+import { proximoRoute } from "@/util/proximoPage";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -21,7 +23,11 @@ interface cadastroForm {
 const CadastroForm: React.FC = () => {
   const [step, setStep] = useState(1);
 
-  const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") || null;
+  const router = useRouter();
 
   const {
     register,
@@ -50,7 +56,12 @@ const CadastroForm: React.FC = () => {
       const dados = await res.json();
 
       if (res.ok) {
-        alert("Cadastro realizado com sucesso!");
+        //alert("Cadastro realizado com sucesso!");
+        if (next) {
+          router.push(proximoRoute[next]);
+        } else {
+          router.push("/");
+        }
       } else {
         alert(dados?.message);
       }
@@ -102,7 +113,6 @@ const CadastroForm: React.FC = () => {
                 <p className="text-red-500 text-sm">{errors.nome.message}</p>
               )}
             </div>
-
             <div className="flex flex-col space-y-1">
               <label className="text-sm text-gray-700 font-semibold">
                 Apelido
@@ -117,7 +127,6 @@ const CadastroForm: React.FC = () => {
                 <p className="text-red-500 text-sm">{errors.aplido.message}</p>
               )}
             </div>
-
             <div className="flex flex-col space-y-1">
               <label className="text-sm text-gray-700 font-semibold">
                 Data de nascimento
@@ -135,8 +144,8 @@ const CadastroForm: React.FC = () => {
                 </p>
               )}
             </div>
-
- -           <div className="flex flex-col space-y-1">
+            -{" "}
+            <div className="flex flex-col space-y-1">
               <label className="text-sm text-gray-700 font-semibold">
                 Telefone
               </label>
@@ -153,6 +162,16 @@ const CadastroForm: React.FC = () => {
                   {errors.telefone.message}
                 </p>
               )}
+            </div>
+            <div className="flex flex-col space-y-1 mt-10">
+              <button
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+                className="px-6 py-2 rounded-full bg-cyan-800 hover:bg-orange-500 text-white font-semibold "
+              >
+                Adicionar Endereço
+              </button>
             </div>
           </div>
         )}

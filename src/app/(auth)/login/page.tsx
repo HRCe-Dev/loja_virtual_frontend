@@ -6,6 +6,8 @@ import { inputStyle } from "@/styles/forms";
 import Link from "next/link";
 import { CircleUser, Facebook } from "lucide-react";
 import { url } from "@/api/url";
+import { useRouter, useSearchParams } from "next/navigation";
+import { proximoRoute } from "@/util/proximoPage";
 
 interface loginForm {
   email: string;
@@ -19,6 +21,12 @@ export default function Login() {
     formState: { errors },
   } = useForm<loginForm>();
 
+  const searchParams = useSearchParams();
+
+  const next = searchParams.get("next") || null;
+
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
     console.log("Dados enviados:", data);
     //TODO: adicionar try...catch para mitigar erros
@@ -31,14 +39,17 @@ export default function Login() {
     });
 
     if (res.ok) {
-      alert("Login efectuado com sucesso");
+      //alert("Login efectuado com sucesso");
       const data = await res.json();
-
-      console.log(JSON.stringify(data));
 
       //guardar token
       if (data.token) {
         localStorage.setItem("token", data.token);
+        if (next) {
+          router.push(proximoRoute[next]);
+        } else {
+          router.push("/");
+        }
       }
 
       console.log(data);
@@ -56,14 +67,15 @@ export default function Login() {
         <div className="w-full md:w-1/2">
           <BannerCadastro />
         </div>
-        
 
         <main className="w-full md:w-1/2 flex flex-col  gap-20 px-8 py-6 md:py-46 md:px-16 lg:px-24 min-h-screen">
           <div className="text-center md:text-left my-2">
             <h1 className="text-3xl md:text-4xl font-bold">
               Página <span className="text-orange-500"> login</span>
             </h1>
-            <p className="text-base md:text-lg text-gray-600 md:mt-4">Loga para ver suas compras</p>
+            <p className="text-base md:text-lg text-gray-600 md:mt-4">
+              Loga para ver suas compras
+            </p>
           </div>
 
           <form
@@ -125,7 +137,9 @@ export default function Login() {
           <div className="mt-6 text-center space-y-4">
             <div className="flex items-center justify-center text-gray-500 gap-2">
               <div className="h-px bg-gray-300 flex-grow" />
-              <span className="text-base md:text-lg whitespace-nowrap">Login via</span>
+              <span className="text-base md:text-lg whitespace-nowrap">
+                Login via
+              </span>
               <div className="h-px bg-gray-300 flex-grow" />
             </div>
 
@@ -149,7 +163,10 @@ export default function Login() {
               Não tens uma conta?{" "}
               <Link
                 className="text-orange-500 hover:text-orange-900"
-                href="/cadastro"
+                href={{
+                  pathname: "/cadastro",
+                  query: next ? { next } : undefined,
+                }}
               >
                 Cadastrar
               </Link>

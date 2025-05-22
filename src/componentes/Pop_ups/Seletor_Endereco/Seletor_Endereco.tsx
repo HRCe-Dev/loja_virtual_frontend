@@ -1,21 +1,52 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useObterCidades, UseObterZonas } from "@/api/localizacao.api";
+import { Cidade, Zona } from "@/types/Localizacao";
 import { LocateFixed, MapPin } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
 interface SeletorEnderecoProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const schema = z.object({
+  ilha: z.string().min(1, "Obrigatório"),
+  cidade_id: z.coerce.number().min(1, "Obrigatório"),
+  zona_id: z.coerce.number().min(1, "Obrigatório"),
+});
+
+type FormData = z.infer<typeof schema>;
+
 const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
   isOpen,
   onClose,
 }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [cidades, setCidades] = useState<Cidade[]>([]);
+  const [zonas, setZonas] = useState<Zona[]>([]);
+  const [loadingZona, setLoadingZona] = useState<boolean>(false);
+
   if (!isOpen) return null;
 
-  const localizacao = {
-    ilha: "São Vicente",
-    cidade: "Mindelo",
-    zona: "Maderalzinho",
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  const dados = watch();
+
+  useObterCidades(setCidades, setLoading, []);
+
+  UseObterZonas(dados.cidade_id, setZonas, setLoadingZona, [dados.cidade_id]);
+
+  const onSubmit = async (data: FormData) => {
+    alert(JSON.stringify(data));
   };
 
   const selectStyle = "border border-gray-300 rounded-lg px-3 py-2";
@@ -36,7 +67,14 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
           <div className="w-full border-dashed border-b-2 border-gray-300">
             <h3 className="flex flex-row justify-center mb-2 px-3 py-2 hover:bg-gray-200 hover:font-bold rounded-lg transition-all duration-300">
               <MapPin className="mr-2" />
-              {localizacao.zona}, {localizacao.cidade}, {localizacao.ilha}
+              {dados.zona_id && (
+                <span>
+                  {zonas.find((zo) => zo.id === dados.zona_id)?.zona},{" "}
+                  {zonas.find((zo) => zo.id === dados.zona_id)?.cidade},{" "}
+                  {zonas.find((zo) => zo.id === dados.zona_id)?.ilha}, Cabo
+                  Verde
+                </span>
+              )}
             </h3>
           </div>
           <div>
@@ -44,44 +82,70 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
               <LocateFixed /> Usar Localização Atual
             </button>
 
-            <form action="" className="flex flex-col mt-10 gap-5 ">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col mt-10 gap-5 "
+            >
               <div className="flex flex-col">
                 <label className="text-gray-700 font-bold" htmlFor="ilha">
                   Ilha
                 </label>
-                <select className={selectStyle} name="ilha" id="ilha">
+                <select {...register("ilha")} className={selectStyle}>
                   <option value="">Selecione a ilha</option>
-                  <option value="sa">Santo Antão</option>
-                  <option value="sv">São Vicente</option>
-                  <option value="sn">São Nicolau</option>
+                  {[...new Set(cidades.map((cidade) => cidade.ilha))].map(
+                    (ilha) => (
+                      <option key={ilha} value={ilha}>
+                        {ilha}
+                      </option>
+                    )
+                  )}
                 </select>
+                <p className="text-red-500 text-sm">{errors.ilha?.message}</p>
               </div>
 
               <div className="flex flex-col ">
                 <label className="font-bold text-gray-700" htmlFor="cidade">
                   Cidade
                 </label>
-                <select className={selectStyle} name="cidade" id="cidade">
+                <select {...register("cidade_id")} className={selectStyle}>
                   <option value="">Selecione a cidade</option>
-                  <option value="opcao1">Mindelo</option>
-                  <option value="opcao2">Porto Novo</option>
-                  <option value="opcao3">Ribeira Grande</option>
+                  {cidades
+                    .filter((cidade) => cidade.ilha === dados.ilha)
+                    .map((cidade) => (
+                      <option key={cidade.id} value={cidade.id}>
+                        {cidade.nome}
+                      </option>
+                    ))}
                 </select>
+                <p className="text-red-500 text-sm">
+                  {errors.cidade_id?.message}
+                </p>
               </div>
 
               <div className="flex flex-col">
                 <label className="font-bold text-gray-700" htmlFor="zona">
                   Zona
                 </label>
-                <select className={selectStyle} name="zona" id="zona">
-                  <option value="">Selecione a zona</option>
-                  <option value="opcao1">Maderalzinho</option>
-                  <option value="opcao2">Chã de Alecrim</option>
-                  <option value="opcao3">Alto Peixinho</option>
+                <select {...register("zona_id")} className={selectStyle}>
+                  <option value="">
+                    {loadingZona ? "Carregando Zonas..." : "Selecione a zona"}
+                  </option>
+                  {Array.isArray(zonas) &&
+                    zonas.map((zona) => (
+                      <option key={zona.id} value={zona.id}>
+                        {zona.zona}
+                      </option>
+                    ))}
                 </select>
+                <p className="text-red-500 text-sm">
+                  {errors.zona_id?.message}
+                </p>
               </div>
 
-              <button className="my-6 text-white font-bold text-lg bg-orange-500 hover:text-orange-500 hover:bg-white border-orange-500 hover:border transition-colors duration-300 rounded-lg px-3 py-2">
+              <button
+                type="submit"
+                className="my-6 text-white font-bold text-lg bg-orange-500 hover:text-orange-500 hover:bg-white border-orange-500 hover:border transition-colors duration-300 rounded-lg px-3 py-2"
+              >
                 Confirmar o Endereço
               </button>
             </form>
