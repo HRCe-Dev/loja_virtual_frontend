@@ -6,8 +6,9 @@ import { inputStyle } from "@/styles/forms";
 import Link from "next/link";
 import { CircleUser, Facebook } from "lucide-react";
 import { url } from "@/api/url";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { proximoRoute } from "@/util/proximoPage";
+import { useEffect, useState } from "react";
 
 interface loginForm {
   email: string;
@@ -21,9 +22,12 @@ export default function Login() {
     formState: { errors },
   } = useForm<loginForm>();
 
-  const searchParams = useSearchParams();
+  const [next, setNext] = useState<string | null>(null);
 
-  const next = searchParams.get("next") || null;
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setNext(params.get("next"));
+  }, []);
 
   const router = useRouter();
 

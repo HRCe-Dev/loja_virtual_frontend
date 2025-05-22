@@ -4,8 +4,8 @@ import { url } from "@/api/url";
 import SeletorEndereco from "@/componentes/Pop_ups/Seletor_Endereco/Seletor_Endereco";
 import { inputStyle } from "@/styles/forms";
 import { proximoRoute } from "@/util/proximoPage";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface cadastroForm {
@@ -25,8 +25,12 @@ const CadastroForm: React.FC = () => {
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const searchParams = useSearchParams();
-  const next = searchParams.get("next") || null;
+  const [next, setNext] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setNext(params.get("next"));
+  }, []);
   const router = useRouter();
 
   const {

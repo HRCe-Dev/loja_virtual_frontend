@@ -109,7 +109,7 @@ export default function Confirmation() {
             <p>{pedidoData.telefoneDestino}</p>
             <br />
             {pedidoData.endereco_id.split(",").map((end) => (
-              <p>{end}</p>
+              <p key={end}>{end}</p>
             ))}
           </div>
         </>

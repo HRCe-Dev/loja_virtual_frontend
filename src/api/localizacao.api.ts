@@ -17,7 +17,7 @@ export async function ObterIlhas(): Promise<string[]> {
 
 export async function ObterCidades(): Promise<Cidade[]> {
   //verificar se dados estam no dispositivo
-  let cidades = localStorage.getItem(ITEM);
+  const cidades = localStorage.getItem(ITEM);
 
   if (cidades) {
     return JSON.parse(cidades) as Cidade[];
@@ -38,7 +38,7 @@ export async function ObterCidades(): Promise<Cidade[]> {
   return Cidades;
 }
 
-export async function useObterCidades(
+export function useObterCidades(
   setCidades: React.Dispatch<React.SetStateAction<Cidade[]>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   dependencies: React.DependencyList = []
@@ -62,7 +62,7 @@ export async function useObterCidades(
   }, dependencies);
 }
 
-export async function useObterIlhas(
+export function useObterIlhas(
   setIlhas: React.Dispatch<React.SetStateAction<string[]>>,
   dependencies: React.DependencyList = []
 ) {
@@ -126,7 +126,7 @@ export async function obterZonas_ilha_cidade({
   return dados.zonas as Zona[];
 }
 
-export async function UseObterZonas(
+export function UseObterZonas(
   cidade_id: number,
   setZonas: React.Dispatch<React.SetStateAction<Zona[]>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,

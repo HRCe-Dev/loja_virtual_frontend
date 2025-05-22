@@ -9,7 +9,7 @@ import { LocateFixed, MapPin } from "lucide-react";
 import React, { useState } from "react";
 
 interface SeletorEnderecoProps {
-  isOpen: boolean;
+  isOpen?: boolean;
   onClose: () => void;
 }
 
@@ -21,16 +21,11 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
-  isOpen,
-  onClose,
-}) => {
+const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({ onClose }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [cidades, setCidades] = useState<Cidade[]>([]);
   const [zonas, setZonas] = useState<Zona[]>([]);
   const [loadingZona, setLoadingZona] = useState<boolean>(false);
-
-  if (!isOpen) return null;
 
   const {
     register,
@@ -82,73 +77,79 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
               <LocateFixed /> Usar Localização Atual
             </button>
 
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col mt-10 gap-5 "
-            >
-              <div className="flex flex-col">
-                <label className="text-gray-700 font-bold" htmlFor="ilha">
-                  Ilha
-                </label>
-                <select {...register("ilha")} className={selectStyle}>
-                  <option value="">Selecione a ilha</option>
-                  {[...new Set(cidades.map((cidade) => cidade.ilha))].map(
-                    (ilha) => (
-                      <option key={ilha} value={ilha}>
-                        {ilha}
-                      </option>
-                    )
-                  )}
-                </select>
-                <p className="text-red-500 text-sm">{errors.ilha?.message}</p>
-              </div>
-
-              <div className="flex flex-col ">
-                <label className="font-bold text-gray-700" htmlFor="cidade">
-                  Cidade
-                </label>
-                <select {...register("cidade_id")} className={selectStyle}>
-                  <option value="">Selecione a cidade</option>
-                  {cidades
-                    .filter((cidade) => cidade.ilha === dados.ilha)
-                    .map((cidade) => (
-                      <option key={cidade.id} value={cidade.id}>
-                        {cidade.nome}
-                      </option>
-                    ))}
-                </select>
-                <p className="text-red-500 text-sm">
-                  {errors.cidade_id?.message}
-                </p>
-              </div>
-
-              <div className="flex flex-col">
-                <label className="font-bold text-gray-700" htmlFor="zona">
-                  Zona
-                </label>
-                <select {...register("zona_id")} className={selectStyle}>
-                  <option value="">
-                    {loadingZona ? "Carregando Zonas..." : "Selecione a zona"}
-                  </option>
-                  {Array.isArray(zonas) &&
-                    zonas.map((zona) => (
-                      <option key={zona.id} value={zona.id}>
-                        {zona.zona}
-                      </option>
-                    ))}
-                </select>
-                <p className="text-red-500 text-sm">
-                  {errors.zona_id?.message}
-                </p>
-              </div>
-
-              <button
-                type="submit"
-                className="my-6 text-white font-bold text-lg bg-orange-500 hover:text-orange-500 hover:bg-white border-orange-500 hover:border transition-colors duration-300 rounded-lg px-3 py-2"
+            {!loading ? (
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col mt-10 gap-5 "
               >
-                Confirmar o Endereço
-              </button>
-            </form>
+                <div className="flex flex-col">
+                  <label className="text-gray-700 font-bold" htmlFor="ilha">
+                    Ilha
+                  </label>
+                  <select {...register("ilha")} className={selectStyle}>
+                    <option value="">Selecione a ilha</option>
+                    {[...new Set(cidades.map((cidade) => cidade.ilha))].map(
+                      (ilha) => (
+                        <option key={ilha} value={ilha}>
+                          {ilha}
+                        </option>
+                      )
+                    )}
+                  </select>
+                  <p className="text-red-500 text-sm">{errors.ilha?.message}</p>
+                </div>
+
+                <div className="flex flex-col ">
+                  <label className="font-bold text-gray-700" htmlFor="cidade">
+                    Cidade
+                  </label>
+                  <select {...register("cidade_id")} className={selectStyle}>
+                    <option value="">Selecione a cidade</option>
+                    {cidades
+                      .filter((cidade) => cidade.ilha === dados.ilha)
+                      .map((cidade) => (
+                        <option key={cidade.id} value={cidade.id}>
+                          {cidade.nome}
+                        </option>
+                      ))}
+                  </select>
+                  <p className="text-red-500 text-sm">
+                    {errors.cidade_id?.message}
+                  </p>
+                </div>
+
+                <div className="flex flex-col">
+                  <label className="font-bold text-gray-700" htmlFor="zona">
+                    Zona
+                  </label>
+                  <select {...register("zona_id")} className={selectStyle}>
+                    <option value="">
+                      {loadingZona ? "Carregando Zonas..." : "Selecione a zona"}
+                    </option>
+                    {Array.isArray(zonas) &&
+                      zonas.map((zona) => (
+                        <option key={zona.id} value={zona.id}>
+                          {zona.zona}
+                        </option>
+                      ))}
+                  </select>
+                  <p className="text-red-500 text-sm">
+                    {errors.zona_id?.message}
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  className="my-6 text-white font-bold text-lg bg-orange-500 hover:text-orange-500 hover:bg-white border-orange-500 hover:border transition-colors duration-300 rounded-lg px-3 py-2"
+                >
+                  Confirmar o Endereço
+                </button>
+              </form>
+            ) : (
+              <div className="flex justify-center items-center mt-10">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-orange-500 border-solid"></div>
+              </div>
+            )}
           </div>
         </div>
       </div>

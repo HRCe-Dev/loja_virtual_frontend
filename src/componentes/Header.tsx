@@ -2,9 +2,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useObterIlhas } from "@/api/localizacao.api";
-import { useState,useRef, useEffect } from "react";
-import { Search, ShoppingCart, Menu, User, MapPin, ChevronDown } from "lucide-react";
-
+import { useState, useRef, useEffect } from "react";
+import {
+  Search,
+  ShoppingCart,
+  Menu,
+  User,
+  MapPin,
+  ChevronDown,
+} from "lucide-react";
 
 const categorias = [
   "Categoria",
@@ -15,7 +21,7 @@ const categorias = [
   "Mais",
 ];
 
-const Header = () => 
+const Header = () => {
   const [ilhas, setIlhas] = useState<string[]>([]);
   useObterIlhas(setIlhas);
 
@@ -25,14 +31,15 @@ const Header = () =>
   const menuRef = useRef<HTMLDivElement | null>(null);
   const ilhasRef = useRef<HTMLDivElement | null>(null);
 
-
   // Fecha menus ao clicar fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as Node;
 
-      const clickedOutsideMenu = menuRef.current && !menuRef.current.contains(target);
-      const clickedOutsideIlhas = ilhasRef.current && !ilhasRef.current.contains(target);
+      const clickedOutsideMenu =
+        menuRef.current && !menuRef.current.contains(target);
+      const clickedOutsideIlhas =
+        ilhasRef.current && !ilhasRef.current.contains(target);
 
       if (menuOpen && clickedOutsideMenu) {
         setMenuOpen(false);
@@ -49,16 +56,16 @@ const Header = () =>
   }, [menuOpen, ilhasOpen]);
 
   // Toggle menus com exclusividade
-  const toggleMenu = () => {
+  /* const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
     setIlhasOpen(false);
-  };
+  };*/
 
+  /*
   const toggleIlhas = () => {
     setIlhasOpen((prev) => !prev);
     setMenuOpen(false);
-  };
-
+  };*/
 
   return (
     <header className="w-full relative">
@@ -156,7 +163,7 @@ const Header = () =>
         </div>
       </div>
 
-    {/* Mobile Menu de Categorias */}
+      {/* Mobile Menu de Categorias */}
       {menuOpen && (
         <div
           ref={menuRef}
@@ -179,14 +186,16 @@ const Header = () =>
           ref={ilhasRef}
           className="md:hidden absolute left-0 right-0 top-[100%] bg-white shadow-lg z-50 px-4 py-3 space-y-2 text-sm"
         >
-          {["Santiago", "Santo Antão", "São Nicolau", "Boa Vista"].map((ilha, i) => (
-            <button
-              key={i}
-              className="block w-full text-left text-gray-800 hover:text-orange-500"
-            >
-              {ilha}
-            </button>
-          ))}
+          {["Santiago", "Santo Antão", "São Nicolau", "Boa Vista"].map(
+            (ilha, i) => (
+              <button
+                key={i}
+                className="block w-full text-left text-gray-800 hover:text-orange-500"
+              >
+                {ilha}
+              </button>
+            )
+          )}
         </div>
       )}
     </header>
