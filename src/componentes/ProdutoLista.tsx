@@ -4,24 +4,15 @@ interface listaProps {
   children: React.ReactNode;
 }
 
-//lista grande
-//mostra todos os dados em children
 export const ProdutoListaLg: React.FC<listaProps> = ({ children }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
-      {children}
+    <div className="overflow-x-auto scrollbar-hide">
+      <div className="flex md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-max md:w-full">
+        {children}
+      </div>
     </div>
   );
 };
 
-//TODO: lista pequena
-//somente para um linha
-/*
-const ProdutoListaSm: React.FC<listaProps> = ({ children }) => {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4  gap-5">
-      {children}
-    </div>
-  );
-};
-*/
+
+

@@ -33,47 +33,48 @@ export function NewsletterForm() {
   };
 
   return (
-    <div className="flex flex-row  gap-20 justify-center mt-15 p-15 mx-30 rounded-xl bg-gradient-to-r from-[#FB943E] from-27% to-[#6773D3] to-69%">
-      <div className="text-white">
-        <h1 className="text-3xl font-bold">Receba Ofertas Exclusivas</h1>
-        <p className="text-lg mt-3">
-          Assine nossa newsletter e fique por <br /> dentro das promoções e
-          novidades do <br />
+    <div className="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-20 mt-10 px-6 py-10 rounded-xl bg-gradient-to-r from-[#FB943E] to-[#6773D3]">
+      {/* Texto */}
+      <div className="text-white text-center md:text-left max-w-md">
+        <h1 className="text-2xl md:text-3xl font-bold">
+          Receba Ofertas Exclusivas
+        </h1>
+        <p className="text-base md:text-lg mt-3">
+          Assine nossa newsletter e fique por <br className="hidden md:block" />
+          dentro das promoções e novidades do <br className="hidden md:block" />
           HRCe
         </p>
       </div>
-      <div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <div>
-            <input
-              type="text"
-              id="nome"
-              {...register("nome", { required: true })}
-              placeholder="Seu nome"
-              className="bg-white rounded-xl py-2 px-6"
-              required
-            />
-          </div>
-          <div>
-            <input
-              type="email"
-              id="email"
-              placeholder="Seu e-mail"
-              className="bg-white rounded-xl py-2 px-6"
-              required
-              {...register("email", { required: true })}
-            />
-          </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="bg-white text-orange-500 rounded-xl py-2 font-bold hover:bg-orange-500 hover:text-white"
-          >
-            {isSubmitting ? "Enviando..." : "QUERO RECEBER OFERTAS!"}
-          </button>
-        </form>
-      </div>
+      {/* Formulário */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 w-full max-w-sm"
+      >
+        <input
+          type="text"
+          id="nome"
+          {...register("nome")}
+          placeholder="Seu nome"
+          className="bg-white rounded-xl py-2 px-4 w-full"
+          required
+        />
+        <input
+          type="email"
+          id="email"
+          {...register("email")}
+          placeholder="Seu e-mail"
+          className="bg-white rounded-xl py-2 px-4 w-full"
+          required
+        />
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-white text-orange-500 rounded-xl py-2 font-bold hover:bg-orange-500 hover:text-white transition-colors"
+        >
+          {isSubmitting ? "Enviando..." : "QUERO RECEBER OFERTAS!"}
+        </button>
+      </form>
     </div>
   );
 }
