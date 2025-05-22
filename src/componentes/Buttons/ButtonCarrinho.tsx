@@ -53,7 +53,7 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
         onClick={(e: React.MouseEvent) => {
           e.stopPropagation();
           e.preventDefault();
-          router.push("/checkout");
+          router.push("/carrinho");
         }}
       >
         {/*TODO: Corrigir isto, nao pode ter link dentro de link */}
