@@ -46,7 +46,7 @@ const Header = () => {
               className="w-full outline-none text-sm text-gray-700"
             />
           </div>
-          <div className="flex items-center bg-[#043873] rounded-e-lg px:3 lg:px-10 py-2 shadow-sm w-1/5">
+          <div className="flex items-center bg-[#043873] rounded-e-lg px:3 py-2 shadow-sm w-1/5">
             <button className="flex items-center justify-center w-full h-full">
               <Search className="text-white" size={22} />
             </button>

@@ -13,15 +13,15 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
-    desktop: "/1920_600-entrega24.svg",
-    tablet: "/1024_600-entrega24 (2).svg",
-    mobile: "/768_300-entrega24.svg",
+    desktop: "/1920_600-entrega24.jpg",
+    tablet: "/768_1024-entrega24.jpg",
+    mobile: "/375_667-entrega24.jpg",
   },
   {
     id: 2,
-    desktop: "/1920_600-devoiluções.svg",
-    tablet: "/1024_600-devoluções.svg",
-    mobile: "/768_300-devoiluções.svg",
+    desktop: "/1920_600-devoluções.jpg",
+    tablet: "/768_1024-devoluções.jpg",
+    mobile: "/375_667-devoluções.jpg",
   },
 ];
 
@@ -37,7 +37,7 @@ export default function BannerCarousel() {
   }, []);
 
   const getImage = (slide: Slide): string => {
-    if (screenWidth < 668) return slide.mobile;
+    if (screenWidth < 658) return slide.mobile;
     if (screenWidth < 1024) return slide.tablet;
     return slide.desktop;
   };
@@ -51,7 +51,7 @@ export default function BannerCarousel() {
     <div className="relative min-w-full overflow-hidden">
       {/* Slide */}
       <div
-        className="h-[348px] bg-cover bg-center transition-all duration-500"
+        className="h-[400px] sm:h-[348px] bg-cover bg-center transition-all duration-500"
         style={{
           backgroundImage: `url(${getImage(slides[current])})`,
         }}
