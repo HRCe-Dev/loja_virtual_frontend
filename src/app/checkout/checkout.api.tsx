@@ -1,5 +1,4 @@
 "use client";
-import { verifyAuth } from "@/api/auth";
 import { fetchWithAuth } from "@/api/fetch_auth";
 import { url } from "@/api/url";
 import { MetodoEnvio } from "@/types/MetodoEnvioTypes";
@@ -114,7 +113,7 @@ export async function pagarPedido(
       }
     );
 
-    const data = await res.json();
+    //const data = await res.json();
 
     //alert(JSON.stringify(data));
 
@@ -125,6 +124,7 @@ export async function pagarPedido(
 
     return false;
   } catch (error) {
+    console.error(error);
     return false;
   }
 }

@@ -53,7 +53,7 @@ export default function DeliveryForm() {
       <h2 className="text-xl font-semibold mb-4">Informações de Entrega</h2>
 
       {/* Endereço */}
-      {!loading ? (
+      {!loading && !error ? (
         <div className="border border-gray-300 p-4 rounded mb-6">
           <label className="block text-sm mb-1">País</label>
           <input
@@ -101,7 +101,7 @@ export default function DeliveryForm() {
       )}
 
       {/* Método de Entrega */}
-      {!loading ? (
+      {!loading && !error ? (
         <div className="border border-gray-300 p-4 rounded">
           <label className="block text-sm font-medium mb-2">
             Método de Entrega

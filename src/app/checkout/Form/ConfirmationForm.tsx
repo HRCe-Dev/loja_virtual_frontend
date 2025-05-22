@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useGetPedidoDados } from "../checkout.api";
 import fetchProdutosLista from "@/api/fetchProdutosLista";
 import { Produto } from "@/types/Produto";
+import Loading from "@/componentes/Loading";
 
 export default function Confirmation() {
   const params = useParams();
@@ -55,9 +56,12 @@ export default function Confirmation() {
         </p>
       </div>
 
-      <h3 className="text-orange-500 font-semibold mb-3">Resumo do Pedido</h3>
-      {pedidoData && (
+      {!loading && !error && pedidoData && (
         <>
+          <h3 className="text-orange-500 font-semibold mb-3">
+            Resumo do Pedido
+          </h3>
+
           <div className="border rounded-md divide-y mb-6">
             {pedidoData.itens_pedido.map((prod) => (
               <div
@@ -110,6 +114,8 @@ export default function Confirmation() {
           </div>
         </>
       )}
+
+      {loading && !error && <Loading />}
 
       <button
         onClick={handleFinish}

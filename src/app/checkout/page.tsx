@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import AccountForm from "@/app/checkout/Form/AccountForm";
 import Wrapper from "@/app/checkout/Form/Wrapper";
 import { verifyAuth } from "@/api/auth";
+import Loading from "@/componentes/Loading";
 
 export default function CheckoutIndex() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,9 +26,5 @@ export default function CheckoutIndex() {
     verifyLogin();
   }, []);
 
-  return (
-    <Wrapper step={1}>
-      <AccountForm />
-    </Wrapper>
-  );
+  return <Wrapper step={1}>{loading ? <Loading /> : <AccountForm />}</Wrapper>;
 }

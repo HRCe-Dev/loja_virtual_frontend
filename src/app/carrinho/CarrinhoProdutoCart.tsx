@@ -5,6 +5,7 @@ import { ProdutoCarrinho } from "@/types/Produto";
 import React from "react";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
 import { BtnTrash } from "@/componentes/Buttons/Buttons";
+import Image from "next/image";
 
 interface carrinhoCardProps {
   produto: ProdutoCarrinho;
@@ -21,7 +22,7 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
     <div className="px-5 sm:px-10 mx-auto flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10 border border-gray-300 rounded-lg">
       <div>
         {/* imagem */}
-        <img
+        <Image
           src={produto.imagem_url}
           alt={produto.nome}
           className="h-40 sm:h-48"

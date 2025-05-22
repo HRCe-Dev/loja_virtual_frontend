@@ -49,7 +49,7 @@ export default function PaymentForm() {
       className="w-full max-w-7xl mx-auto px-4 md:px-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-6"
     >
       {/* Coluna esquerda */}
-      {pedidoData && (
+      {pedidoData && !loading && !error && (
         <>
           <div className="md:col-span-2 space-y-3 ">
             {/* Dados de Entrega */}

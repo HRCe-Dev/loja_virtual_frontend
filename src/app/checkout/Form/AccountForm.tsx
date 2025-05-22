@@ -32,7 +32,8 @@ export default function AccountForm() {
   });
 
   const onSubmit = (data: FormData) => {
-    const { confirmPassword, ...user } = data;
+    //const { confirmPassword, ...user } = data;
+    console.log(JSON.stringify(data));
     router.push("/checkout/entrega");
   };
 
