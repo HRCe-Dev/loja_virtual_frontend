@@ -107,10 +107,10 @@ export default function Confirmation() {
             <p className="font-semibold mb-1">Endereço de Entrega</p>
             <p>{pedidoData.nomeDestino}</p>
             <p>{pedidoData.telefoneDestino}</p>
-            <p>Maderalzinho</p>
-            <p>Mindelo</p>
-            <p>São Vicente</p>
-            <p>Cabo Verde</p>
+            <br />
+            {pedidoData.endereco_id.split(",").map((end) => (
+              <p>{end}</p>
+            ))}
           </div>
         </>
       )}

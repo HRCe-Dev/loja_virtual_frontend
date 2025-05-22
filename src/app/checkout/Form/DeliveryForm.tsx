@@ -3,15 +3,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MetodoEnvio } from "@/types/MetodoEnvioTypes";
 import { realizarCheckout, useGetMetodosEnvio } from "../checkout.api";
 import Loading from "@/componentes/Loading";
+import { Cidade, Zona } from "@/types/Localizacao";
+import { useObterCidades, UseObterZonas } from "@/api/localizacao.api";
 
 const schema = z.object({
   island: z.string().min(1, "Obrigatório"),
-  city: z.string().min(1, "Obrigatório"),
-  zone: z.string().min(1, "Obrigatório"),
+  city: z.coerce.number().min(1, "Obrigatório"),
+  zone: z.coerce.number().min(1, "Obrigatório"),
   deliveryMethod: z.string().min(1, "Escolha um método de entrega"),
 });
 
@@ -22,14 +24,24 @@ export default function DeliveryForm() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [metodosEnvio, setMetodosEnvio] = useState<MetodoEnvio[]>([]);
+  const [cidades, setCidades] = useState<Cidade[]>([]);
+  const [zonas, setZonas] = useState<Zona[]>([]);
+  const [loadingZona, setLoadingZona] = useState<boolean>(false);
 
   useGetMetodosEnvio(setMetodosEnvio, setLoading, setError, []);
+  useObterCidades(setCidades, setLoading, []);
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  const dados = watch();
+
+  //definir zonas
+  UseObterZonas(dados.city, setZonas, setLoadingZona, [dados.city]);
 
   const onSubmit = async (data: FormData) => {
     setLoading(true);
@@ -39,7 +51,15 @@ export default function DeliveryForm() {
       metodo_entrega_id: Number(data.deliveryMethod),
     });
 
-    if (pedido_id) router.push("/checkout/pagamento/" + pedido_id);
+    if (pedido_id) {
+      //TODO: retirar depois, so para fase 1:
+      localStorage.setItem(
+        "endereco",
+        JSON.stringify(zonas.find((zona) => zona.id === data.zone))
+      );
+
+      router.push("/checkout/pagamento/" + pedido_id);
+    }
 
     //TODO: mostrar erros
     setError("Erro em realizar checkout");
@@ -68,9 +88,11 @@ export default function DeliveryForm() {
             className="input w-full border border-gray-300 rounded-md px-3 py-2 "
           >
             <option value="">Selecione a ilha</option>
-            <option value="Santiago">Santiago</option>
-            <option value="São Vicente">São Vicente</option>
-            {/* ...adicione mais opções */}
+            {[...new Set(cidades.map((cidade) => cidade.ilha))].map((ilha) => (
+              <option key={ilha} value={ilha}>
+                {ilha}
+              </option>
+            ))}
           </select>
           <p className="text-red-500 text-sm">{errors.island?.message}</p>
 
@@ -80,8 +102,13 @@ export default function DeliveryForm() {
             className="input w-full border border-gray-300 rounded-md px-3 py-2 "
           >
             <option value="">Selecione a cidade</option>
-            <option value="Praia">Praia</option>
-            {/* ...mais opções */}
+            {cidades
+              .filter((cidade) => cidade.ilha === dados.island)
+              .map((cidade) => (
+                <option key={cidade.id} value={cidade.id}>
+                  {cidade.nome}
+                </option>
+              ))}
           </select>
           <p className="text-red-500 text-sm">{errors.city?.message}</p>
 
@@ -90,9 +117,15 @@ export default function DeliveryForm() {
             {...register("zone")}
             className="input w-full  border border-gray-300 rounded-md px-3 py-2"
           >
-            <option value="">Selecione a zona</option>
-            <option value="tarrafal">Tarrafal</option>
-            {/* ...opções dinâmicas */}
+            <option value="">
+              {loadingZona ? "Carregando Zonas..." : "Selecione a zona"}
+            </option>
+            {Array.isArray(zonas) &&
+              zonas.map((zona) => (
+                <option key={zona.id} value={zona.id}>
+                  {zona.zona}
+                </option>
+              ))}
           </select>
           <p className="text-red-500 text-sm">{errors.zone?.message}</p>
         </div>

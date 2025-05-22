@@ -2,7 +2,7 @@ export interface PedidoDados1 {
   id: string;
   nomeDestino: string;
   telefoneDestino: string | null;
-  endereco_id: number;
+  endereco_id: string;
   metodo_entrega_id: number;
   total: number;
   custo_envio: number;

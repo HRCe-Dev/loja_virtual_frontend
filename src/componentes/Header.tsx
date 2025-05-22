@@ -1,7 +1,9 @@
-'use client';
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, ShoppingCart, Menu, User, MapPin } from "lucide-react";
+import { useObterIlhas } from "@/api/localizacao.api";
+import { useState } from "react";
 
 const categorias = [
   "Categoria",
@@ -13,6 +15,9 @@ const categorias = [
 ];
 
 const Header = () => {
+  const [ilhas, setIlhas] = useState<string[]>([]);
+  useObterIlhas(setIlhas);
+
   return (
     <header className="w-full">
       {/* Top Orange Bar */}
@@ -57,10 +62,12 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-4">
           {/* Select ilhas */}
           <select className="bg-white text-sm px-2 py-1 rounded-md">
-            <option value="sv">Santiago</option>
-            <option value="sa">Santo Antão</option>
-            <option value="sn">São Nicolau</option>
-            <option value="bv">Boa Vista</option>
+            <option value="">Selecione a ilha</option>
+            {ilhas.map((ilha) => (
+              <option key={ilha} value={ilha}>
+                {ilha}
+              </option>
+            ))}
           </select>
 
           <Link href="/login" className="text-white text-sm hover:underline">

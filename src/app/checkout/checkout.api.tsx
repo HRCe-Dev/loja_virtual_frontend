@@ -5,6 +5,7 @@ import { MetodoEnvio } from "@/types/MetodoEnvioTypes";
 import { useEffect } from "react";
 import { esvaziarCarrinho, obterCarrinho } from "../carrinho/carrinho";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
+import { Zona } from "@/types/Localizacao";
 
 //obter metodos de envio
 export function useGetMetodosEnvio(
@@ -86,7 +87,14 @@ export function useGetPedidoDados(
 
       const dados: PedidoDados1 = await res.json();
 
-      setPedidoData(dados);
+      const endereco = JSON.parse(
+        localStorage.getItem("endereco") || "{}"
+      ) as Zona;
+
+      setPedidoData({
+        ...dados,
+        endereco_id: `${endereco.zona}, ${endereco.cidade}, ${endereco.ilha}, Cabo Verde`,
+      });
 
       //alert(JSON.stringify(dados));
 
