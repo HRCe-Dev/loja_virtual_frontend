@@ -20,12 +20,14 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
 }) => {
   return (
     <div className="px-5 sm:px-10 mx-auto flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10 border border-gray-300 rounded-lg">
-      <div>
+      <div className="flex items-center justify-center w-40 h-48">
         {/* imagem */}
         <Image
           src={produto.imagem_url}
           alt={produto.nome}
-          className="h-40 sm:h-48"
+          className="object-contain w-full h-full"
+          width={160}
+          height={192}
         />
       </div>
       <div className="flex flex-col sm:flex-1 text-center sm:text-start">

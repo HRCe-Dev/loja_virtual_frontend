@@ -56,7 +56,7 @@ export default function Confirmation() {
         </p>
       </div>
 
-      {!loading && !error && pedidoData && (
+      {!loading && pedidoData && (
         <>
           <h3 className="text-orange-500 font-semibold mb-3">
             Resumo do Pedido
