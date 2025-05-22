@@ -21,25 +21,38 @@ const Header = () => {
   const ilhasRef = useRef<HTMLDivElement | null>(null);
 
 
+  // Fecha menus ao clicar fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-    const target = event.target as HTMLElement;
+      const target = event.target as Node;
 
-    const clickedOutsideMenu = menuRef.current && !menuRef.current.contains(target);
-    const clickedOutsideIlhas = ilhasRef.current && !ilhasRef.current.contains(target);
+      const clickedOutsideMenu = menuRef.current && !menuRef.current.contains(target);
+      const clickedOutsideIlhas = ilhasRef.current && !ilhasRef.current.contains(target);
 
-    if (clickedOutsideMenu && clickedOutsideIlhas) {
-      setMenuOpen(false);
-      setIlhasOpen(false);
+      if (menuOpen && clickedOutsideMenu) {
+        setMenuOpen(false);
+      }
+      if (ilhasOpen && clickedOutsideIlhas) {
+        setIlhasOpen(false);
+      }
     }
-  }
-
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [menuOpen, ilhasOpen]);
+
+  // Toggle menus com exclusividade
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+    setIlhasOpen(false);
+  };
+
+  const toggleIlhas = () => {
+    setIlhasOpen((prev) => !prev);
+    setMenuOpen(false);
+  };
 
 
   return (
@@ -137,37 +150,38 @@ const Header = () => {
       </div>
 
     {/* Mobile Menu de Categorias */}
-    {menuOpen && (
-      <div
-        ref={menuRef}
-        className="md:hidden absolute top-14 right-4 w-1/2 bg-white shadow-lg z-50 px-4 py-3 space-y-2 text-sm"
-      >
-        {categorias.map((cat, i) => (
-          <button
-            key={i}
-            className="block w-full text-left text-gray-800 hover:text-orange-500"
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-    )}
-    {/* Mobile Menu de Ilhas */}
-    {ilhasOpen && (
-      <div
-        ref={ilhasRef}
-        className="md:hidden absolute left-0 right-0 top-[100%] bg-white shadow-lg z-50 px-4 py-3 space-y-2 text-sm"
-      >
-        {["Santiago", "Santo Antão", "São Nicolau", "Boa Vista"].map((ilha, i) => (
-          <button
-            key={i}
-            className="block w-full text-left text-gray-800 hover:text-orange-500"
-          >
-            {ilha}
-          </button>
-        ))}
-      </div>
-    )}
+      {menuOpen && (
+        <div
+          ref={menuRef}
+          className="md:hidden absolute top-14 right-4 w-1/2 bg-white shadow-lg z-50 px-4 py-3 space-y-2 text-sm"
+        >
+          {categorias.map((cat, i) => (
+            <button
+              key={i}
+              className="block w-full text-left text-gray-800 hover:text-orange-500"
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Mobile Menu de Ilhas */}
+      {ilhasOpen && (
+        <div
+          ref={ilhasRef}
+          className="md:hidden absolute left-0 right-0 top-[100%] bg-white shadow-lg z-50 px-4 py-3 space-y-2 text-sm"
+        >
+          {["Santiago", "Santo Antão", "São Nicolau", "Boa Vista"].map((ilha, i) => (
+            <button
+              key={i}
+              className="block w-full text-left text-gray-800 hover:text-orange-500"
+            >
+              {ilha}
+            </button>
+          ))}
+        </div>
+      )}
     </header>
   );
 };
