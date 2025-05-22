@@ -3,6 +3,8 @@
 import { url } from "@/api/url";
 import SeletorEndereco from "@/componentes/Pop_ups/Seletor_Endereco/Seletor_Endereco";
 import { inputStyle } from "@/styles/forms";
+import { proximoRoute } from "@/util/proximoPage";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -22,6 +24,10 @@ const CadastroForm: React.FC = () => {
   const [step, setStep] = useState(1);
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") || null;
+  const router = useRouter();
 
   const {
     register,
@@ -50,7 +56,12 @@ const CadastroForm: React.FC = () => {
       const dados = await res.json();
 
       if (res.ok) {
-        alert("Cadastro realizado com sucesso!");
+        //alert("Cadastro realizado com sucesso!");
+        if (next) {
+          router.push(proximoRoute[next]);
+        } else {
+          router.push("/");
+        }
       } else {
         alert(dados?.message);
       }

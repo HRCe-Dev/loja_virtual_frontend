@@ -15,7 +15,7 @@ function useVerifyLogin(
       const auth = await verifyAuth();
 
       if (!auth) {
-        router.push("/checkout");
+        router.push("/login?next=entrega");
         return; // evita chamar setLoading(false) depois de redirecionar
       }
 
