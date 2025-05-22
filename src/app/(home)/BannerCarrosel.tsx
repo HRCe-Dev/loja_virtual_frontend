@@ -13,15 +13,21 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
-    desktop: "/1920_600-entrega24.jpg",
-    tablet: "/768_1024-entrega24.jpg",
-    mobile: "/375_667-entrega24.jpg",
+    desktop:
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747898095/hrce/home_banners/bannerEntrega/desktop.jpg",
+    tablet:
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747898095/hrce/home_banners/bannerEntrega/tablet.jpg",
+    mobile:
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747898095/hrce/home_banners/bannerEntrega/mobile.jpg",
   },
   {
     id: 2,
-    desktop: "/1920_600-devoluções.jpg",
-    tablet: "/768_1024-devoluções.jpg",
-    mobile: "/375_667-devoluções.jpg",
+    desktop:
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747897866/hrce/home_banners/banner1/desktop.jpg",
+    tablet:
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747897866/hrce/home_banners/banner1/tablet.jpg",
+    mobile:
+      "https://res.cloudinary.com/dnptdd7su/image/upload/v1747897866/hrce/home_banners/banner1/mobile.jpg",
   },
 ];
 
@@ -56,7 +62,6 @@ export default function BannerCarousel() {
           backgroundImage: `url(${getImage(slides[current])})`,
         }}
       />
-
 
       {/* Setas */}
       <button
