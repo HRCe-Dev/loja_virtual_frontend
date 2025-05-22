@@ -23,7 +23,7 @@ export default async function Home() {
           ))}
         </ProdutoListaLg>
       </div>
-    <div className="flex flex-col gap-10 mb-30 mx-10 mt-4">
+    <div className="flex flex-col gap-10 mb-30 mt-4">
       {/*Produtos TOP*/}
       <div className="flex flex-col gap-10 px-4 md:px-10 mt-4 mb-10">
         {/*<h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
@@ -56,7 +56,7 @@ export default async function Home() {
         </ProdutoListaLg>
       </div>
 
-      <div>
+      <div className="px-4">
         <NewsletterForm />
       </div>
     </div>
