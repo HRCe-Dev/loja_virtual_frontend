@@ -3,7 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   //output: 'export',
-  distDir: "out",
   // TODO: corrigir este config
   //The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
   images: {
@@ -20,3 +19,5 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+//Retirei todas as configs do cloudflare pages
