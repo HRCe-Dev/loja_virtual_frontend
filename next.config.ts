@@ -19,5 +19,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-//Retirei todas as configs do cloudflare pages
