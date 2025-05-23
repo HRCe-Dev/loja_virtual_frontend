@@ -6,6 +6,7 @@ import { NewsletterForm } from "@/componentes/NewsletterForm";
 import SeccaoMarker from "./SeccaoMarker";
 import Promocoes from "@/componentes/Promocoes/Promocoes";
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
+import CategoriaNavigation from "@/componentes/CategoriaNavigation";
 
 export default async function Home() {
   const produtosMaisVendidos = (await fetchProdutosMaisVendidos()) as Produto[];
@@ -13,10 +14,13 @@ export default async function Home() {
   return (
     <div>
       <BannerCarousel />
-      
+      <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
+        <SeccaoMarker>Categorias Populares</SeccaoMarker>
+        <CategoriaNavigation />
+      </div>
       {/* Produtos em Destaque */}
       <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
-        <SeccaoMarker>Produtos em Destaque</SeccaoMarker>
+        <SeccaoMarker href="/destaques">Produtos em Destaque</SeccaoMarker>
         <ProdutoListaLg>
           {produtosMaisVendidos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
@@ -29,7 +33,7 @@ export default async function Home() {
         {/*<h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
           Produtos TOP
         </h1>*/}
-        <SeccaoMarker>Produtos TOP</SeccaoMarker>
+        <SeccaoMarker href="/top">Produtos TOP</SeccaoMarker>
         <ProdutoListaLg>
           {produtosMaisVendidos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
@@ -39,7 +43,7 @@ export default async function Home() {
 
       {/*Produtos em Promoção */}
       <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
-        <SeccaoMarker>Produtos em Promoção</SeccaoMarker>
+        <SeccaoMarker href="promocoes">Produtos em Promoção</SeccaoMarker>
         <Promocoes />
       </div>
 
@@ -48,7 +52,7 @@ export default async function Home() {
         {/*<h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
           Produtos Mais Vendidos
         </h1>*/}
-        <SeccaoMarker>Produtos Mais Vendidos</SeccaoMarker>
+        <SeccaoMarker href="/maisvendidos++">Produtos Mais Vendidos</SeccaoMarker>
         <ProdutoListaLg>
           {produtosMaisVendidos.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
