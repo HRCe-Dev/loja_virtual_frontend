@@ -24,10 +24,16 @@ const PromocoesCard2: React.FC<PromocoesCardProps> = ({ produto }) => {
       <div
         id="info"
         className="absolute inset-0 flex flex-col items-center justify-center 
-                   bg-black bg-opacity-50 text-white p-4 opacity-0 
-                   group-hover:opacity-100 transition-opacity duration-300"
+           bg-black bg-opacity-50 text-white p-4 
+           opacity-50 md:opacity-0 md:group-hover:opacity-70 
+           transition-opacity duration-300"
       >
-        <p className="text-sm md:text-lg font-bold bg-red-500 px-2 py-1 rounded mb-2">
+        <p className="absolute top-2 right-2 text-xs font-bold bg-red-500 px-2 py-1 rounded z-10 block md:hidden">
+          {desconto}% OFF
+        </p>
+
+        {/* Só Desktop – centralizado */}
+        <p className="hidden md:block text-sm md:text-lg font-bold bg-red-500 px-2 py-1 rounded mb-2">
           {desconto}% OFF
         </p>
         <h2 className="text-center text-base md:text-xl font-semibold">

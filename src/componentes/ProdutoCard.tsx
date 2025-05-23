@@ -15,8 +15,9 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
       className="group relative w-full px-3 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300"
     >
       {/* Botão de Like (Lista de Desejo) */}
-      <BtnListaDesejo produto_id={produto.id} tipo={2} />
-
+      <div className="absolute top-2 right-2 z-10 visible md:invisible md:group-hover:visible">
+        <BtnListaDesejo produto_id={produto.id} tipo={2} />
+      </div>
       {/*Imagem */}
       <div className="relative w-full aspect-[4/3] overflow-hidden">
         <Image
