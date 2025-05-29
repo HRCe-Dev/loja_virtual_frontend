@@ -99,7 +99,7 @@ const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
             </div>
           </div>
 
-          <div className="my-10 md:my-20 px-2 sm:px-6 md:px-20 lg:px-40 xl:px-60 text-left">
+          <div className="my-10 md:my-20 px-2 sm:px-6  text-left">
             {/*Descricao*/}
             <DescricaoProduto
               descricaoText={produto ? produto.descricao : null}
@@ -113,7 +113,7 @@ const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
 
         <SeccaoMarker>Produtos Semelhantes</SeccaoMarker>
         <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-max md:w-full">
+          <div className="flex md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 3xl:grid-cols-6 gap-6 w-max md:w-full">
             {ProdutosSemelhantes &&
               ProdutosSemelhantes.slice(0, 4).map((prod) => (
                 <ProdutoCard key={prod.id} produto={prod} />
@@ -121,9 +121,9 @@ const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
           </div>
         </div>
       </div>
-      <div className="my-10">
+      <div className="flex flex-col gap-10 px-2 md:px-10 mt-4 mb-10">
         <SeccaoMarker>Avaliações do Produto</SeccaoMarker>
-        <div className="mx-auto text-center">
+        <div className="text-center">
           <AvaliacoesPage />
         </div>
       </div>

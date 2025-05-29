@@ -38,27 +38,27 @@ export default function AvaliacoesPage() {
   return (
     <>
       {avaliacoes && !loading && !error && (
-        <section className="max-w-4xl mx-auto p-4 space-y-8">
+        <section className="max-w-4xl mx-auto p-2 md:p-4 space-y-8">
           {/* Avaliação Geral */}
           <div className="bg-white p-6 rounded shadow flex">
             <div className="mt-6 space-y-2 w-1/2">
-              <h1 className="text-2xl font-bold mb-2 text-start ">
+              <h1 className="text-lg md:text-2xl font-bold mb-2 text-start ">
                 Avaliação Geral
               </h1>
               <div className="flex gap-4">
-                <p className="text-4xl font-bold">{avaliacoes.media}</p>
+                <p className="text-2xl md:text-4xl font-bold">{avaliacoes.media}</p>
                 <div className="text-sm text-gray-500 mt-2">
                   <div>
-                    <div className="flex text-yellow-400 text-sm">
+                    <div className="flex text-yellow-400  text-sm md:text-base">
                       {[...Array(5)].map((_, i) => (
                         <FaStar key={i} />
                       ))}
                     </div>
-                    <p className="text-gray-400  text-start">de 5</p>
+                    <p className="text-gray-400 text-sm text-start">de 5</p>
                   </div>
                 </div>
               </div>
-              <p className="text-start text-gray-400">
+              <p className="text-start text-sm md:text-base text-gray-400">
                 Baseado em {avaliacoes.n_avaliacoes} avaliações
               </p>
             </div>
@@ -82,11 +82,11 @@ export default function AvaliacoesPage() {
           </div>
 
           {/* Avaliações em Destaque */}
-          <div className="flex justify-between items-center">
-            <h2 className="text-lg font-semibold">Avaliações em Destaque</h2>
+          <div className="flex justify-between items-center gap-4">
+            <h2 className="txt-sm md:text-lg font-semibold">Avaliações em Destaque</h2>
             <button
               onClick={() => setModalOpen(true)}
-              className="bg-orange-400 text-white px-8 py-2 rounded hover:bg-orange-500 transition text-sm font-medium"
+              className="bg-orange-400 text-white px-3 md:px-8 py-2 rounded hover:bg-orange-500 transition text-sm font-medium"
             >
               Avaliar
             </button>

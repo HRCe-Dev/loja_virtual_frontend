@@ -68,7 +68,7 @@ const Header = () => {
   };*/
 
   return (
-    <header className="w-full relative">
+    <header className="w-full fixed top-0 left-0 right-0 z-50">
       {/* Top Orange Bar */}
       <div className="bg-[#FF7700] w-full px-4 sm:px-6 lg:px-16 py-2 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Logo */}

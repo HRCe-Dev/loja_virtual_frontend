@@ -33,7 +33,7 @@ export function NewsletterForm() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-20 mt-10 px-6 py-10 rounded-xl bg-gradient-to-r from-[#FB943E] to-[#6773D3]">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-20 mt-10 px-6 py-10 md:py-20 rounded-3xl bg-gradient-to-r from-[#FF7700] to-[#265674]">
       {/* Texto */}
       <div className="text-white text-center md:text-left max-w-md">
         <h1 className="text-2xl md:text-3xl font-bold">

@@ -54,10 +54,10 @@ export const BtnListaDesejo: React.FC<btnLikeProps> = ({
     return (
       <button
         onClick={(e) => onClickLike(e)}
-        className={`absolute top-2 right-2 z-10 
-  bg-white p-1 rounded-full shadow-md ${
-    isLiked ? "" : "opacity-0"
-  } group-hover:opacity-100 transition-opacity duration-300 `}
+        className={`absolute top-2 right-2 z-10
+        bg-white p-1 rounded-full shadow-md
+        opacity-100 md:opacity-0 md:group-hover:opacity-100
+        transition-opacity duration-300`}
         title="Adicionar à Lista de Desejos"
       >
         <Heart
