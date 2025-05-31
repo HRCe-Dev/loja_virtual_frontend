@@ -1,6 +1,6 @@
 "use client";
 
-import { adicionarCarrinho, verificarCarrinho } from "@/app/carrinho/carrinho";
+import { adicionarCarrinho, verificarCarrinho } from "@/app/(cliente)/carrinho/carrinho";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 

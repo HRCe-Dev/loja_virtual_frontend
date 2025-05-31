@@ -1,0 +1,94 @@
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import ProdutoCard from '@/componentes/ProdutoCard';
+import FiltroSidebar from '@/componentes/FiltroSidebar';
+import { Produto } from '@/types/Produto';
+import { ProdutoListaLg } from '@/componentes/ProdutoLista';
+
+export default function PaginaBusca() {
+  const searchParams = useSearchParams();
+  const termo = searchParams.get('termo')?.toLowerCase() || '';
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [mostrarFiltro, setMostrarFiltro] = useState(false);
+
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      const res = await fetch('/api/produtos');
+      const data: Produto[] = await res.json();
+
+      const filtrados = data.filter((p) =>
+        p.nome.toLowerCase().includes(termo)
+      );
+
+      setProdutos(filtrados);
+    };
+
+    if (termo) fetchProdutos();
+  }, [termo]);
+
+  return (
+    <div className="flex bg-gray-50 min-h-screen pt-5"> {/* min-h-screen garante altura */}
+      
+      <aside className="hidden md:block w-1/5 px-4 sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto">
+        <FiltroSidebar />
+      </aside>
+
+      {/* Conteúdo principal */}
+      <main className="flex-1 px-4 md:px-8">
+        {/* Cabeçalho responsivo */}
+        <div className="bg-white rounded-2xl px-6 py-4 shadow mb-6 space-y-2 md:space-y-0 md:flex md:items-center md:justify-between">
+          {/* Título */}
+          <p className="text-lg font-medium">
+            Resultados para: <span className="font-semibold">"{termo}"</span>
+          </p>
+
+          {/* Contagem e Ações */}
+          <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
+            <span className="text-sm text-gray-500">{produtos.length} produtos encontrados</span>
+
+            {/* Dropdown de ordenação */}
+            <button className="border border-gray-300 text-sm rounded-full px-4 py-1 hover:bg-gray-100 transition">
+              Mais Relevantes ⌄
+            </button>
+
+            {/* Botão de filtros (visível só no mobile) */}
+            <button
+              onClick={() => setMostrarFiltro(!mostrarFiltro)}
+              className="md:hidden border border-gray-300 text-sm rounded-full px-4 py-1 hover:bg-gray-100 transition"
+            >
+              Filtros ⌄
+            </button>
+          </div>
+        </div>
+
+        {/* Lista de produtos */}
+        <ProdutoListaLg>
+          {produtos.length === 0 ? (
+            <p className="text-gray-600">Nenhum produto encontrado.</p>
+          ) : (
+            produtos.map((prod) => (
+              <ProdutoCard key={prod.id} produto={prod} />
+            ))
+          )}
+        </ProdutoListaLg>
+      </main>
+
+      {/* Sidebar em mobile como overlay opcional */}
+      {mostrarFiltro && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-start">
+          <div className="bg-white w-64 h-full p-4">
+            <button
+              onClick={() => setMostrarFiltro(false)}
+              className="text-gray-500 text-sm mb-4"
+            >
+              Fechar ✕
+            </button>
+            <FiltroSidebar />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

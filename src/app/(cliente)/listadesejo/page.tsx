@@ -4,7 +4,7 @@ import { Produto } from "@/types/Produto";
 import { Produtos } from "@/util/produtosTeste";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
-import SeccaoMarker from "../(home)/SeccaoMarker";
+import SeccaoMarker from "../../(home)/SeccaoMarker";
 import { useEffect, useState } from "react";
 import { obterProdutosListaDesejo } from "./listadesejo";
 import Loading from "@/componentes/Loading";

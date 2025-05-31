@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useObterIlhas } from "@/api/localizacao.api";
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Search,
   ShoppingCart,
@@ -30,6 +31,11 @@ const Header = () => {
 
   const menuRef = useRef<HTMLDivElement | null>(null);
   const ilhasRef = useRef<HTMLDivElement | null>(null);
+
+  const router = useRouter();
+  const [termoBusca, setTermoBusca] = useState('');
+
+  
 
   // Fecha menus ao clicar fora
   useEffect(() => {
@@ -101,13 +107,22 @@ const Header = () => {
         <div className="w-full flex md:px-10">
           <div className="flex items-center bg-white rounded-l-lg px-3  py-2 shadow-s md:w-9/10 w-full">
             <input
-              type="text"
-              placeholder="Procura aqui seu produto"
-              className="w-full outline-none text-sm text-gray-700"
-            />
+            type="text"
+            placeholder="Procura aqui seu produto"
+            value={termoBusca}
+            onChange={(e) => setTermoBusca(e.target.value)}
+            className="w-full outline-none text-sm text-gray-700"
+          />
           </div>
           <div className="flex items-center bg-[#265674] rounded-e-lg px-5 md:px-3 py-3 shadow-sm md:w-1/10">
-            <button className="flex items-center justify-center w-full h-full">
+            <button
+              onClick={() => {
+                if (termoBusca.trim()) {
+                  router.push(`/busca?termo=${encodeURIComponent(termoBusca)}`);
+                }
+              }}
+              className="flex items-center justify-center w-full h-full"
+            >
               <Search className="text-white" size={22} />
             </button>
           </div>

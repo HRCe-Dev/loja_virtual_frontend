@@ -1,6 +1,6 @@
 "use client";
 
-import { atualizarCarrinho } from "@/app/carrinho/carrinho";
+import { atualizarCarrinho } from "@/app/(cliente)/carrinho/carrinho";
 import { useEffect, useRef, useState } from "react";
 
 interface seletorProps {

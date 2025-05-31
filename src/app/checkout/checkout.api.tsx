@@ -3,7 +3,7 @@ import { fetchWithAuth } from "@/api/fetch_auth";
 import { url } from "@/api/url";
 import { MetodoEnvio } from "@/types/MetodoEnvioTypes";
 import { useEffect } from "react";
-import { esvaziarCarrinho, obterCarrinho } from "../carrinho/carrinho";
+import { esvaziarCarrinho, obterCarrinho } from "../(cliente)/carrinho/carrinho";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import { Zona } from "@/types/Localizacao";
 
