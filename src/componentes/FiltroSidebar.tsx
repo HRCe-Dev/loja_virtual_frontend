@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Slider } from '@/components/ui/slider';
+import { IntervalSlider } from '@/components/ui/slider';
 import { ChevronDown, ChevronUp } from 'lucide-react'; // lucide-react instalado?
 
 export default function FiltroSidebar() {
-  const [preco, setPreco] = useState([50]);
+  const [preco, setPreco] = useState([0, 5000]); // valor inicial do intervalo
+
 
   const [mostrarCategoria, setMostrarCategoria] = useState(true);
   const [mostrarSubcategoria, setMostrarSubcategoria] = useState(true);
@@ -64,14 +65,16 @@ export default function FiltroSidebar() {
         </div>
         {mostrarPreco && (
           <div className="mt-2">
-            <Slider
+            <IntervalSlider
               value={preco}
               onValueChange={setPreco}
               min={0}
               max={5000}
               step={50}
             />
-            <div className="text-sm text-gray-500 mt-2">R$0,00 – R${preco[0]},00</div>
+            <div className="text-sm text-gray-500 mt-2">
+              R${preco[0]},00 – R${preco[1]},00
+            </div>
           </div>
         )}
       </div>

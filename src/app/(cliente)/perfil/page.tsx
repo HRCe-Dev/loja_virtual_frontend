@@ -1,107 +1,97 @@
 'use client';
 
 import { useState } from 'react';
+import { Pencil } from 'lucide-react';
+import PerfilModal from './PerfilModal';
+import AlterarPasswordModal from './PasswordModal';
 
-export default function PerfilPage() {
-  const [form, setForm] = useState({
-    nome: '',
-    apelido: '',
-    nascimento: '',
-    telefone: '',
-    foto: null as File | null,
+export default function PerfilView() {
+  const [dados, setDados] = useState<{
+    nome: string;
+    apelido: string;
+    nascimento: string;
+    telefone: string;
+    ilha: string;
+    zona: string;
+    foto: File | null;
+  }>({
+    nome: 'Nome',
+    apelido: 'Apelido',
+    nascimento: '20/00/2003',
+    telefone: '9504192',
+    ilha: 'Ilha',
+    zona: 'Zona',
+    foto: null,
   });
 
+
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarModalSenha, setMostrarModalSenha] = useState(false);
+
+
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md">
+    <div className="bg-white p-6 rounded-xl shadow-md relative">
       <h1 className="text-xl font-semibold mb-6">Meu perfil</h1>
 
-      <form className="flex flex-col gap-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Primeiro Nome
-            </label>
-            <input
-              type="text"
-              placeholder="Nome"
-              className="w-full px-4 py-2 border rounded-md bg-gray-100"
-            />
-          </div>
+      <button
+        className="absolute top-4 right-4 text-orange-500 hover:text-orange-600"
+        onClick={() => setMostrarModal(true)}
+      >
+        <Pencil size={20} />
+      </button>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Apelido
-            </label>
-            <input
-              type="text"
-              placeholder="Apelido"
-              className="w-full px-4 py-2 border rounded-md bg-gray-100"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Data de Nascimento
-            </label>
-            <input
-              type="date"
-              className="w-full px-4 py-2 border rounded-md bg-gray-100"
-            />
-          </div>
-
-          <div className="flex gap-2">
-            <div className="w-20">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Telemóvel
-              </label>
-              <input
-                type="text"
-                value="+238"
-                disabled
-                className="w-full px-2 py-2 border rounded-md bg-gray-100 text-gray-500"
-              />
-            </div>
-            <div className="flex-1 mt-6 md:mt-0">
-              <input
-                type="text"
-                placeholder="9504192"
-                className="w-full px-4 py-2 border rounded-md bg-gray-100"
-              />
-            </div>
-          </div>
-        </div>
-
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Alterar foto
-          </label>
-          <p className="text-xs text-gray-500 mb-6">
-            Nota: Formato SVG, PNG, ou JPG (Max 4mb)
-          </p>
-          <label
-            htmlFor="foto"
-            className="border border-dashed border-orange-300 bg-orange-50 text-orange-500 text-sm px-6 py-4 rounded-lg cursor-pointer w-fit hover:bg-orange-100"
-          >
-            📷 Photo 1
-          </label>
-          <input
-            type="file"
-            id="foto"
-            accept=".svg,.png,.jpg,.jpeg"
-            className="hidden"
-            onChange={(e) => setForm({ ...form, foto: e.target.files?.[0] || null })}
-          />
+          <p className="text-sm text-gray-500">Primeiro Nome</p>
+          <p className="font-medium">{dados.nome}</p>
         </div>
+        <div>
+          <p className="text-sm text-gray-500">Apelido</p>
+          <p className="font-medium">{dados.apelido}</p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-500">Data de Nascimento</p>
+          <p className="font-medium">{dados.nascimento}</p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-500">Telemóvel</p>
+          <p className="font-medium">+238 {dados.telefone}</p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-500">Zona</p>
+          <p className="font-medium">{dados.zona}</p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-500">Ilha</p>
+          <p className="font-medium">{dados.ilha}</p>
+        </div>
+      </div>
 
-        <div className="text-end">
-          <button
-            type="submit"
-            className="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600"
-          >
-            Atualizar Perfil
-          </button>
-        </div>
-      </form>
+      <button onClick={() => setMostrarModalSenha(true)}
+        className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
+        Alterar Password
+      </button>
+
+      {mostrarModalSenha && (
+        <AlterarPasswordModal
+          onFechar={() => setMostrarModalSenha(false)}
+          onSalvar={(dados) => {
+            console.log('Nova senha:', dados);
+            setMostrarModalSenha(false);
+          }}
+        />
+      )}
+
+      {mostrarModal && (
+        <PerfilModal
+          dadosIniciais={dados}
+          onFechar={() => setMostrarModal(false)}
+          onAtualizar={(novosDados) => {
+            setDados(novosDados);
+            setMostrarModal(false);
+          }}
+        />
+      )}
     </div>
   );
 }
