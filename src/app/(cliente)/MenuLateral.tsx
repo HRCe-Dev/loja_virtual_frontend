@@ -17,14 +17,14 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
     { href: '/historico', label: 'Histórico de Compras', icon: <ShoppingCart size={18} /> },
     { href: '/listadesejo', label: 'Lista de desejo', icon: <Heart size={18} /> },
     { href: '/carrinho', label: 'Carrinho de compras', icon: <ShoppingCart size={18} /> },
-    { href: '/entrega', label: 'Dados de entrega', icon: <MapPin size={18} /> },
+    { href: '/dadosentrega', label: 'Dados de entrega', icon: <MapPin size={18} /> },
     { href: '/perfil', label: 'Meu perfil', icon: <User size={18} /> },
   ];
 
   return (
     <aside
       className={`
-        fixed z-40 top-0 left-0 h-full w-1/5 bg-white shadow-lg transition-transform duration-300
+        fixed z-40 top-0 left-0 h-full  w-2/3 md:w-1/5 bg-white shadow-lg transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         md:static md:translate-x-0 md:block md:h-[calc(100vh-8rem)] md:rounded-2xl md:mt-4 md:ml-4 
       `}
@@ -47,7 +47,7 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
             className={`
               flex items-center gap-2 py-2 px-4 rounded-md transition
               ${pathname === href
-                ? 'bg-orange-500 text-white'
+                ? 'bg-[#FF7700] text-white'
                 : 'hover:bg-gray-100 text-gray-800'}
             `}
           >
