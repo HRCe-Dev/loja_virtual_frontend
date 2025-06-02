@@ -1,3 +1,5 @@
+import { string } from "zod";
+
 export interface Produto {
   id: string;
   nome: string;
@@ -45,4 +47,13 @@ interface Subcategoria {
 export interface Carrinho {
   produto_id: string;
   qtd?: number;
+}
+
+export interface SearchQuery {
+  q: string;
+  categoria?: string;
+  subcategoria?: string;
+  marca?: string;
+  precomin?: string;
+  precomax?: string;
 }

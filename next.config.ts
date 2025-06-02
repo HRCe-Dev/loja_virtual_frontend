@@ -16,9 +16,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    allowedDevOrigins: ['http://192.168.213.6:3000'], // substitua pelo seu IP real
-  },
 };
 
 export default nextConfig;
