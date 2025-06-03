@@ -26,6 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
+      <head>
+        {/* Define a cor da barra de status para Android */}
+        <meta name="theme-color" content="[#FF7700]" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
