@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import { alterarPassword } from "./perfil.api";
 
 interface Props {
   onFechar: () => void;
@@ -8,15 +9,30 @@ interface Props {
 }
 
 export default function AlterarPasswordModal({ onFechar, onSalvar }: Props) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  //TODO: usar react forms com validacao zod
   const [form, setForm] = useState({
-    atual: '',
-    nova: '',
-    confirmar: ''
+    atual: "",
+    nova: "",
+    confirmar: "",
   });
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    onSalvar(form); // Pode validar no componente pai
+    setLoading(true);
+    if (form.nova === form.confirmar) {
+      const enviar = await alterarPassword(form.atual, form.nova);
+      if (enviar) {
+        onSalvar(form);
+      } else {
+        setError("Erro em alterar Password");
+      }
+    }
+    setError("Password e Confirmar Password são diferentes");
+
+    setLoading(false);
   }
 
   return (
@@ -34,7 +50,10 @@ export default function AlterarPasswordModal({ onFechar, onSalvar }: Props) {
         {/* Cabeçalho */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Alterar sua password</h2>
-          <button onClick={onFechar} className="text-gray-400 hover:text-black text-xl">
+          <button
+            onClick={onFechar}
+            className="text-gray-400 hover:text-black text-xl"
+          >
             &times;
           </button>
         </div>
@@ -42,7 +61,9 @@ export default function AlterarPasswordModal({ onFechar, onSalvar }: Props) {
         {/* Formulário */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-700 mb-1">Antiga password</label>
+            <label className="block text-sm text-gray-700 mb-1">
+              Antiga password
+            </label>
             <input
               type="password"
               className="w-full px-4 py-2 bg-gray-100 rounded-md"
@@ -51,7 +72,9 @@ export default function AlterarPasswordModal({ onFechar, onSalvar }: Props) {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-700 mb-1">Nova password</label>
+            <label className="block text-sm text-gray-700 mb-1">
+              Nova password
+            </label>
             <input
               type="password"
               className="w-full px-4 py-2 bg-gray-100 rounded-md"
@@ -60,7 +83,9 @@ export default function AlterarPasswordModal({ onFechar, onSalvar }: Props) {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-700 mb-1">Confirmar password</label>
+            <label className="block text-sm text-gray-700 mb-1">
+              Confirmar password
+            </label>
             <input
               type="password"
               className="w-full px-4 py-2 bg-gray-100 rounded-md"
@@ -69,11 +94,14 @@ export default function AlterarPasswordModal({ onFechar, onSalvar }: Props) {
             />
           </div>
 
+          {error && <p className="text-red-800">{error}</p>}
+
           <button
             type="submit"
             className="w-full bg-orange-400 text-white font-semibold py-2 rounded-md hover:bg-orange-500"
+            disabled={loading}
           >
-            Atualizar Password
+            {!loading ? "Atualizar Password" : "Enviando..."}
           </button>
         </form>
       </div>
