@@ -73,7 +73,7 @@ export default function FiltroSidebar() {
               step={50}
             />
             <div className="text-sm text-gray-500 mt-2">
-              R${preco[0]},00 – R${preco[1]},00
+              CVE{preco[0]},00 – CVE{preco[1]},00
             </div>
           </div>
         )}
