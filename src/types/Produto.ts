@@ -31,17 +31,24 @@ interface imagensProduto {
   ordem: number;
 }
 
-interface Categoria {
+export interface Categoria {
   id: number;
   nome: string;
   descricao?: string;
   imagem_url?: string;
+  subcategorias?: Subcategoria[];
 }
 
 interface Subcategoria {
   id: number;
   nome: string;
   descricao?: string;
+}
+
+export interface AtributosProdutos {
+  categorias: Categoria[];
+  preco_min: number;
+  preco_max: number;
 }
 
 export interface Carrinho {

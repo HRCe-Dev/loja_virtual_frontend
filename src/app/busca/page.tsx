@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import FiltroSidebar from "@/componentes/FiltroSidebar";
-import { Produto } from "@/types/Produto";
+import { Produto, SearchQuery } from "@/types/Produto";
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import { useSearch } from "./search.api";
 import Loading from "@/componentes/Loading";
@@ -16,16 +16,20 @@ export default function PaginaBusca() {
   const termo = searchParams.get("termo")?.toLowerCase() || "";
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
+  const [filtros, setFiltros] = useState<Partial<SearchQuery> | null>(null);
 
   //colocar os filtros aqui
-  useSearch({ q: termo }, setProdutos, setLoading, setError, [termo]);
+  useSearch({ q: termo, ...filtros }, setProdutos, setLoading, setError, [
+    termo,
+    filtros,
+  ]);
 
   return (
     <div className="flex bg-gray-50 min-h-screen pt-5">
       {" "}
       {/* min-h-screen garante altura */}
       <aside className="hidden md:block w-1/5 px-4 sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto">
-        <FiltroSidebar />
+        <FiltroSidebar filtros={filtros} setFiltros={setFiltros} />
       </aside>
       {/* Conteúdo principal */}
       <main className="flex-1 px-4 md:px-8">
@@ -83,7 +87,7 @@ export default function PaginaBusca() {
             >
               Fechar ✕
             </button>
-            <FiltroSidebar />
+            <FiltroSidebar setFiltros={setFiltros} filtros={filtros} />
           </div>
         </div>
       )}
