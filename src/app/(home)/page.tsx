@@ -14,10 +14,10 @@ export default async function Home() {
   return (
     <div>
       <BannerCarousel />
-      <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-5">
+      <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
         <SeccaoMarker>Categorias Populares</SeccaoMarker>
+        <CategoriaNavigation />
       </div>
-      <CategoriaNavigation />
       {/* Produtos em Destaque */}
       <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
         <SeccaoMarker href="/destaques">Produtos em Destaque</SeccaoMarker>
