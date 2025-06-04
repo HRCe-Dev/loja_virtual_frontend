@@ -81,9 +81,9 @@ const Header = () => {
         <div className="flex items-center w-full md:w-auto justify-between">
           <Link href="/">
             <Image
-              src="\HRC_Azul.svg"
+              src="\HRC - Branca.svg"
               alt="Logo HRC"
-              width={140}
+              width={120}
               height={40}
               className="h-auto"
             />
