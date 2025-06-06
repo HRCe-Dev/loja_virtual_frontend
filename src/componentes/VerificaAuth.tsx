@@ -2,17 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { UserCircle } from "lucide-react";
-
-export const verifyAuth = async (): Promise<boolean> => {
-  console.log("Verificando se usuario está logado");
-  try {
-    return localStorage.getItem("token") !== null;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
+import { UserCircle } from "lucide-react"
+import { verifyAuth } from "@/api/auth";
 
 const AuthLinks = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -17,3 +17,17 @@ interface zona {
   ilha: string;
   pais: string;
 }
+
+// schemas/clienteSchema.ts
+import { z } from "zod";
+
+export const clienteSchema = z.object({
+  nome: z.string().min(1, "Nome é obrigatório"),
+  aplido: z.string().min(1, "Apelido é obrigatório"),
+  dataNascimento: z.string().min(1, "Data de nascimento é obrigatória"),
+  telefone: z.string()
+    .min(7, "Número muito curto")
+    .max(7, "Número inválido")
+    .regex(/^[0-9]+$/, "Apenas números"),
+  nif: z.number().int().nonnegative().optional(), // ou obrigatório se quiseres
+});

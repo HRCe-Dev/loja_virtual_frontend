@@ -1,8 +1,11 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { clienteSchema } from "@/types/Cliente";
+import { z } from "zod";
+
 import { Cliente } from "@/types/Cliente";
-import { Cidade, Zona } from "@/types/Localizacao";
-import { useState } from "react";
 
 interface Props {
   dadosIniciais: Cliente;
@@ -10,77 +13,69 @@ interface Props {
   onAtualizar: (dados: Cliente) => void;
 }
 
-export default function PerfilModal({
-  dadosIniciais,
-  onFechar,
-  onAtualizar,
-}: Props) {
-  const [form, setForm] = useState(dadosIniciais);
-  const [cidades, setCidades] = useState<Cidade[]>([]);
-  const [zonas, setZonas] = useState<Zona[]>([]);
+type ClienteFormData = z.infer<typeof clienteSchema>;
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    onAtualizar(form);
+export default function PerfilModal({ dadosIniciais, onFechar, onAtualizar }: Props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ClienteFormData>({
+    resolver: zodResolver(clienteSchema),
+    defaultValues: {
+      nome: dadosIniciais.nome,
+      aplido: dadosIniciais.aplido,
+      dataNascimento: dadosIniciais.dataNascimento,
+      telefone: dadosIniciais.telefone,
+      nif: dadosIniciais.nif,
+    },
+  });
+
+  function onSubmit(data: ClienteFormData) {
+    onAtualizar(data as Cliente);
   }
-
-  const selectStyle = "border border-gray-300 rounded-lg px-3 py-2";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Fundo com blur */}
-      <div
-        className="fixed inset-0 bg-black/30 backdrop-blur-sm"
-        onClick={onFechar}
-      />
-
-      {/* Conteúdo do modal */}
+      <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" onClick={onFechar} />
       <div className="relative z-10 bg-white p-6 rounded-xl shadow-md max-w-3xl w-full mx-4">
         <h1 className="text-xl font-semibold mb-6">Editar Perfil</h1>
-        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Primeiro Nome
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Primeiro Nome</label>
               <input
                 type="text"
                 className="w-full px-4 py-2 border rounded-md bg-gray-100"
-                value={form.nome}
-                onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                {...register("nome")}
               />
+              {errors.nome && <p className="text-sm text-red-500">{errors.nome.message}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Apelido
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Apelido</label>
               <input
                 type="text"
                 className="w-full px-4 py-2 border rounded-md bg-gray-100"
-                value={form.aplido}
-                onChange={(e) => setForm({ ...form, aplido: e.target.value })}
+                {...register("aplido")}
               />
+              {errors.aplido && <p className="text-sm text-red-500">{errors.aplido.message}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Data de Nascimento
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
               <input
                 type="date"
                 className="w-full px-4 py-2 border rounded-md bg-gray-100"
-                value={form.dataNascimento}
-                onChange={(e) =>
-                  setForm({ ...form, dataNascimento: e.target.value })
-                }
+                {...register("dataNascimento")}
               />
+              {errors.dataNascimento && (
+                <p className="text-sm text-red-500">{errors.dataNascimento.message}</p>
+              )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Telemóvel
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Telemóvel</label>
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -91,28 +86,23 @@ export default function PerfilModal({
                 <input
                   type="text"
                   className="w-full px-4 py-2 border rounded-md bg-gray-100"
-                  value={form.telefone}
-                  onChange={(e) =>
-                    setForm({ ...form, telefone: e.target.value })
-                  }
+                  {...register("telefone")}
                 />
               </div>
+              {errors.telefone && <p className="text-sm text-red-500">{errors.telefone.message}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                NIF
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">NIF</label>
               <input
                 type="number"
                 className="w-full px-4 py-2 border rounded-md bg-gray-100"
-                value={form.nif}
-                onChange={(e) =>
-                  setForm({ ...form, nif: Number(e.target.value) })
-                }
+                {...register("nif", { valueAsNumber: true })}
               />
+              {errors.nif && <p className="text-sm text-red-500">{errors.nif.message}</p>}
             </div>
           </div>
+
           <div className="flex justify-center gap-4">
             <button
               type="button"
@@ -133,29 +123,3 @@ export default function PerfilModal({
     </div>
   );
 }
-
-/*
-  <div className="hidden">
-              <label className="block text-sm font-medium text-gray-700 mb-4">
-                Alterar foto
-              </label>
-              <label
-                htmlFor="foto"
-                className="border border-dashed border-orange-300 bg-orange-50 text-orange-500 text-sm px-6 py-4 rounded-lg cursor-pointer w-fit hover:bg-orange-100"
-              >
-                📷 Alterar Foto
-              </label>
-              <input
-                type="file"
-                id="foto"
-                accept=".svg,.png,.jpg,.jpeg"
-                className="hidden"
-                onChange={(e) =>
-                  setForm({ ...form, foto: e.target.files?.[0] || null })
-                }
-              />
-              {form.foto && (
-                <p className="text-sm text-gray-600 mt-2">{form.foto.name}</p>
-              )}
-            </div>
-*/

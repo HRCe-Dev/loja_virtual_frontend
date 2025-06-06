@@ -1,6 +1,9 @@
+import Link from "next/link";
+
 // app/(dashboard)/historico/page.tsx
 export default function HistoricoPage() {
   return (
+    <Link href='/historico/detalhesentrega'>
     <div className="bg-white p-6 rounded-xl shadow-md">
       <h1 className="text-xl font-semibold mb-6">Histórico de Compras</h1>
 
@@ -44,5 +47,6 @@ export default function HistoricoPage() {
         </button>
       </div>
     </div>
+    </Link>
   );
 }

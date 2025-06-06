@@ -112,6 +112,11 @@ const Header = () => {
             placeholder="Procura aqui seu produto"
             value={termoBusca}
             onChange={(e) => setTermoBusca(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && termoBusca.trim()) {
+                router.push(`/busca?termo=${encodeURIComponent(termoBusca)}`);
+              }
+            }}
             className="w-full outline-none text-sm text-gray-700"
           />
           </div>
