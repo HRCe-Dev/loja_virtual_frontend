@@ -3,6 +3,7 @@ import Loading from "@/componentes/Loading";
 import { HistoricoPedidos, Status } from "@/types/PedidoDadosTypes";
 import { useState } from "react";
 import { useObterHistoricoPedidos } from "./historico.api";
+import { ArrowRight } from "lucide-react";
 
 // app/(dashboard)/historico/page.tsx
 export default function HistoricoPage() {
@@ -59,17 +60,26 @@ const PedidoCard: React.FC<{ pedido: HistoricoPedidos }> = ({ pedido }) => {
           <div className="w-12 h-12 bg-gray-100 flex items-center justify-center rounded">
             📦
           </div>
-          {pedido.produtos.map((prod) => (
+          {pedido.produtos.slice(0, 3).map((prod) => (
             <div key={prod.produto_id}>
               <p className="text-sm font-medium">{prod.nome}</p>
               <p className="text-xs text-gray-500">Quantidade: {prod.qtd}</p>
             </div>
           ))}
+          {pedido.produtos.length > 3 && (
+            <button
+              className="flex items-center gap-1 text-xs ml-4 text-orange-500 hover:underline"
+              // TODO: adicionar navegação para detalhes
+            >
+              <span>... +{pedido.produtos.length - 1} mais</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         <div className="flex gap-4 mt-2 text-sm text-orange-500">
           <button className="hover:underline">Ver detalhes</button>
-          <button className="hover:underline">Comprar novamente</button>
+          <button className="hover:underline hidden">Comprar novamente</button>
         </div>
       </div>
 
