@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useObterIlhas } from "@/api/localizacao.api";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import AuthLinks from "./VerificaAuth";
 import {
   Search,
   ShoppingCart,
@@ -111,6 +112,11 @@ const Header = () => {
             placeholder="Procura aqui seu produto"
             value={termoBusca}
             onChange={(e) => setTermoBusca(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && termoBusca.trim()) {
+                router.push(`/busca?termo=${encodeURIComponent(termoBusca)}`);
+              }
+            }}
             className="w-full outline-none text-sm text-gray-700"
           />
           </div>
@@ -140,9 +146,9 @@ const Header = () => {
             ))}
           </select>
 
-          <Link href="/login" className="text-white text-sm hover:underline">
-            Register/Login
-          </Link>
+          <div className="text-white text-sm hover:underline">
+            <AuthLinks />
+          </div>
 
           <Link href="/carrinho">
             <ShoppingCart className="text-white" />

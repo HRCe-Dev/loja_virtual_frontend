@@ -1,9 +1,12 @@
+
 "use client";
 import Loading from "@/componentes/Loading";
 import { HistoricoPedidos, Status } from "@/types/PedidoDadosTypes";
 import { useState } from "react";
 import { useObterHistoricoPedidos } from "./historico.api";
 import { ArrowRight } from "lucide-react";
+
+
 
 // app/(dashboard)/historico/page.tsx
 export default function HistoricoPage() {
@@ -14,6 +17,7 @@ export default function HistoricoPage() {
   useObterHistoricoPedidos(setHistorico, setLoading, setError, []);
 
   return (
+    <Link href='/historico/detalhesentrega'>
     <div className="bg-white p-6 rounded-xl shadow-md">
       <h1 className="text-xl font-semibold mb-6">Histórico de Compras</h1>
       {!loading && !error && (
@@ -84,6 +88,7 @@ const PedidoCard: React.FC<{ pedido: HistoricoPedidos }> = ({ pedido }) => {
         {pedido.total}.00 CVE
       </div>
     </div>
+    </Link>
   );
 };
 

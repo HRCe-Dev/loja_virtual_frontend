@@ -24,9 +24,10 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
   return (
     <aside
       className={`
-        fixed z-40 top-0 left-0 h-full  w-2/3 md:w-1/5 bg-white shadow-lg transition-transform duration-300
+        fixed top-0 left-0 h-full w-2/3 md:w-64 bg-white shadow-lg z-40 overflow-y-auto
+        transform transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        md:static md:translate-x-0 md:block md:h-[calc(100vh-8rem)] md:rounded-2xl md:mt-4 md:ml-4 
+        md:translate-x-0 md:static md:block
       `}
     >
       {/* Perfil */}
@@ -39,7 +40,7 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
       </div>
 
       {/* Navegação */}
-      <nav className="flex flex-col my-6 px-4 gap-2 border-b ">
+      <nav className="flex flex-col my-6 px-4 gap-2 border-b">
         {links.map(({ href, label, icon }) => (
           <Link
             key={href}
@@ -58,7 +59,7 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
       </nav>
 
       {/* Sair */}
-      <div className="mt-auto px-4 items-center flex justify-center">
+      <div className="mt-auto px-4 flex justify-center pb-6">
         <button className="text-red-500 hover:underline flex items-center gap-2">
           <LogOut size={18} /> Sair
         </button>
