@@ -19,7 +19,7 @@ export default function HistoricoPage() {
       {!loading && !error && (
         <div>
           {historico.map((pedido) => (
-            <PedidoCard pedido={pedido} />
+            <PedidoCard key={pedido.id} pedido={pedido} />
           ))}
 
           <div hidden={true} className="text-center mt-6">
@@ -37,10 +37,7 @@ export default function HistoricoPage() {
 
 const PedidoCard: React.FC<{ pedido: HistoricoPedidos }> = ({ pedido }) => {
   return (
-    <div
-      key={pedido.id}
-      className="border p-4 rounded-lg mb-4 flex justify-between items-center"
-    >
+    <div className="border p-4 rounded-lg mb-4 flex justify-between items-center">
       <div>
         <PedidoStatus status={pedido.status} />
         <p className="font-bold">Pedido #{pedido.id}</p>
@@ -61,7 +58,7 @@ const PedidoCard: React.FC<{ pedido: HistoricoPedidos }> = ({ pedido }) => {
             📦
           </div>
           {pedido.produtos.slice(0, 3).map((prod) => (
-            <div key={prod.produto_id}>
+            <div key={Math.random().toString(36).substr(2, 9)}>
               <p className="text-sm font-medium">{prod.nome}</p>
               <p className="text-xs text-gray-500">Quantidade: {prod.qtd}</p>
             </div>
