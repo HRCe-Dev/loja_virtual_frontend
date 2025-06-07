@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { obterProdutosListaDesejo } from "./listadesejo";
 import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
+import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
 
 export default function ListaDesejo() {
   //TODO: remover produto de lista de desejo
@@ -16,8 +17,7 @@ export default function ListaDesejo() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [produtos, setProdutos] = useState<Produto[]>([]);
-
-  const ProdutosSemelhantes: Produto[] = Produtos;
+  const [ProdutosSemelhantes, setProdutosSemelhantes] = useState<Produto[]>([]);
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -25,6 +25,9 @@ export default function ListaDesejo() {
       const produtos = await obterProdutosListaDesejo();
       if (!produtos) setError(true);
       else setProdutos(produtos);
+
+      const produtos2: Produto[] = await fetchProdutosMaisVendidos();
+      setProdutosSemelhantes(produtos2);
 
       setLoading(false);
     };
@@ -43,24 +46,26 @@ export default function ListaDesejo() {
       {error && <Error />}
 
       {!error && !loading && (
-        <ProdutoListaLg>
-          {produtos &&
-            produtos.map((produto) => (
-              <ProdutoCard key={produto.id} produto={produto} />
-            ))}{" "}
-        </ProdutoListaLg>
-      )}
+        <>
+          <ProdutoListaLg>
+            {produtos &&
+              produtos.map((produto) => (
+                <ProdutoCard key={produto.id} produto={produto} />
+              ))}{" "}
+          </ProdutoListaLg>
 
-      {/* TODO: produtos relacionados*/}
-      <div className="mt-12 flex flex-col gap-5">
-        <SeccaoMarker>Produtos Relacionados</SeccaoMarker>
-        <ProdutoListaLg>
-          {ProdutosSemelhantes &&
-            ProdutosSemelhantes.slice(0, 4).map((prod) => (
-              <ProdutoCard key={prod.id} produto={prod} />
-            ))}
-        </ProdutoListaLg>
-      </div>
+          {/* TODO: produtos relacionados*/}
+          <div className="mt-12 flex flex-col gap-5">
+            <SeccaoMarker>Produtos Relacionados</SeccaoMarker>
+            <ProdutoListaLg>
+              {ProdutosSemelhantes &&
+                ProdutosSemelhantes.slice(0, 4).map((prod) => (
+                  <ProdutoCard key={prod.id} produto={prod} />
+                ))}
+            </ProdutoListaLg>
+          </div>
+        </>
+      )}
     </div>
   );
 }
