@@ -3,11 +3,20 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ShoppingCart, Heart, MapPin, User, LogOut } from "lucide-react";
-import { logout } from "@/api/auth";
+import { logout, verifyAuth } from "@/api/auth";
+import { useEffect, useState } from "react";
+import { Usuario } from "@/types/Cliente";
 
 export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
+  const [user, setUser] = useState<Usuario | null>();
   const pathname = usePathname();
 
+  useEffect(() => {
+    verifyAuth();
+    const user_ = JSON.parse(localStorage.getItem("user") || "{}") as Usuario;
+
+    setUser(user_);
+  }, []);
   const links = [
     {
       href: "/historico",
@@ -46,8 +55,8 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
         <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mb-2">
           <span className="text-xl font-bold text-blue-500">N</span>
         </div>
-        <h2 className="font-semibold">Gabriel Luz</h2>
-        <p className="text-sm text-gray-500">g.luz03@gmail.com</p>
+        <h2 className="font-semibold">{user?.nome}</h2>
+        <p className="text-sm text-gray-500">{user?.email}</p>
       </div>
 
       {/* Navegação */}

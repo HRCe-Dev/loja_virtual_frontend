@@ -2,7 +2,6 @@
 
 import { proximoRoute } from "@/util/proximoPage";
 import { url } from "./url";
-import { useRouter } from "next/navigation";
 
 export const fazerLogin = async (
   data: { email: string; password: string },
@@ -25,6 +24,9 @@ export const fazerLogin = async (
     //guardar token
     if (data.token) {
       localStorage.setItem("token", data.token);
+
+      //guardar dados de usuario
+      localStorage.setItem("user", JSON.stringify(data.user));
       if (next) {
         router.push(proximoRoute[next]);
       } else {
