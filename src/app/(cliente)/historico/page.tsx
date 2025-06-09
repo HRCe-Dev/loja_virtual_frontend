@@ -41,10 +41,15 @@ const PedidoCard: React.FC<{ pedido: HistoricoPedidos }> = ({ pedido }) => {
     <Link href={"/historico/" + pedido.id}>
       {" "}
       <div className="border p-4 rounded-lg mb-4 flex justify-between items-center">
-        <div>
-          <PedidoStatus status={pedido.status} />
+        <div className="flex-1">
+          <div className="flex justify-between w-full items-center">
+            <PedidoStatus status={pedido.status} />
+            <div className="text-right font-semibold">
+              {pedido.total}.00 CVE
+            </div>
+          </div>
           <p className="font-bold">Pedido #{pedido.id}</p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 mb-3">
             Realizado em{" "}
             {new Date(pedido.created_at).toLocaleString("pt-BR", {
               day: "2-digit",
@@ -56,8 +61,8 @@ const PedidoCard: React.FC<{ pedido: HistoricoPedidos }> = ({ pedido }) => {
             })}
           </p>
 
-          <div className="flex items-center gap-2 mt-2">
-            <div className="w-12 h-12 bg-gray-100 flex items-center justify-center rounded">
+          <div className="flex items-center gap-4 md:gap-2 mt-2">
+            <div className="w-12 h-10 md:w-16 md:h-16 bg-gray-100 flex items-center justify-center rounded md:rounded-xl border-2 border-orange-300">
               📦
             </div>
             {pedido.produtos.slice(0, 3).map((prod) => (
@@ -77,17 +82,15 @@ const PedidoCard: React.FC<{ pedido: HistoricoPedidos }> = ({ pedido }) => {
             )}
           </div>
 
-          <div className="flex gap-4 mt-2 text-sm text-orange-500">
-            <button className="hover:underline">Ver detalhes</button>
+          <div className="flex gap-4 mt-4 text-sm text-[#FF7700] border-t">
+            <button className="hover:underline mt-2">Ver detalhes</button>
             <button className="hover:underline hidden">
               Comprar novamente
             </button>
           </div>
         </div>
 
-        <div className="text-right font-semibold text-orange-600">
-          {pedido.total}.00 CVE
-        </div>
+        
       </div>
     </Link>
   );

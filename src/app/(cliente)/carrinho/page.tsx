@@ -51,9 +51,9 @@ export default function CarrinhoPage() {
   const total = carrinho.reduce((acc, prod) => acc + prod.preco * prod.qtd, 0);
 
   return (
-    <div className="mx-10 mt-10 mb-10">
+    <div className="bg-white p-6 rounded-xl shadow-md">
       <div className="flex flex-row items-center justify-between border-b border-gray-300">
-        <h1 className="text-2xl font-bold">Carrinho de compras</h1>
+        <h1 className="text-2xl font-bold mb-2">Carrinho de compras</h1>
         <p className="flex items-center gap-1 text-sm mr-20 font-bold text-gray-700">
           {carrinho.length} items{" "}
           <span>
@@ -79,7 +79,7 @@ export default function CarrinhoPage() {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row mt-20 border-t-4 border-gray-300 p-5 items-center justify-between sticky bottom-0 bg-white shadow-lg z-10">
+      <div className="flex flex-col sm:flex-row mt-20 border-t border-gray-300 p-5 items-center justify-between sticky bottom-0 shadow-lg z-10">
         {/* Pre checkout */}
         <div className="ml-4 sm:ml-10 w-full sm:w-auto">
           <p className="text-2xl font-bold">Total:</p>
@@ -90,7 +90,7 @@ export default function CarrinhoPage() {
         </div>
         <div className="w-full sm:w-auto flex justify-center sm:justify-end mt-4 sm:mt-0 sm:mr-20">
           <button className="text-xl font-bold text-white rounded-xl bg-orange-500 px-6 py-3 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-2 w-full sm:w-auto">
-            <Link href="/checkout/entrega">Checkout</Link>
+            <Link href="/checkout/entrega">Comprar</Link>
           </button>
         </div>
       </div>

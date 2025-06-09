@@ -34,7 +34,7 @@ const enderecos = [
 
 export default function EnderecosEntrega() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-white rounded-xl p-6 lex flex-col shadow-md">
       {/* Cabeçalho */}
       <div className="flex items-center p-4 border-b">
         <ChevronLeft className="text-gray-600 mr-2" />

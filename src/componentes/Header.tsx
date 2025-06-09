@@ -12,15 +12,16 @@ import {
   User,
   MapPin,
   ChevronDown,
+  Ellipsis
 } from "lucide-react";
 
 const categorias = [
-  "Categoria",
-  "Vestuarios",
-  "Eletrônicos",
-  "Beleza",
-  "Calçado",
-  "Mais",
+  { label: "Categoria" },
+  { label: "Vestuarios" },
+  { label: "Eletrônicos" },
+  { label: "Beleza" },
+  { label: "Calçado" },
+  { icon: <Ellipsis /> }, // ícone no lugar do texto
 ];
 
 const Header = () => {
@@ -92,9 +93,7 @@ const Header = () => {
 
           {/* Mobile Icons */}
           <div className="flex md:hidden gap-3 relative">
-            <Link href="/login">
-              <User className="text-white" />
-            </Link>
+            <AuthLinks/>
             <Link href="/carrinho">
               <ShoppingCart className="text-white" />
             </Link>
@@ -164,10 +163,10 @@ const Header = () => {
             <button
               key={i}
               className={`hover:text-orange-400 transition-colors ${
-                i === 0 && "font-bold"
+                cat.label === "Categoria" && "font-bold"
               }`}
             >
-              {cat}
+              {cat.label || cat.icon}
             </button>
           ))}
         </div>
@@ -193,9 +192,9 @@ const Header = () => {
           {categorias.map((cat, i) => (
             <button
               key={i}
-              className="block w-full text-left text-gray-800 hover:text-orange-500"
+              className="block w-full text-left text-gray-800 hover:text-orange-500 items-center gap-2"
             >
-              {cat}
+              {cat.label || cat.icon}
             </button>
           ))}
         </div>

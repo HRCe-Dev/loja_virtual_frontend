@@ -36,8 +36,8 @@ export default function ListaDesejo() {
   }, []);
 
   return (
-    <div className="m-10">
-      <div className="p-4 m-4 border-b-3 border-gray-300 ">
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <div className="p-4 m-4 border-b border-gray-300 ">
         <h1 className="text-3xl font-bold text-center">Lista de Desejos</h1>
       </div>
 
