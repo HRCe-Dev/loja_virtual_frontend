@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import { Produto } from "@/types/Produto";
@@ -16,11 +16,8 @@ export default function ResumoPedido({ pedidoData, produtoDetalhes }: Props) {
       <div className="border rounded-md divide-y mb-6">
         {Array.isArray(pedidoData?.itens_pedido) &&
           pedidoData.itens_pedido.map((prod) => (
-            <div
-              key={prod.produto_id}
-              className="flex items-center gap-4 p-4"
-            >
-              <div className="w-14 h-14 bg-gray-100 rounded-md">
+            <div key={prod.produto_id} className="flex items-center gap-4 p-4">
+              <div className="w-14 h-14 bg-gray-100 rounded-md overflow-hidden">
                 <img
                   src={
                     produtoDetalhes.find((obj) => obj.id === prod.produto_id)

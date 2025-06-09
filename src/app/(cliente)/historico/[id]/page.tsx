@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import PedidoStepper from './PedidoStepper';
-import ResumoPedido from '@/componentes/ResumoPedido';
-import { useGetPedidoDados } from '@/app/checkout/checkout.api';
-import fetchProdutosLista from '@/api/fetchProdutosLista';
+import PedidoStepper from "./PedidoStepper";
+import ResumoPedido from "@/componentes/ResumoPedido";
+import { useGetPedidoDados } from "@/app/checkout/checkout.api";
+import fetchProdutosLista from "@/api/fetchProdutosLista";
 
-import { PedidoDados1 } from '@/types/PedidoDadosTypes';
-import { Produto } from '@/types/Produto';
-import Loading from '@/componentes/Loading';
+import { PedidoDados1 } from "@/types/PedidoDadosTypes";
+import { Produto } from "@/types/Produto";
+import Loading from "@/componentes/Loading";
 
 export default function PedidoStatusPage() {
-  const faseAtual = 2;
+  const faseAtual = 1;
   const params = useParams();
   const pedido_id = params?.id as string;
   const router = useRouter();
@@ -36,11 +36,12 @@ export default function PedidoStatusPage() {
       }
     };
 
+    /*
     if (pedidoData?.status === "NAO PAGO") {
       router.push("/checkout/pagamento/" + pedido_id);
     } else {
       getData();
-    }
+    }*/
   }, [pedidoData]);
 
   return (
