@@ -65,7 +65,7 @@ export default function PaymentForm() {
                 </div>
                 <div className="flex items-center gap-2">
                   <FaMapMarkerAlt className="text-gray-500" />
-                  <span>{pedidoData.endereco_id}</span>
+                  <span>{pedidoData.endereco || ""}</span>
                 </div>
               </div>
               <button
