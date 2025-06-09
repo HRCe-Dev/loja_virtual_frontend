@@ -32,7 +32,7 @@ export default function ResumoPedido({ pedidoData, produtoDetalhes }: Props) {
                   {prod.preco} x {prod.qtd}
                 </p>
               </div>
-              <p className="font-medium">{prod.preco * prod.qtd}$00 CVE</p>
+              <p className="font-medium">{prod.preco! * prod.qtd}$00 CVE</p>
             </div>
           ))}
       </div>
@@ -57,9 +57,7 @@ export default function ResumoPedido({ pedidoData, produtoDetalhes }: Props) {
         <p>{pedidoData.nomeDestino}</p>
         <p>{pedidoData.telefoneDestino}</p>
         <br />
-        {pedidoData.endereco_id?.split(",").map((end, idx) => (
-          <p key={idx}>{end}</p>
-        ))}
+        <p>{pedidoData.endereco || ""}</p>
       </div>
     </>
   );

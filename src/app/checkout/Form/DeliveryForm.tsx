@@ -47,7 +47,7 @@ export default function DeliveryForm() {
     setLoading(true);
 
     const pedido_id = await realizarCheckout({
-      endereco_id: 1,
+      endereco_id: Number(data.zone),
       metodo_entrega_id: Number(data.deliveryMethod),
     });
 

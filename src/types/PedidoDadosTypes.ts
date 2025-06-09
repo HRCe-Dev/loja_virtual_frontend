@@ -15,6 +15,7 @@ export interface PedidoDados1 {
   custo_envio: number;
   status: Status;
   itens_pedido: itensPedido[];
+  endereco?: string;
 }
 
 interface itensPedido {

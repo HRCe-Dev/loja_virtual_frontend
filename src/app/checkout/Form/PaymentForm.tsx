@@ -119,7 +119,7 @@ export default function PaymentForm() {
                 <div key={prod.produto_id}>
                   <div className="flex justify-between">
                     <span>{prod.nome}</span>
-                    <span>{prod.preco * prod.qtd}$00 CVE</span>
+                    <span>{prod.preco! * prod.qtd}$00 CVE</span>
                   </div>
                   <div className="text-gray-500 text-xs">
                     {prod.qtd} x {prod.preco}$00 CVE
