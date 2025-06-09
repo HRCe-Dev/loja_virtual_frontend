@@ -11,6 +11,7 @@ import React, { useState } from "react";
 interface SeletorEnderecoProps {
   isOpen?: boolean;
   onClose: () => void;
+  onSave: (zona_id: number) => void;
 }
 
 const schema = z.object({
@@ -21,7 +22,10 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({ onClose }) => {
+const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
+  onClose,
+  onSave,
+}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [cidades, setCidades] = useState<Cidade[]>([]);
   const [zonas, setZonas] = useState<Zona[]>([]);
@@ -42,6 +46,7 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({ onClose }) => {
 
   const onSubmit = async (data: FormData) => {
     alert(JSON.stringify(data));
+    onSave(data.zona_id);
   };
 
   const selectStyle = "border border-gray-300 rounded-lg px-3 py-2";
