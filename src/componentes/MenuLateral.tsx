@@ -1,24 +1,35 @@
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import {
-  ShoppingCart,
-  Heart,
-  MapPin,
-  User,
-  LogOut,
-} from 'lucide-react';
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { ShoppingCart, Heart, MapPin, User, LogOut } from "lucide-react";
+import { logout } from "@/api/auth";
 
 export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
   const pathname = usePathname();
 
   const links = [
-    { href: '/historico', label: 'Histórico de Compras', icon: <ShoppingCart size={18} /> },
-    { href: '/listadesejo', label: 'Lista de desejo', icon: <Heart size={18} /> },
-    { href: '/carrinho', label: 'Carrinho de compras', icon: <ShoppingCart size={18} /> },
-    { href: '/dadosentrega', label: 'Dados de entrega', icon: <MapPin size={18} /> },
-    { href: '/perfil', label: 'Meu perfil', icon: <User size={18} /> },
+    {
+      href: "/historico",
+      label: "Histórico de Compras",
+      icon: <ShoppingCart size={18} />,
+    },
+    {
+      href: "/listadesejo",
+      label: "Lista de desejo",
+      icon: <Heart size={18} />,
+    },
+    {
+      href: "/carrinho",
+      label: "Carrinho de compras",
+      icon: <ShoppingCart size={18} />,
+    },
+    {
+      href: "/dadosentrega",
+      label: "Dados de entrega",
+      icon: <MapPin size={18} />,
+    },
+    { href: "/perfil", label: "Meu perfil", icon: <User size={18} /> },
   ];
 
   return (
@@ -26,7 +37,7 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
       className={`
         fixed top-0 left-0 h-full w-2/3 md:w-64 bg-white shadow-lg z-40 overflow-y-auto
         transform transition-transform duration-300
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}
         md:translate-x-0 md:static md:block
       `}
     >
@@ -47,9 +58,11 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
             href={href}
             className={`
               flex items-center gap-2 py-2 px-4 rounded-md transition
-              ${pathname === href
-                ? 'bg-[#FF7700] text-white'
-                : 'hover:bg-gray-100 text-gray-800'}
+              ${
+                pathname === href
+                  ? "bg-[#FF7700] text-white"
+                  : "hover:bg-gray-100 text-gray-800"
+              }
             `}
           >
             {icon}
@@ -60,7 +73,10 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
 
       {/* Sair */}
       <div className="mt-auto px-4 flex justify-center pb-6">
-        <button className="text-red-500 hover:underline flex items-center gap-2">
+        <button
+          onClick={() => logout()}
+          className="text-red-500 hover:underline flex items-center gap-2"
+        >
           <LogOut size={18} /> Sair
         </button>
       </div>
