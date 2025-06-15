@@ -6,7 +6,9 @@ import { z } from "zod";
 import { useObterCidades, UseObterZonas } from "@/api/localizacao.api";
 import { Cidade, Zona } from "@/types/Localizacao";
 import { LocateFixed, MapPin } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import obterMinhaLocalizacao from "@/util/obterMinhaLocalizacao";
+import { GetLocalizacao } from "@/api/localizar.api";
 
 interface SeletorEnderecoProps {
   isOpen?: boolean;
@@ -35,6 +37,7 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
@@ -43,6 +46,28 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
   useObterCidades(setCidades, setLoading, []);
 
   UseObterZonas(dados.cidade_id, setZonas, setLoadingZona, [dados.cidade_id]);
+
+  const obterLocalizacao = async () => {
+    setLoading(true);
+    const meuLocal = await obterMinhaLocalizacao();
+
+    if (meuLocal) {
+      const zona_ = await GetLocalizacao(meuLocal);
+
+      if (zona_) {
+        setValue("ilha", zona_.ilha);
+        const cidadeEncontrada = cidades.find(
+          (city) => city.nome === zona_.cidade
+        );
+        if (cidadeEncontrada) {
+          setValue("cidade_id", cidadeEncontrada.id);
+          setValue("zona_id", zona_.id);
+        }
+      }
+    }
+
+    setLoading(false);
+  };
 
   const onSubmit = async (data: FormData) => {
     alert(JSON.stringify(data));
@@ -68,17 +93,21 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
             <h3 className="flex flex-row justify-center mb-2 px-3 py-2 hover:bg-gray-200 hover:font-bold rounded-lg transition-all duration-300">
               <MapPin className="mr-2" />
               {dados.zona_id && (
-                <span>
-                  {zonas.find((zo) => zo.id === dados.zona_id)?.zona},{" "}
-                  {zonas.find((zo) => zo.id === dados.zona_id)?.cidade},{" "}
-                  {zonas.find((zo) => zo.id === dados.zona_id)?.ilha}, Cabo
-                  Verde
-                </span>
+                <span>{`${
+                  zonas.find((zo) => zo.id === Number(dados.zona_id))?.zona ||
+                  ""
+                }, ${
+                  cidades.find((ci) => ci.id === Number(dados.cidade_id))
+                    ?.nome || ""
+                }, ${dados.ilha || ""}, Cabo Verde`}</span>
               )}
             </h3>
           </div>
           <div>
-            <button className="mt-3 flex flex-row  gap-2 font-bold py-2 px-5 border border-dashed border-gray-300 rounded-lg text-orange-500  hover:border-solid hover:bg-blue-500 hover:text-white transition-all duration-300">
+            <button
+              onClick={obterLocalizacao}
+              className="mt-3 flex flex-row  gap-2 font-bold py-2 px-5 border border-dashed border-gray-300 rounded-lg text-orange-500  hover:border-solid hover:bg-blue-500 hover:text-white transition-all duration-300"
+            >
               <LocateFixed /> Usar Localização Atual
             </button>
 
@@ -144,7 +173,7 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
                 </div>
 
                 <button
-                  type="submit"
+                  onClick={() => handleSubmit}
                   className="my-6 text-white font-bold text-lg bg-orange-500 hover:text-orange-500 hover:bg-white border-orange-500 hover:border transition-colors duration-300 rounded-lg px-3 py-2"
                 >
                   Confirmar o Endereço
