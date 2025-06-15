@@ -3,7 +3,10 @@ import { fetchWithAuth } from "@/api/fetch_auth";
 import { url } from "@/api/url";
 import { MetodoEnvio } from "@/types/MetodoEnvioTypes";
 import { useEffect } from "react";
-import { esvaziarCarrinho, obterCarrinho } from "../(cliente)/carrinho/carrinho";
+import {
+  esvaziarCarrinho,
+  obterCarrinho,
+} from "../(cliente)/carrinho/carrinho";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import { Zona } from "@/types/Localizacao";
 
@@ -87,13 +90,8 @@ export function useGetPedidoDados(
 
       const dados: PedidoDados1 = await res.json();
 
-      const endereco = JSON.parse(
-        localStorage.getItem("endereco") || "{}"
-      ) as Zona;
-
       setPedidoData({
         ...dados,
-        endereco_id: `${endereco.zona}, ${endereco.cidade}, ${endereco.ilha}, Cabo Verde`,
       });
 
       //alert(JSON.stringify(dados));
