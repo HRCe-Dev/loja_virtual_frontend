@@ -5,6 +5,7 @@ import { url } from "@/api/url";
 import SeletorEndereco from "@/componentes/Pop_ups/Seletor_Endereco/Seletor_Endereco";
 import { inputStyle } from "@/styles/forms";
 import { proximoRoute } from "@/util/proximoPage";
+import { MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -24,6 +25,7 @@ interface cadastroForm {
 const CadastroForm: React.FC = () => {
   const [step, setStep] = useState(1);
   const [zona_id, setZona_id] = useState<number | undefined>(undefined);
+  const [endereco, setEndereco] = useState<string | null>(null);
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -178,6 +180,12 @@ const CadastroForm: React.FC = () => {
               )}
             </div>
             <div className="flex flex-col space-y-1 mt-10">
+              {endereco && (
+                <p className="flex flex-row justify-center mb-2 px-3 py-2 hover:bg-gray-200 hover:font-bold rounded-lg transition-all duration-300">
+                  <MapPin className="mr-2" />
+                  <span>{endereco}</span>
+                </p>
+              )}
               <button
                 onClick={() => {
                   setModalOpen(true);
@@ -310,8 +318,9 @@ const CadastroForm: React.FC = () => {
           onClose={() => {
             setModalOpen(false);
           }}
-          onSave={(zona_id: number) => {
+          onSave={(zona_id: number, endereco: string) => {
             setZona_id(zona_id);
+            setEndereco(endereco);
             setModalOpen(false);
           }}
         />

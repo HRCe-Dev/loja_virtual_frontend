@@ -13,7 +13,7 @@ import { GetLocalizacao } from "@/api/localizar.api";
 interface SeletorEnderecoProps {
   isOpen?: boolean;
   onClose: () => void;
-  onSave: (zona_id: number) => void;
+  onSave: (zona_id: number, endereco: string) => void;
 }
 
 const schema = z.object({
@@ -71,7 +71,12 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
 
   const onSubmit = async (data: FormData) => {
     alert(JSON.stringify(data));
-    onSave(data.zona_id);
+    onSave(
+      data.zona_id,
+      `${zonas.find((zo) => zo.id === Number(dados.zona_id))?.zona || ""}, ${
+        cidades.find((ci) => ci.id === Number(dados.cidade_id))?.nome || ""
+      }, ${dados.ilha || ""}, Cabo Verde`
+    );
   };
 
   const selectStyle = "border border-gray-300 rounded-lg px-3 py-2";
