@@ -23,6 +23,7 @@ interface itensPedido {
   qtd: number;
   nome: string;
   preco?: number;
+  imagem_url: string;
 }
 
 export interface HistoricoPedidos {

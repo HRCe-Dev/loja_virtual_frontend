@@ -18,13 +18,7 @@ export default function ResumoPedido({ pedidoData, produtoDetalhes }: Props) {
           pedidoData.itens_pedido.map((prod) => (
             <div key={prod.produto_id} className="flex items-center gap-4 p-4">
               <div className="w-14 h-14 bg-gray-100 rounded-md overflow-hidden">
-                <img
-                  src={
-                    produtoDetalhes.find((obj) => obj.id === prod.produto_id)
-                      ?.imagem_url
-                  }
-                  alt={prod.nome}
-                />
+                <img src={prod.imagem_url} alt={prod.nome} />
               </div>
               <div className="flex-1">
                 <p className="font-medium">{prod.nome}</p>
