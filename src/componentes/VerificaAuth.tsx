@@ -1,12 +1,16 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { UserCircle } from 'lucide-react';
-import { verifyAuth } from '@/api/auth';
-import MenuLateral from './MenuLateral';
+import { useEffect, useRef, useState } from "react";
+import { UserCircle } from "lucide-react";
+import { verifyAuth } from "@/api/auth";
+import MenuLateral from "./MenuLateral";
+
+import { usePathname } from "next/navigation";
 
 const AuthLinks = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
   const [showMenu, setShowMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -17,7 +21,7 @@ const AuthLinks = () => {
       setIsLoggedIn(result);
     };
     check();
-  }, []);
+  }, [pathname]);
 
   // Fecha o menu se clicar fora
   useEffect(() => {
@@ -33,13 +37,13 @@ const AuthLinks = () => {
     };
 
     if (showMenu) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     } else {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showMenu]);
 
