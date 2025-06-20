@@ -15,6 +15,7 @@ import { Produto } from "@/types/Produto";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
 import { url } from "@/api/url";
+import DetalhesProduto from "./DetalhesProduto";
 
 interface PageProps {
   id: string;
@@ -56,47 +57,7 @@ const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
                 nome={produto.nome}
               />
             </div>
-            <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:mx-10 px-4 lg:my-10">
-              {/*nome, preco, addlista de desejo, qtd, addcart, buynow, entrega rapida, troca e devolucoes */}
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">{produto.nome}</h1>
-              <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center border-b border-gray-400 mb-4">
-                <h3 className="text-xl font-bold  ">
-                  {produto.preco}
-                  <span className="text-sm ">$CVE</span>
-                </h3>
-                {/*TODO: considerar se o produto estiver em promoção*/}
-
-                <div className="mt-2 smmt-0">
-                  <BtnListaDesejo produto_id={produto.id} tipo={3} />
-                </div>
-              </div>
-
-              <div className="flex flex-row flex-wrap gap-2 items-center mb-2">
-                <SeletorQuantidade produto_id={produto.id} />
-                <p className="text-sm md:text-xl font-bold">
-                  {produto.estoque || 1} Disponível
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 ">
-                <ButtonLaranja>
-                  Adicionar <ShoppingCart />
-                </ButtonLaranja>
-                <ButtonWhite>Comprar agora</ButtonWhite>
-              </div>
-
-              <div className="mt-5 flex sm:flex-row gap-4 sm:justify-between  sm:items-center">
-                <ButtonNoBg>
-                  {" "}
-                  <Truck /> Entrega Rápida
-                </ButtonNoBg>
-                <ButtonNoBg>
-                  {" "}
-                  <Repeat />
-                  Trocas e Devolução
-                </ButtonNoBg>
-              </div>
-            </div>
+            <DetalhesProduto produto={produto}/>
           </div>
 
           <div className="my-10 md:my-20 px-2 sm:px-6  text-left">
