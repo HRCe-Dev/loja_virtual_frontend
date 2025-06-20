@@ -7,13 +7,16 @@ import { useEffect, useState } from "react";
 import { obterProdutosCarrinho, removerCarrinho } from "./carrinho";
 import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CarrinhoPage() {
   const [btnLoading, setbtnLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>([]);
+  const [total, setTotal] = useState<number>(0);
+  const router = useRouter();
+
   /*const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>(
     Produtos.map((produto) => {
       return {
@@ -48,7 +51,38 @@ export default function CarrinhoPage() {
     setbtnLoading(false);
   };
 
-  const total = carrinho.reduce((acc, prod) => acc + prod.preco * prod.qtd, 0);
+  useEffect(() => {
+    setTotal(
+      carrinho.reduce(
+        (acc, prod) => acc + prod.preco * (prod.estoque === 0 ? 0 : prod.qtd),
+        0
+      )
+    );
+  }, [carrinho]);
+
+  const handleComprarClick = async () => {
+    setLoading(true);
+    for (const prod of carrinho) {
+      if (!(prod.estoque > 0)) {
+        alert(
+          `O produto ${prod.nome} está ESGOTADO e  será removido do carrinho.`
+        );
+        await removerCarrinho(prod.id);
+      }
+    }
+
+    router.push("/checkout/entrega");
+
+    setLoading(false);
+  };
+
+  const alterarQtdProduto = (produto_id: string, novaQtd: number) => {
+    setCarrinho((carrinhoAtual) =>
+      carrinhoAtual.map((produto) =>
+        produto.id === produto_id ? { ...produto, qtd: novaQtd } : produto
+      )
+    );
+  };
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">
@@ -74,6 +108,7 @@ export default function CarrinhoPage() {
                 btnLoading={btnLoading}
                 key={produto.id}
                 produto={produto}
+                setProdutoQtd={alterarQtdProduto}
               />
             ))}
         </div>
@@ -89,8 +124,11 @@ export default function CarrinhoPage() {
           </p>
         </div>
         <div className="w-full sm:w-auto flex justify-center sm:justify-end mt-4 sm:mt-0 sm:mr-20">
-          <button className="text-xl font-bold text-white rounded-xl bg-orange-500 px-6 py-3 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-2 w-full sm:w-auto">
-            <Link href="/checkout/entrega">Comprar</Link>
+          <button
+            onClick={handleComprarClick}
+            className="text-xl font-bold text-white rounded-xl bg-orange-500 px-6 py-3 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-2 w-full sm:w-auto"
+          >
+            Comprar
           </button>
         </div>
       </div>
