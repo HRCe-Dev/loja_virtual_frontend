@@ -3,7 +3,7 @@ export interface Produto {
   nome: string;
   preco: number;
   imagem_url: string;
-  estoque?: number;
+  estoque: number;
 }
 
 export interface ProdutoCarrinho extends Produto {
@@ -29,11 +29,12 @@ interface imagensProduto {
   ordem: number;
 }
 
-interface Categoria {
+export interface Categoria {
   id: number;
   nome: string;
   descricao?: string;
   imagem_url?: string;
+  subcategorias?: Subcategoria[];
 }
 
 interface Subcategoria {
@@ -42,7 +43,22 @@ interface Subcategoria {
   descricao?: string;
 }
 
+export interface AtributosProdutos {
+  categorias: Categoria[];
+  preco_min: number;
+  preco_max: number;
+}
+
 export interface Carrinho {
   produto_id: string;
   qtd?: number;
+}
+
+export interface SearchQuery {
+  q: string;
+  categoria?: string;
+  subcategoria?: string;
+  marca?: string;
+  precomin?: string;
+  precomax?: string;
 }

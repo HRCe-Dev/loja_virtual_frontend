@@ -2,10 +2,11 @@ import React from "react";
 
 const Loading: React.FC = () => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-orange-500 text-center">
-        CARREGANDO OS PRODUTOS ...
-      </h1>
+    <div className="flex items-center justify-center mt-10 sm:mt-20 md:mt-30">
+      <div
+        className="w-8 h-8 border-4 border-[#FF7700] border-t-transparent rounded-full animate-spin"
+        role="status"
+      />
     </div>
   );
 };

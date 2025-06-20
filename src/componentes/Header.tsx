@@ -3,22 +3,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { useObterIlhas } from "@/api/localizacao.api";
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import AuthLinks from "./VerificaAuth";
 import {
   Search,
   ShoppingCart,
   Menu,
-  User,
   MapPin,
   ChevronDown,
+  Ellipsis,
 } from "lucide-react";
 
 const categorias = [
-  "Categoria",
-  "Vestuarios",
-  "Eletrônicos",
-  "Beleza",
-  "Calçado",
-  "Mais",
+  { label: "Categoria" },
+  { label: "Vestuarios" },
+  { label: "Eletrônicos" },
+  { label: "Beleza" },
+  { label: "Calçado" },
+  { icon: <Ellipsis /> }, // ícone no lugar do texto
 ];
 
 const Header = () => {
@@ -30,6 +32,9 @@ const Header = () => {
 
   const menuRef = useRef<HTMLDivElement | null>(null);
   const ilhasRef = useRef<HTMLDivElement | null>(null);
+
+  const router = useRouter();
+  const [termoBusca, setTermoBusca] = useState("");
 
   // Fecha menus ao clicar fora
   useEffect(() => {
@@ -75,9 +80,9 @@ const Header = () => {
         <div className="flex items-center w-full md:w-auto justify-between">
           <Link href="/">
             <Image
-              src="\HRC - Branca.svg"
+              src="\HRC_Azul.svg"
               alt="Logo HRC"
-              width={120}
+              width={140}
               height={40}
               className="h-auto"
             />
@@ -85,9 +90,7 @@ const Header = () => {
 
           {/* Mobile Icons */}
           <div className="flex md:hidden gap-3 relative">
-            <Link href="/login">
-              <User className="text-white" />
-            </Link>
+            <AuthLinks />
             <Link href="/carrinho">
               <ShoppingCart className="text-white" />
             </Link>
@@ -103,11 +106,25 @@ const Header = () => {
             <input
               type="text"
               placeholder="Procura aqui seu produto"
+              value={termoBusca}
+              onChange={(e) => setTermoBusca(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && termoBusca.trim()) {
+                  router.push(`/busca?termo=${encodeURIComponent(termoBusca)}`);
+                }
+              }}
               className="w-full outline-none text-sm text-gray-700"
             />
           </div>
           <div className="flex items-center bg-[#265674] rounded-e-lg px-5 md:px-3 py-3 shadow-sm md:w-1/10">
-            <button className="flex items-center justify-center w-full h-full">
+            <button
+              onClick={() => {
+                if (termoBusca.trim()) {
+                  router.push(`/busca?termo=${encodeURIComponent(termoBusca)}`);
+                }
+              }}
+              className="flex items-center justify-center w-full h-full"
+            >
               <Search className="text-white" size={22} />
             </button>
           </div>
@@ -125,9 +142,9 @@ const Header = () => {
             ))}
           </select>
 
-          <Link href="/login" className="text-white text-sm hover:underline">
-            Register/Login
-          </Link>
+          <div className="text-white text-sm hover:underline">
+            <AuthLinks />
+          </div>
 
           <Link href="/carrinho">
             <ShoppingCart className="text-white" />
@@ -143,10 +160,10 @@ const Header = () => {
             <button
               key={i}
               className={`hover:text-orange-400 transition-colors ${
-                i === 0 && "font-bold"
+                cat.label === "Categoria" && "font-bold"
               }`}
             >
-              {cat}
+              {cat.label || cat.icon}
             </button>
           ))}
         </div>
@@ -172,9 +189,9 @@ const Header = () => {
           {categorias.map((cat, i) => (
             <button
               key={i}
-              className="block w-full text-left text-gray-800 hover:text-orange-500"
+              className="block w-full text-left text-gray-800 hover:text-orange-500 items-center gap-2"
             >
-              {cat}
+              {cat.label || cat.icon}
             </button>
           ))}
         </div>

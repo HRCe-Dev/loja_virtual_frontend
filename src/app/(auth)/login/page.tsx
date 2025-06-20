@@ -5,10 +5,9 @@ import BannerCadastro from "../cadastro/BannerCadastro";
 import { inputStyle } from "@/styles/forms";
 import Link from "next/link";
 import { CircleUser, Facebook } from "lucide-react";
-import { url } from "@/api/url";
 import { useRouter } from "next/navigation";
-import { proximoRoute } from "@/util/proximoPage";
 import { useEffect, useState } from "react";
+import { fazerLogin } from "@/api/auth";
 
 interface loginForm {
   email: string;
@@ -33,36 +32,7 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
     console.log("Dados enviados:", data);
-    //TODO: adicionar try...catch para mitigar erros
-    const res = await fetch(url + "login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...data }),
-    });
-
-    if (res.ok) {
-      //alert("Login efectuado com sucesso");
-      const data = await res.json();
-
-      //guardar token
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        if (next) {
-          router.push(proximoRoute[next]);
-        } else {
-          router.push("/");
-        }
-      }
-
-      console.log(data);
-    } else if (res.status === 401) {
-      const errorData = await res.json();
-      alert(errorData?.message);
-    } else {
-      alert("Erro desconhecido");
-    }
+    await fazerLogin(data, router, next!);
   };
 
   return (

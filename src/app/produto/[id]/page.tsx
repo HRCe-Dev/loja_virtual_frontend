@@ -58,7 +58,9 @@ const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
             </div>
             <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:mx-10 px-4 lg:my-10">
               {/*nome, preco, addlista de desejo, qtd, addcart, buynow, entrega rapida, troca e devolucoes */}
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">{produto.nome}</h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+                {produto.nome}
+              </h1>
               <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center border-b border-gray-400 mb-4">
                 <h3 className="text-xl font-bold  ">
                   {produto.preco}

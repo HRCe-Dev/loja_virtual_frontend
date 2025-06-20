@@ -1,3 +1,10 @@
+export type Status =
+  | "NAO PAGO"
+  | "PAGO"
+  | "EMPROCESSAMENTO"
+  | "ENVIADO"
+  | "FINALIZADO";
+
 export interface PedidoDados1 {
   id: string;
   nomeDestino: string;
@@ -6,13 +13,23 @@ export interface PedidoDados1 {
   metodo_entrega_id: number;
   total: number;
   custo_envio: number;
-  status: string;
+  status: Status;
   itens_pedido: itensPedido[];
+  endereco?: string;
 }
 
 interface itensPedido {
   produto_id: string;
   qtd: number;
   nome: string;
-  preco: number;
+  preco?: number;
+  imagem_url: string;
+}
+
+export interface HistoricoPedidos {
+  id: string;
+  created_at: Date;
+  status: Status;
+  total: number;
+  produtos: itensPedido[];
 }

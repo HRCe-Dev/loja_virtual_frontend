@@ -1,7 +1,7 @@
 import { Produto } from "@/types/Produto";
 
 export const Produtos: Produto[] = [
-  {
+  /*{
     id: "4232",
     nome: "Produto 1",
     preco: 10.0,
@@ -60,5 +60,5 @@ export const Produtos: Produto[] = [
     nome: "Produto 10",
     preco: 100.0,
     imagem_url: "/produtos/Desktop_Lenovo.jpg",
-  },
+  },*/
 ];

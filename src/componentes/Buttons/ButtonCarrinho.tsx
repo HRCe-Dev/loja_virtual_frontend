@@ -1,6 +1,6 @@
 "use client";
 
-import { adicionarCarrinho, verificarCarrinho } from "@/app/carrinho/carrinho";
+import { adicionarCarrinho, verificarCarrinho } from "@/app/(cliente)/carrinho/carrinho";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -38,7 +38,7 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
   if (!noCarrinho)
     return (
       <button
-        className="w-full mt-2 mb-2 bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400"
+        className="w-full mt-2 mb-2 bg-[#265674] text-white py-2 px-3 rounded-xl hover:bg-blue-400"
         onClick={(e) => onClick(e)}
         disabled={loading}
       >
@@ -48,7 +48,7 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
   else
     return (
       <button
-        className="w-full mt-2 mb-2 bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400"
+        className="w-full mt-2 mb-2 bg-[#265674] text-white py-2 px-3 rounded-xl hover:bg-blue-400"
         disabled={loading}
         onClick={(e: React.MouseEvent) => {
           e.stopPropagation();
