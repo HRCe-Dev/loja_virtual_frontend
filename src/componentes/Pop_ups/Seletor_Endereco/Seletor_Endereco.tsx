@@ -6,7 +6,7 @@ import { z } from "zod";
 import { useObterCidades, UseObterZonas } from "@/api/localizacao.api";
 import { Cidade, Zona } from "@/types/Localizacao";
 import { LocateFixed, MapPin } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import obterMinhaLocalizacao from "@/util/obterMinhaLocalizacao";
 import { GetLocalizacao } from "@/api/localizar.api";
 

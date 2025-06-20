@@ -2,7 +2,7 @@
 
 import { proximoRoute } from "@/util/proximoPage";
 import { url } from "./url";
-import { json } from "stream/consumers";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export type UserType = {
   id: string;
@@ -12,7 +12,7 @@ export type UserType = {
 
 export const fazerLogin = async (
   data: { email: string; password: string },
-  router: any,
+  router: AppRouterInstance,
   next?: string
 ) => {
   //TODO: adicionar try...catch para mitigar erros

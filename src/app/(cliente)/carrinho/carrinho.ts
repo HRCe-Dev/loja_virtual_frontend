@@ -1,3 +1,5 @@
+"use client";
+
 import fetchProdutosLista from "@/api/fetchProdutosLista";
 import { Carrinho, ProdutoCarrinho } from "@/types/Produto";
 

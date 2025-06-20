@@ -8,7 +8,6 @@ import {
   obterCarrinho,
 } from "../(cliente)/carrinho/carrinho";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
-import { Zona } from "@/types/Localizacao";
 
 //obter metodos de envio
 export function useGetMetodosEnvio(

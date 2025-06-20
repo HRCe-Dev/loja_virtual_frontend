@@ -3,11 +3,10 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ShoppingCart, Heart, MapPin, User, LogOut } from "lucide-react";
-import { logout, obterDadosUser, UserType } from "@/api/auth";
-import { useState } from "react";
+import { logout, obterDadosUser } from "@/api/auth";
 
-export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
-  const [user, setUser] = useState<UserType | null>(obterDadosUser());
+const MenuLateral: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
+  const user = obterDadosUser();
   const pathname = usePathname();
 
   const links = [
@@ -78,7 +77,6 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
           </Link>
         ))}
       </nav>
-      , User: User_
       {/* Sair */}
       <div className="mt-auto px-4 flex justify-center pb-6">
         <button
@@ -90,4 +88,6 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
       </div>
     </aside>
   );
-}
+};
+
+export default MenuLateral;

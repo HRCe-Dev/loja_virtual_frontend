@@ -11,7 +11,7 @@ interface props {
   setFiltros: React.Dispatch<React.SetStateAction<Partial<SearchQuery> | null>>;
 }
 
-const FiltroSidebar: React.FC<props> = ({ setFiltros, filtros }) => {
+const FiltroSidebar: React.FC<props> = ({ setFiltros }) => {
   const [atributos, setAtributos] = useState<AtributosProdutos | null>(null);
   const [preco, setPreco] = useState([0, 5000]); // valor inicial do intervalo
 
