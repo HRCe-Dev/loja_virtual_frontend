@@ -20,23 +20,15 @@ const PromocoesCard2: React.FC<PromocoesCardProps> = ({ produto }) => {
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
 
-      {/* Overlay com informações */}
+      
       <div
         id="info"
-        className="absolute inset-0 flex flex-col items-center justify-center 
-           bg-black bg-opacity-50 text-white p-4 
-           opacity-50 md:opacity-0 md:group-hover:opacity-70 
-           transition-opacity duration-300"
+        className="absolute top-1/2 -translate-y-1/2 right-2 bg-black/50 backdrop-blur-sm rounded-md px-3 py-4 shadow-md text-right z-10 w-1/2"
       >
-        <p className="absolute top-2 right-2 text-xs font-bold bg-red-500 px-2 py-1 rounded z-10 block md:hidden">
+        <p className="text-xs font-bold text-red-600">
           {desconto}% OFF
         </p>
-
-        {/* Só Desktop – centralizado */}
-        <p className="hidden md:block text-sm md:text-lg font-bold bg-red-500 px-2 py-1 rounded mb-2">
-          {desconto}% OFF
-        </p>
-        <h2 className="text-center text-base md:text-xl font-semibold">
+        <h2 className="text-sm font-bold text-white">
           {produto.nome}
         </h2>
       </div>

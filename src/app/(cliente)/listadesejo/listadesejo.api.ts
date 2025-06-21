@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Produto } from "@/types/Produto";
-import { url } from "../../api/url";
-import { fetchWithAuth } from "../../api/fetch_auth";
+import { url } from "../../../api/url";
+import { fetchWithAuth } from "../../../api/fetch_auth";
 
 const url_ = url + "protected/listadesejo/";
 

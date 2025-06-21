@@ -65,7 +65,7 @@ export default function PaymentForm() {
                 </div>
                 <div className="flex items-center gap-2">
                   <FaMapMarkerAlt className="text-gray-500" />
-                  <span>{pedidoData.endereco_id}</span>
+                  <span>{pedidoData.endereco || ""}</span>
                 </div>
               </div>
               <button
@@ -119,7 +119,7 @@ export default function PaymentForm() {
                 <div key={prod.produto_id}>
                   <div className="flex justify-between">
                     <span>{prod.nome}</span>
-                    <span>{prod.preco * prod.qtd}$00 CVE</span>
+                    <span>{prod.preco! * prod.qtd}$00 CVE</span>
                   </div>
                   <div className="text-gray-500 text-xs">
                     {prod.qtd} x {prod.preco}$00 CVE

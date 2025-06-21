@@ -7,23 +7,15 @@ import { useEffect, useState } from "react";
 import { obterProdutosCarrinho, removerCarrinho } from "./carrinho";
 import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CarrinhoPage() {
   const [btnLoading, setbtnLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>([]);
-  /*const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>(
-    Produtos.map((produto) => {
-      return {
-        ...produto,
-        qtd: 5,
-        estoque: 10,
-        updated_at: new Date(),
-      };
-    })
-  );*/
+  const [total, setTotal] = useState<number>(0);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCarrinho = async () => {
@@ -48,12 +40,43 @@ export default function CarrinhoPage() {
     setbtnLoading(false);
   };
 
-  const total = carrinho.reduce((acc, prod) => acc + prod.preco * prod.qtd, 0);
+  useEffect(() => {
+    setTotal(
+      carrinho.reduce(
+        (acc, prod) => acc + prod.preco * (prod.estoque === 0 ? 0 : prod.qtd),
+        0
+      )
+    );
+  }, [carrinho]);
+
+  const handleComprarClick = async () => {
+    setLoading(true);
+    for (const prod of carrinho) {
+      if (!(prod.estoque > 0)) {
+        alert(
+          `O produto ${prod.nome} está ESGOTADO e  será removido do carrinho.`
+        );
+        await removerCarrinho(prod.id);
+      }
+    }
+
+    router.push("/checkout/entrega");
+
+    setLoading(false);
+  };
+
+  const alterarQtdProduto = (produto_id: string, novaQtd: number) => {
+    setCarrinho((carrinhoAtual) =>
+      carrinhoAtual.map((produto) =>
+        produto.id === produto_id ? { ...produto, qtd: novaQtd } : produto
+      )
+    );
+  };
 
   return (
-    <div className="mx-10 mt-10 mb-10">
+    <div className="bg-white p-6 rounded-xl shadow-md">
       <div className="flex flex-row items-center justify-between border-b border-gray-300">
-        <h1 className="text-2xl font-bold">Carrinho de compras</h1>
+        <h1 className="text-2xl font-bold mb-2">Carrinho de compras</h1>
         <p className="flex items-center gap-1 text-sm mr-20 font-bold text-gray-700">
           {carrinho.length} items{" "}
           <span>
@@ -74,12 +97,13 @@ export default function CarrinhoPage() {
                 btnLoading={btnLoading}
                 key={produto.id}
                 produto={produto}
+                setProdutoQtd={alterarQtdProduto}
               />
             ))}
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row mt-20 border-t-4 border-gray-300 p-5 items-center justify-between sticky bottom-0 bg-white shadow-lg z-10">
+      <div className="flex flex-col sm:flex-row mt-20 border-t border-gray-300 p-5 items-center justify-between sticky bottom-0 shadow-lg z-10">
         {/* Pre checkout */}
         <div className="ml-4 sm:ml-10 w-full sm:w-auto">
           <p className="text-2xl font-bold">Total:</p>
@@ -89,8 +113,11 @@ export default function CarrinhoPage() {
           </p>
         </div>
         <div className="w-full sm:w-auto flex justify-center sm:justify-end mt-4 sm:mt-0 sm:mr-20">
-          <button className="text-xl font-bold text-white rounded-xl bg-orange-500 px-6 py-3 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-2 w-full sm:w-auto">
-            <Link href="/checkout/entrega">Checkout</Link>
+          <button
+            onClick={handleComprarClick}
+            className="text-xl font-bold text-white rounded-xl bg-orange-500 px-6 py-3 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-2 w-full sm:w-auto"
+          >
+            Comprar
           </button>
         </div>
       </div>

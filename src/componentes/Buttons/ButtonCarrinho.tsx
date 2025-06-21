@@ -1,14 +1,22 @@
 "use client";
 
-import { adicionarCarrinho, verificarCarrinho } from "@/app/carrinho/carrinho";
+import {
+  adicionarCarrinho,
+  verificarCarrinho,
+} from "@/app/(cliente)/carrinho/carrinho";
+import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface btnProps {
   produto_id: string;
+  className?: string;
 }
 
-export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
+export const BtnAdicionarCarrinho: React.FC<btnProps> = ({
+  produto_id,
+  className,
+}) => {
   const [noCarrinho, setNoCarrinho] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -38,17 +46,27 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({ produto_id }) => {
   if (!noCarrinho)
     return (
       <button
-        className="w-full mt-2 mb-2 bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400"
+        className={
+          className
+            ? className
+            : "w-full mt-2 mb-2 bg-[#265674] text-white py-2 px-3 rounded-xl hover:bg-blue-400"
+        }
         onClick={(e) => onClick(e)}
         disabled={loading}
       >
-        Adicionar ao Carrinho
+        {className ? (
+          <span className="flex gap-4">
+            Adicionar <ShoppingCart />
+          </span>
+        ) : (
+          "Adicionar ao Carrinho"
+        )}
       </button>
     );
   else
     return (
       <button
-        className="w-full mt-2 mb-2 bg-blue-950 text-white py-2 px-3 rounded-xl hover:bg-blue-400"
+        className="w-full mt-2 mb-2 bg-[#265674] text-white py-2 px-3 rounded-xl hover:bg-blue-400"
         disabled={loading}
         onClick={(e: React.MouseEvent) => {
           e.stopPropagation();

@@ -4,7 +4,7 @@ import {
   removerListaDesejo,
   adicionarListaDesejo,
   verifyInListaDesejo,
-} from "@/app/listadesejo/listadesejo";
+} from "@/app/(cliente)/listadesejo/listadesejo";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 

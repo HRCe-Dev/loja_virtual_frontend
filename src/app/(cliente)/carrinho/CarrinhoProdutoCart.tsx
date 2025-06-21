@@ -6,9 +6,11 @@ import React from "react";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
 import { BtnTrash } from "@/componentes/Buttons/Buttons";
 import Image from "next/image";
+import { AlertTriangle } from "lucide-react";
 
 interface carrinhoCardProps {
   produto: ProdutoCarrinho;
+  setProdutoQtd: (produto_id: string, qtd: number) => void;
   removerProduto: (produto_id: string) => void;
   btnLoading?: boolean;
 }
@@ -17,10 +19,19 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
   produto,
   removerProduto,
   btnLoading,
+  setProdutoQtd,
 }) => {
   return (
     <div className="px-5 sm:px-10 mx-auto flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10 border border-gray-300 rounded-lg">
-      <div className="flex items-center justify-center w-40 h-48">
+      <div className="relative flex items-center justify-center w-40 h-48">
+        {produto.estoque === 0 && (
+          <div className="absolute flex flex-col items-center justify-center gap-1">
+            <AlertTriangle className=" text-red-600 font-bold size-10" />
+            <span className="text-sm bg-white/40 font-bold rounded-xl p-1 ">
+              Esgotado
+            </span>
+          </div>
+        )}
         {/* imagem */}
         <Image
           src={produto.imagem_url}
@@ -46,7 +57,8 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
         {/* acoes */}
         <BtnListaDesejo tipo={1} produto_id={produto.id} />
         <SeletorQuantidade
-          qtd_={produto.qtd}
+          qtd_={produto.estoque === 0 ? 0 : produto.qtd}
+          setProdutoQtd={setProdutoQtd}
           estoque={produto.estoque}
           produto_id={produto.id}
           carrinho={true}

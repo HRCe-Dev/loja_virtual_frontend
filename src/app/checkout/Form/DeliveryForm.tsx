@@ -9,6 +9,9 @@ import { realizarCheckout, useGetMetodosEnvio } from "../checkout.api";
 import Loading from "@/componentes/Loading";
 import { Cidade, Zona } from "@/types/Localizacao";
 import { useObterCidades, UseObterZonas } from "@/api/localizacao.api";
+import { LocateFixed } from "lucide-react";
+import obterMinhaLocalizacao from "@/util/obterMinhaLocalizacao";
+import { GetLocalizacao } from "@/api/localizar.api";
 
 const schema = z.object({
   island: z.string().min(1, "Obrigatório"),
@@ -35,6 +38,7 @@ export default function DeliveryForm() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
@@ -43,11 +47,33 @@ export default function DeliveryForm() {
   //definir zonas
   UseObterZonas(dados.city, setZonas, setLoadingZona, [dados.city]);
 
+  const obterLocalizacao = async () => {
+    setLoading(true);
+    const meuLocal = await obterMinhaLocalizacao();
+
+    if (meuLocal) {
+      const zona_ = await GetLocalizacao(meuLocal);
+
+      if (zona_) {
+        setValue("island", zona_.ilha);
+        const cidadeEncontrada = cidades.find(
+          (city) => city.nome === zona_.cidade
+        );
+        if (cidadeEncontrada) {
+          setValue("city", cidadeEncontrada.id);
+          setValue("zone", zona_.id);
+        }
+      }
+    }
+
+    setLoading(false);
+  };
+
   const onSubmit = async (data: FormData) => {
     setLoading(true);
 
     const pedido_id = await realizarCheckout({
-      endereco_id: 1,
+      endereco_id: Number(data.zone),
       metodo_entrega_id: Number(data.deliveryMethod),
     });
 
@@ -74,60 +100,70 @@ export default function DeliveryForm() {
 
       {/* Endereço */}
       {!loading && !error ? (
-        <div className="border border-gray-300 p-4 rounded mb-6">
-          <label className="block text-sm mb-1">País</label>
-          <input
-            className="input w-full border border-gray-300 rounded-md px-3 py-2 "
-            value="Cabo Verde"
-            readOnly
-          />
+        <div className="">
+          <div className="border border-gray-300 p-4 rounded mb-6">
+            <label className="block text-sm mb-1">País</label>
+            <input
+              className="input w-full border border-gray-300 rounded-md px-3 py-2 "
+              value="Cabo Verde"
+              readOnly
+            />
 
-          <label className="block text-sm mt-4 mb-1">Ilha</label>
-          <select
-            {...register("island")}
-            className="input w-full border border-gray-300 rounded-md px-3 py-2 "
-          >
-            <option value="">Selecione a ilha</option>
-            {[...new Set(cidades.map((cidade) => cidade.ilha))].map((ilha) => (
-              <option key={ilha} value={ilha}>
-                {ilha}
+            <label className="block text-sm mt-4 mb-1">Ilha</label>
+            <select
+              {...register("island")}
+              className="input w-full border border-gray-300 rounded-md px-3 py-2 "
+            >
+              <option value="">Selecione a ilha</option>
+              {[...new Set(cidades.map((cidade) => cidade.ilha))].map(
+                (ilha) => (
+                  <option key={ilha} value={ilha}>
+                    {ilha}
+                  </option>
+                )
+              )}
+            </select>
+            <p className="text-red-500 text-sm">{errors.island?.message}</p>
+
+            <label className="block text-sm mt-4 mb-1">Cidade</label>
+            <select
+              {...register("city")}
+              className="input w-full border border-gray-300 rounded-md px-3 py-2 "
+            >
+              <option value="">Selecione a cidade</option>
+              {cidades
+                .filter((cidade) => cidade.ilha === dados.island)
+                .map((cidade) => (
+                  <option key={cidade.id} value={cidade.id}>
+                    {cidade.nome}
+                  </option>
+                ))}
+            </select>
+            <p className="text-red-500 text-sm">{errors.city?.message}</p>
+
+            <label className="block text-sm mt-4 mb-1">Zona</label>
+            <select
+              {...register("zone")}
+              className="input w-full  border border-gray-300 rounded-md px-3 py-2"
+            >
+              <option value="">
+                {loadingZona ? "Carregando Zonas..." : "Selecione a zona"}
               </option>
-            ))}
-          </select>
-          <p className="text-red-500 text-sm">{errors.island?.message}</p>
-
-          <label className="block text-sm mt-4 mb-1">Cidade</label>
-          <select
-            {...register("city")}
-            className="input w-full border border-gray-300 rounded-md px-3 py-2 "
+              {Array.isArray(zonas) &&
+                zonas.map((zona) => (
+                  <option key={zona.id} value={zona.id}>
+                    {zona.zona}
+                  </option>
+                ))}
+            </select>
+            <p className="text-red-500 text-sm">{errors.zone?.message}</p>
+          </div>
+          <button
+            onClick={obterLocalizacao}
+            className="mt-3 mb-5  flex flex-row  mx-auto items-center gap-2 font-bold py-2 px-5 border border-dashed border-gray-300 rounded-lg text-orange-500  hover:border-solid hover:bg-blue-500 hover:text-white transition-all duration-300 "
           >
-            <option value="">Selecione a cidade</option>
-            {cidades
-              .filter((cidade) => cidade.ilha === dados.island)
-              .map((cidade) => (
-                <option key={cidade.id} value={cidade.id}>
-                  {cidade.nome}
-                </option>
-              ))}
-          </select>
-          <p className="text-red-500 text-sm">{errors.city?.message}</p>
-
-          <label className="block text-sm mt-4 mb-1">Zona</label>
-          <select
-            {...register("zone")}
-            className="input w-full  border border-gray-300 rounded-md px-3 py-2"
-          >
-            <option value="">
-              {loadingZona ? "Carregando Zonas..." : "Selecione a zona"}
-            </option>
-            {Array.isArray(zonas) &&
-              zonas.map((zona) => (
-                <option key={zona.id} value={zona.id}>
-                  {zona.zona}
-                </option>
-              ))}
-          </select>
-          <p className="text-red-500 text-sm">{errors.zone?.message}</p>
+            <LocateFixed /> Usar Localização Atual
+          </button>
         </div>
       ) : (
         <Loading />
