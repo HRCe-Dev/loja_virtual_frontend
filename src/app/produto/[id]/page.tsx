@@ -3,11 +3,7 @@ import fetchProductDetalhes from "./produtoDetalhes.api";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
 import { Truck, Repeat } from "lucide-react";
 import AvaliacoesPage from "./AvaliacoesPage";
-import {
-  ButtonLaranja,
-  ButtonNoBg,
-  ButtonWhite,
-} from "@/componentes/Buttons/Buttons";
+import { ButtonNoBg } from "@/componentes/Buttons/Buttons";
 import DescricaoProduto from "./DescricaoProduto";
 import SeccaoMarker from "@/app/(home)/SeccaoMarker";
 import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
