@@ -1,13 +1,9 @@
 import ProductGallery from "@/componentes/PhotoGallery";
 import fetchProductDetalhes from "./produtoDetalhes.api";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
-import { ShoppingCart, Truck, Repeat } from "lucide-react";
+import { Truck, Repeat } from "lucide-react";
 import AvaliacoesPage from "./AvaliacoesPage";
-import {
-  ButtonLaranja,
-  ButtonNoBg,
-  ButtonWhite,
-} from "@/componentes/Buttons/Buttons";
+import { ButtonNoBg } from "@/componentes/Buttons/Buttons";
 import DescricaoProduto from "./DescricaoProduto";
 import SeccaoMarker from "@/app/(home)/SeccaoMarker";
 import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
@@ -15,6 +11,8 @@ import { Produto } from "@/types/Produto";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
 import { url } from "@/api/url";
+import { BtnAdicionarCarrinho } from "@/componentes/Buttons/ButtonCarrinho";
+import { BtnComprarAgora } from "@/componentes/Buttons/ButtonComprarAgora";
 
 interface PageProps {
   id: string;
@@ -81,10 +79,14 @@ const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 ">
-                <ButtonLaranja>
-                  Adicionar <ShoppingCart />
-                </ButtonLaranja>
-                <ButtonWhite>Comprar agora</ButtonWhite>
+                <BtnAdicionarCarrinho
+                  produto_id={produto_id}
+                  className="flex flex-row items-center justify-center gap-2 md:gap-4 py-1 px-2 md:py-3 md:px-6 bg-orange-500 text-lg font-bold text-white rounded-lg hover:bg-orange-700"
+                />
+                <BtnComprarAgora
+                  produto_id={produto_id}
+                  styleClass="py-1 px-2 bg-white text-lg font-bold  text-orange-500 rounded-lg border-1 border-orange-500 hover:bg-orange-700 hover:text-white"
+                />
               </div>
 
               <div className="mt-5 flex sm:flex-row gap-4 sm:justify-between  sm:items-center">
