@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BtnListaDesejo } from "./Buttons/ButtonListaDesejo";
 import { BtnAdicionarCarrinho } from "./Buttons/ButtonCarrinho";
+import { BtnComprarAgora } from "./Buttons/ButtonComprarAgora";
 
 interface ProdutoCardProps {
   produto: Produto;
@@ -44,9 +45,7 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
 
       {/*btn de comprar agora */}
       <div>
-        <button className="w-full mt-2 bg-[#FF7700] text-white py-2 px-3 rounded-xl hover:bg-orange-300 hover:text-gray-500">
-          Comprar Agora
-        </button>
+        <BtnComprarAgora produto_id={produto.id} />
       </div>
 
       {/*btn de adicionar ao carrinho */}

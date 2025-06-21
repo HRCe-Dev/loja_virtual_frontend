@@ -18,7 +18,7 @@ async function fetchProductDetalhes(
     }
 
     const produto = (await res.json()) as ProdutoDetalhes;
-    console.log(produto);
+    //console.log(produto);
     return produto;
   } catch (error) {
     console.log(error);
