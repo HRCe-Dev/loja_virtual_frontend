@@ -2,10 +2,17 @@
 
 import { proximoRoute } from "@/util/proximoPage";
 import { url } from "./url";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
+export type UserType = {
+  id: string;
+  email: string;
+  nome: string;
+};
 
 export const fazerLogin = async (
   data: { email: string; password: string },
-  router: any,
+  router: AppRouterInstance,
   next?: string
 ) => {
   //TODO: adicionar try...catch para mitigar erros
@@ -62,4 +69,16 @@ export const verifyAuth = async (): Promise<boolean> => {
 export const logout = () => {
   localStorage.removeItem("token");
   window.location.href = "/";
+};
+
+export const obterDadosUser = (): UserType | null => {
+  const dados = localStorage.getItem("user");
+
+  if (!dados) {
+    return null;
+  }
+
+  const user = JSON.parse(dados) as UserType;
+
+  return user;
 };

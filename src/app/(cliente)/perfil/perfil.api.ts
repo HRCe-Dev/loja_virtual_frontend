@@ -19,7 +19,7 @@ const obterDadosCliente = async () => {
 };
 
 //alterar dados
-const editarDadosClientes = async (
+export const editarDadosClientes = async (
   data: Partial<Cliente>
 ): Promise<boolean> => {
   const res = await fetchWithAuth(url_, {
@@ -72,7 +72,7 @@ export const useObterDadosClientes = (
   setCliente: React.Dispatch<React.SetStateAction<Cliente | null>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setErro: React.Dispatch<React.SetStateAction<string | null>>,
-  dependencies: any[]
+  dependencies: []
 ) => {
   const hasRun = useRef(false);
   useEffect(() => {

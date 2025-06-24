@@ -1,13 +1,9 @@
 import ProductGallery from "@/componentes/PhotoGallery";
 import fetchProductDetalhes from "./produtoDetalhes.api";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
-import { ShoppingCart, Truck, Repeat } from "lucide-react";
+import { Truck, Repeat } from "lucide-react";
 import AvaliacoesPage from "./AvaliacoesPage";
-import {
-  ButtonLaranja,
-  ButtonNoBg,
-  ButtonWhite,
-} from "@/componentes/Buttons/Buttons";
+import { ButtonNoBg } from "@/componentes/Buttons/Buttons";
 import DescricaoProduto from "./DescricaoProduto";
 import SeccaoMarker from "@/app/(home)/SeccaoMarker";
 import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
@@ -16,6 +12,7 @@ import ProdutoCard from "@/componentes/ProdutoCard";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
 import { url } from "@/api/url";
 import DetalhesProduto from "./DetalhesProduto";
+
 
 interface PageProps {
   id: string;
@@ -57,6 +54,7 @@ const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
                 nome={produto.nome}
               />
             </div>
+
             <DetalhesProduto produto={produto}/>
           </div>
 

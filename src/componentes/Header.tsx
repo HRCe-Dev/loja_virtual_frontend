@@ -9,10 +9,9 @@ import {
   Search,
   ShoppingCart,
   Menu,
-  User,
   MapPin,
   ChevronDown,
-  Ellipsis
+  Ellipsis,
 } from "lucide-react";
 
 const categorias = [
@@ -35,9 +34,7 @@ const Header = () => {
   const ilhasRef = useRef<HTMLDivElement | null>(null);
 
   const router = useRouter();
-  const [termoBusca, setTermoBusca] = useState('');
-
-  
+  const [termoBusca, setTermoBusca] = useState("");
 
   // Fecha menus ao clicar fora
   useEffect(() => {
@@ -93,7 +90,7 @@ const Header = () => {
 
           {/* Mobile Icons */}
           <div className="flex md:hidden gap-3 relative">
-            <AuthLinks/>
+            <AuthLinks />
             <Link href="/carrinho">
               <ShoppingCart className="text-white" />
             </Link>
@@ -107,17 +104,17 @@ const Header = () => {
         <div className="w-full flex md:px-10">
           <div className="flex items-center bg-white rounded-l-lg px-3  py-2 shadow-s md:w-9/10 w-full">
             <input
-            type="text"
-            placeholder="Procura aqui seu produto"
-            value={termoBusca}
-            onChange={(e) => setTermoBusca(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && termoBusca.trim()) {
-                router.push(`/busca?termo=${encodeURIComponent(termoBusca)}`);
-              }
-            }}
-            className="w-full outline-none text-sm text-gray-700"
-          />
+              type="text"
+              placeholder="Procura aqui seu produto"
+              value={termoBusca}
+              onChange={(e) => setTermoBusca(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && termoBusca.trim()) {
+                  router.push(`/busca?termo=${encodeURIComponent(termoBusca)}`);
+                }
+              }}
+              className="w-full outline-none text-sm text-gray-700"
+            />
           </div>
           <div className="flex items-center bg-[#265674] rounded-e-lg px-5 md:px-3 py-3 shadow-sm md:w-1/10">
             <button

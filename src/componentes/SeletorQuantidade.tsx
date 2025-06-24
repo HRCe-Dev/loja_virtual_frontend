@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 interface seletorProps {
   produto_id: string;
   qtd_?: number;
+  setProdutoQtd?: (produto_id: string, qtd: number) => void;
   estoque?: number;
   carrinho?: boolean;
 }
@@ -15,6 +16,7 @@ const SeletorQuantidade: React.FC<seletorProps> = ({
   qtd_ = 1,
   estoque = 5,
   carrinho = false,
+  setProdutoQtd,
 }) => {
   const [qtd, setQtd] = useState<number>(qtd_);
   const [tempoDeEspera, setTempoDeEspera] = useState<NodeJS.Timeout | null>(
@@ -45,6 +47,9 @@ const SeletorQuantidade: React.FC<seletorProps> = ({
 
     const timeout = setTimeout(() => {
       atualizarCarrinho(produto_id, qtd);
+      if (setProdutoQtd) {
+        setProdutoQtd(produto_id, qtd);
+      }
       mudouPorInteracao.current = false;
     }, 1000); // Espera 1 segundo após o último clique
 

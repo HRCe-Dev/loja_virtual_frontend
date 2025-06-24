@@ -1,6 +1,6 @@
 import { fetchWithAuth } from "@/api/fetch_auth";
 import { url } from "@/api/url";
-import { HistoricoPedidos, PedidoDados1 } from "@/types/PedidoDadosTypes";
+import { HistoricoPedidos } from "@/types/PedidoDadosTypes";
 import { useEffect, useRef } from "react";
 
 const url_ = url + "protected/checkout/meuspedidos";
@@ -24,7 +24,7 @@ export const useObterHistoricoPedidos = (
   setHistoricoPedidos: React.Dispatch<React.SetStateAction<HistoricoPedidos[]>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setErro: React.Dispatch<React.SetStateAction<string | null>>,
-  dependencies: any[]
+  dependencies: []
 ) => {
   const hasRun = useRef(false);
   useEffect(() => {

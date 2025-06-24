@@ -3,9 +3,10 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ShoppingCart, Heart, MapPin, User, LogOut } from "lucide-react";
-import { logout } from "@/api/auth";
+import { logout, obterDadosUser } from "@/api/auth";
 
-export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
+const MenuLateral: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
+  const user = obterDadosUser();
   const pathname = usePathname();
 
   const links = [
@@ -42,14 +43,20 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
       `}
     >
       {/* Perfil */}
-      <div className="p-6 flex flex-col items-center border-b">
-        <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mb-2">
-          <span className="text-xl font-bold text-blue-500">N</span>
-        </div>
-        <h2 className="font-semibold">Gabriel Luz</h2>
-        <p className="text-sm text-gray-500">g.luz03@gmail.com</p>
-      </div>
+      {user && (
+        <div className="p-6 flex flex-col items-center border-b">
+          <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+            <span className="text-xl font-bold text-blue-500">
+              {user.nome[0]}
+            </span>
+          </div>
 
+          <>
+            <h2 className="font-semibold text-gray-800">{user.nome}</h2>
+            <p className="text-sm text-gray-500">{user.email}</p>
+          </>
+        </div>
+      )}
       {/* Navegação */}
       <nav className="flex flex-col my-6 px-4 gap-2 border-b">
         {links.map(({ href, label, icon }) => (
@@ -70,7 +77,6 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
           </Link>
         ))}
       </nav>
-
       {/* Sair */}
       <div className="mt-auto px-4 flex justify-center pb-6">
         <button
@@ -82,4 +88,6 @@ export default function MenuLateral({ isOpen = false }: { isOpen?: boolean }) {
       </div>
     </aside>
   );
-}
+};
+
+export default MenuLateral;

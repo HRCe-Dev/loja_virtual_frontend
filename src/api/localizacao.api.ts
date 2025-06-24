@@ -41,7 +41,7 @@ export async function ObterCidades(): Promise<Cidade[]> {
 export function useObterCidades(
   setCidades: React.Dispatch<React.SetStateAction<Cidade[]>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  dependencies: React.DependencyList = []
+  dependencies: []
 ) {
   useEffect(() => {
     const obterCidades = async () => {

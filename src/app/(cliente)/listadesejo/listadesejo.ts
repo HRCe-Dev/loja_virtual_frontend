@@ -39,7 +39,7 @@ export const adicionarListaDesejo = async (
     //guardar no localstorage
     localStorage.setItem(ITEM, JSON.stringify(listadesejo));
 
-    alert(JSON.stringify(listadesejo));
+    //alert(JSON.stringify(listadesejo));
 
     return true;
   } catch (error) {
@@ -59,7 +59,7 @@ export const removerListaDesejo = async (
 
     //salvar no local storage
     localStorage.setItem(ITEM, JSON.stringify(novaLista));
-    alert(JSON.stringify(novaLista));
+    //alert(JSON.stringify(novaLista));
 
     return true;
   } catch (error) {

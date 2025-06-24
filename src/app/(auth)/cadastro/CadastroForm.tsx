@@ -4,7 +4,6 @@ import { fazerLogin } from "@/api/auth";
 import { url } from "@/api/url";
 import SeletorEndereco from "@/componentes/Pop_ups/Seletor_Endereco/Seletor_Endereco";
 import { inputStyle } from "@/styles/forms";
-import { proximoRoute } from "@/util/proximoPage";
 import { MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";

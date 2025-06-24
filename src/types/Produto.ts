@@ -1,11 +1,9 @@
-import { string } from "zod";
-
 export interface Produto {
   id: string;
   nome: string;
   preco: number;
   imagem_url: string;
-  estoque?: number;
+  estoque: number;
 }
 
 export interface ProdutoCarrinho extends Produto {

@@ -1,14 +1,11 @@
 "use client";
 
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
-import { Produto } from "@/types/Produto";
-
 type Props = {
   pedidoData: PedidoDados1;
-  produtoDetalhes: Produto[];
 };
 
-export default function ResumoPedido({ pedidoData, produtoDetalhes }: Props) {
+export default function ResumoPedido({ pedidoData }: Props) {
   return (
     <>
       <h3 className="text-orange-500 font-semibold mb-3">Resumo do Pedido</h3>

@@ -18,7 +18,7 @@ const obterCategorias = async (): Promise<Categoria[]> => {
 
 export const useObterAtributosProdutos = (
   setAtributos: React.Dispatch<React.SetStateAction<AtributosProdutos | null>>,
-  dependencies: any[]
+  dependencies: []
 ) => {
   const hasRun = useRef(false);
   useEffect(() => {

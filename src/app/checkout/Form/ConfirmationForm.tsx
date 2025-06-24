@@ -1,10 +1,8 @@
 "use client";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGetPedidoDados } from "../checkout.api";
-import fetchProdutosLista from "@/api/fetchProdutosLista";
-import { Produto } from "@/types/Produto";
 import Loading from "@/componentes/Loading";
 import ResumoPedido from "@/componentes/ResumoPedido";
 
@@ -14,32 +12,9 @@ export default function Confirmation() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [pedidoData, setPedidoData] = useState<PedidoDados1 | null>(null);
-  const [produtoDetalhes, setProdutosDetalhes] = useState<Produto[]>([]);
   const router = useRouter();
 
   useGetPedidoDados(pedido_id, setPedidoData, setLoading, setError);
-
-  useEffect(() => {
-    //obter detalhes do produto para mostrar a imagem do produto
-    const getData = async () => {
-      setLoading(true);
-
-      if (pedidoData) {
-        const produtos = await fetchProdutosLista(pedidoData.itens_pedido);
-
-        if (produtos) setProdutosDetalhes(produtos);
-        else setError("Erro em obter detalhes dos produtos");
-      } else {
-        setError("Erro em obter itens comprados");
-      }
-
-      setLoading(false);
-    };
-
-    if (pedidoData?.status === "NAO PAGO") {
-      router.push("checkout/pagamento/" + pedido_id);
-    } else getData();
-  }, [pedidoData]);
 
   const handleFinish = () => {
     router.push("/");
@@ -57,13 +32,7 @@ export default function Confirmation() {
         </p>
       </div>
 
-      {!loading && pedidoData && (
-        <ResumoPedido
-          pedidoData={pedidoData}
-          produtoDetalhes={produtoDetalhes}
-        />
-      )}
-        
+      {!loading && pedidoData && <ResumoPedido pedidoData={pedidoData} />}
 
       {loading && !error && <Loading />}
 
