@@ -8,6 +8,7 @@ import { CircleUser, Facebook } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fazerLogin } from "@/api/auth";
+import Loading from "@/componentes/Loading";
 
 interface loginForm {
   email: string;
@@ -22,6 +23,7 @@ export default function Login() {
   } = useForm<loginForm>();
 
   const [next, setNext] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -31,18 +33,20 @@ export default function Login() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
-    console.log("Dados enviados:", data);
+    setLoading(true);
     await fazerLogin(data, router, next!);
+    setLoading(false);
   };
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row min-h-screen w-full">
-        <div className="w-full md:w-1/2">
-          <BannerCadastro />
-        </div>
+    <div className="flex flex-col md:flex-row min-h-screen w-full">
+      <div className="w-full md:w-1/2">
+        <BannerCadastro />
+      </div>
 
-        <main className="w-full md:w-1/2 flex flex-col  gap-20 px-8 py-6 md:py-46 md:px-16 lg:px-24 min-h-screen">
+      {/* Lado direito (formulário ou loading) */}
+      {!loading ? (
+        <main className="w-full md:w-1/2 flex flex-col gap-20 px-8 py-6 md:py-46 md:px-16 lg:px-24 min-h-screen">
           <div className="text-center md:text-left my-2">
             <h1 className="text-3xl md:text-4xl font-bold">
               Página <span className="text-orange-500"> login</span>
@@ -117,7 +121,6 @@ export default function Login() {
               <div className="h-px bg-gray-300 flex-grow" />
             </div>
 
-            {/* Botões sociais */}
             <div className="flex gap-4 justify-center mt-4">
               <button
                 title="Clique para fazer login com sua conta do Google"
@@ -147,7 +150,11 @@ export default function Login() {
             </p>
           </div>
         </main>
-      </div>
-    </>
+      ) : (
+        <main className="w-full md:w-1/2 flex items-center justify-center min-h-screen">
+          <Loading />
+        </main>
+      )}
+    </div>
   );
 }
