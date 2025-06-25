@@ -94,6 +94,11 @@ const Footer: React.FC = () => {
                   Termos de uso
                 </a>
               </li>
+              <li>
+                <a href="/politicaDevolucoes" className="hover:text-white">
+                  Política de devoluções
+                </a>
+              </li>
             </ul>
           </div>
 
