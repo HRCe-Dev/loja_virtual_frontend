@@ -11,16 +11,17 @@ import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 
 //obter metodos de envio
 export function useGetMetodosEnvio(
+  ilha: string,
   setMetodosEnvio: React.Dispatch<React.SetStateAction<MetodoEnvio[]>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setError: React.Dispatch<React.SetStateAction<string | null>>,
   dependencies: React.DependencyList = []
 ) {
   useEffect(() => {
-    const verifyLogin = async () => {
+    const getter = async () => {
       setLoading(true);
 
-      const res = await fetch(url + "envio");
+      const res = await fetch(url + `envio/metodos?ilha=${ilha}&peso=${100}`);
 
       if (!res.ok) {
         setError("Erro em obter metodos de Envio");
@@ -35,7 +36,7 @@ export function useGetMetodosEnvio(
       setLoading(false);
     };
 
-    verifyLogin();
+    if (ilha) getter();
   }, dependencies);
 }
 

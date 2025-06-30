@@ -31,7 +31,6 @@ export default function DeliveryForm() {
   const [zonas, setZonas] = useState<Zona[]>([]);
   const [loadingZona, setLoadingZona] = useState<boolean>(false);
 
-  useGetMetodosEnvio(setMetodosEnvio, setLoading, setError, []);
   useObterCidades(setCidades, setLoading, []);
 
   const {
@@ -43,6 +42,10 @@ export default function DeliveryForm() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const dados = watch();
+
+  useGetMetodosEnvio(dados.island, setMetodosEnvio, setLoading, setError, [
+    dados.island,
+  ]);
 
   //definir zonas
   UseObterZonas(dados.city, setZonas, setLoadingZona, [dados.city]);
