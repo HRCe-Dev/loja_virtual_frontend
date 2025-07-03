@@ -1,7 +1,8 @@
 import { fetchWithAuth } from "@/api/fetch_auth";
+import { url } from "@/api/url";
 import { useEffect, useRef } from "react";
 
-interface dadosEntrega {
+export interface dadosEntrega {
   titulo: string;
   nome?: string;
   telefone?: string;
@@ -17,7 +18,7 @@ interface dadosEntrega {
   updatedAt?: Date;
 }
 
-interface dadosEntrega0 {
+export interface dadosEntrega0 {
   clienteId: string;
   titulo: string;
   nome?: string;
@@ -25,9 +26,11 @@ interface dadosEntrega0 {
   zonaId: number;
 }
 
+const url_ = url + "protected/entrega";
+
 //obter dados de entrega
 export const obterDadosEntrega = async (): Promise<dadosEntrega[]> => {
-  const res = await fetchWithAuth("entrega");
+  const res = await fetchWithAuth(url_);
 
   const dados = await res.json();
 
@@ -59,7 +62,7 @@ export const useObterDadosEntrega = (
         setDadosEntrega(dados);
       } catch (error) {
         console.error(error);
-        setErro(JSON.stringify(error));
+        setErro(error instanceof Error ? error.message : String(error));
       } finally {
         setLoading(false);
       }
@@ -73,7 +76,7 @@ export const useObterDadosEntrega = (
 export const adicionarDadosEntrega = async (
   dados: dadosEntrega0
 ): Promise<{ status: boolean; message?: string }> => {
-  const res = await fetchWithAuth("entrega", {
+  const res = await fetchWithAuth(url_, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

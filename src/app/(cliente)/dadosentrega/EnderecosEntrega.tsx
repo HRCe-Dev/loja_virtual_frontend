@@ -7,6 +7,10 @@ import {
   Building2,
   Users,
 } from "lucide-react";
+import { dadosEntrega, useObterDadosEntrega } from "./dadosEntrega.api";
+import { useState } from "react";
+import Loading from "@/componentes/Loading";
+import Error from "@/componentes/Error";
 
 const enderecos = [
   {
@@ -39,6 +43,12 @@ const enderecos = [
 ];
 
 const EnderecosEntrega: React.FC = () => {
+  const [dados, setDados] = useState<dadosEntrega[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useObterDadosEntrega(setDados, setLoading, setError, []);
+
   return (
     <div className="min-h-screen bg-white rounded-xl p-6 lex flex-col shadow-md">
       {/* Cabeçalho */}
@@ -48,31 +58,44 @@ const EnderecosEntrega: React.FC = () => {
       </div>
 
       {/* Lista de endereços */}
-      <div className="flex-1 p-4 space-y-4">
-        {enderecos.map((endereco, index) => (
-          <div
-            key={index}
-            className="bg-white p-4 rounded-xl shadow-sm flex items-start justify-between"
-          >
-            <div className="flex gap-3">
-              <div className="mt-1">{endereco.icone}</div>
-              <div>
-                <p className="font-semibold">{endereco.tipo}</p>
-                <p className="text-sm text-gray-700">{endereco.logradouro}</p>
-                <p className="text-sm text-gray-700">
-                  {endereco.bairro} - {endereco.cidade}, {endereco.estado}
-                </p>
-                <p className="text-sm text-gray-700">CEP: {endereco.cep}</p>
+      {!loading && !error && (
+        <div className="flex-1 p-4 space-y-4">
+          {enderecos.map((endereco, index) => (
+            <div
+              key={index}
+              className="bg-white p-4 rounded-xl shadow-sm flex items-start justify-between"
+            >
+              <div className="flex gap-3">
+                <div className="mt-1">{endereco.icone}</div>
+                <div>
+                  <p className="font-semibold">{endereco.tipo}</p>
+                  <p className="text-sm text-gray-700">{endereco.logradouro}</p>
+                  <p className="text-sm text-gray-700">
+                    {endereco.bairro} - {endereco.cidade}, {endereco.estado}
+                  </p>
+                  <p className="text-sm text-gray-700">CEP: {endereco.cep}</p>
+                </div>
               </div>
+              <MoreVertical className="text-gray-400 cursor-pointer" />
             </div>
-            <MoreVertical className="text-gray-400 cursor-pointer" />
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {loading && !error && (
+        <>
+          <Loading /> <div className="h-10"></div>
+        </>
+      )}
+
+      {error && <Error>{error}</Error>}
 
       {/* Botão adicionar novo endereço */}
       <div className="p-4 bg-white border-t">
-        <button className="w-full bg-orange-500 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-orange-600 transition">
+        <button
+          disabled={loading}
+          className="w-full bg-orange-500 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-orange-600 transition"
+        >
           <span className="text-xl">+</span>
           Adicionar novo endereço
         </button>
