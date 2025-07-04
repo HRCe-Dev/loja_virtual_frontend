@@ -1,20 +1,6 @@
 import { AtributosProdutos, Categoria } from "@/types/Produto";
-import { url } from "./url";
 import { useEffect, useRef } from "react";
-
-//obter categorias
-const obterCategorias = async (): Promise<Categoria[]> => {
-  //TODO: receber todos os atributos do servidor de um vez so e guardar no localstorage
-  const res = await fetch(url + "produtos/categorias");
-
-  const data = await res.json();
-
-  if (!(await res.ok)) {
-    throw Error(data.message);
-  }
-
-  return data as Categoria[];
-};
+import { obterCategorias } from "./categorias.api";
 
 export const useObterAtributosProdutos = (
   setAtributos: React.Dispatch<React.SetStateAction<AtributosProdutos | null>>,
