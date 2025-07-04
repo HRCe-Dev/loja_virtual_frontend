@@ -12,10 +12,11 @@ type Categoria = {
 };
 
 type Props = {
-  categorias: Categoria[];
+  link: string;
+  categorias: { id: number; nome: string; imagem_url?: string }[];
 };
 
-export default function CategoriaNavigationClient({ categorias }: Props) {
+export default function CategoriaNavigationClient({ categorias, link }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScroll, setCanScroll] = useState(false);
 
@@ -65,7 +66,7 @@ export default function CategoriaNavigationClient({ categorias }: Props) {
         >
           {categorias.map((cat) => (
             <Link
-              href={"/categoria/" + cat.id}
+              href={`/${link}/${cat.id}`}
               key={cat.id}
               className="flex flex-col items-center justify-center px-4 py-6 md:px-6 md:py-8 min-w-[130px] min-h-[130px] border border-gray-300 hover:border-[] rounded bg-white text-black hover:bg-[#FF7700] hover:text-white hover:shadow-xl transition-all duration-300"
             >

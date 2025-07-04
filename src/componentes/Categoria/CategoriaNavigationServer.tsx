@@ -5,7 +5,9 @@ import CategoriaNavigationClient from "./CategoriaNavigationClient";
 const CategoriaNavigationServer = async () => {
   const categorias = await obterCategorias();
 
-  return <CategoriaNavigationClient categorias={categorias} />;
+  return (
+    <CategoriaNavigationClient categorias={categorias} link={"categoria"} />
+  );
 };
 
 export default CategoriaNavigationServer;
