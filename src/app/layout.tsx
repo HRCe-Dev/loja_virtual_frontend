@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HRCe Store",
+  title: "HRCe Loja",
   description: "Loja Virtual para Cabo Verdianos",
 };
 
@@ -36,7 +36,7 @@ export default function RootLayout({
       >
         <Header />
         <main className="flex-grow pt-[164px] md:pt-[126px]">{children}</main>
-        <CookieBanner/>
+        <CookieBanner />
         <Footer />
       </body>
     </html>

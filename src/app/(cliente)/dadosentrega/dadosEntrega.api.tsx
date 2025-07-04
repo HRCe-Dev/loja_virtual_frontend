@@ -3,6 +3,7 @@ import { url } from "@/api/url";
 import { useEffect, useRef } from "react";
 
 export interface dadosEntrega {
+  id: number;
   titulo: string;
   nome?: string;
   telefone?: string;
@@ -19,7 +20,6 @@ export interface dadosEntrega {
 }
 
 export interface dadosEntrega0 {
-  clienteId: string;
   titulo: string;
   nome?: string;
   telefone?: string;
@@ -37,6 +37,8 @@ export const obterDadosEntrega = async (): Promise<dadosEntrega[]> => {
   if (!(await res.ok)) {
     throw Error(dados.message);
   }
+
+  console.log(dados);
 
   return dados as dadosEntrega[];
 };
@@ -82,6 +84,29 @@ export const adicionarDadosEntrega = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify(dados),
+  });
+
+  const data = await res.json();
+
+  if (!(await res.ok)) {
+    alert(data.message);
+    return { status: false, message: data.message };
+  }
+
+  alert(data.message);
+
+  return { status: true };
+};
+
+export const removerDadoEntrega = async (
+  id: number
+): Promise<{ status: boolean; message?: string }> => {
+  const res = await fetchWithAuth(url_ + `/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
   });
 
   const data = await res.json();

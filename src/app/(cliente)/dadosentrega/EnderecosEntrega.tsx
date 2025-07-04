@@ -6,51 +6,42 @@ import {
   Home,
   Building2,
   Users,
+  MapPin,
+  Trash2,
 } from "lucide-react";
-import { dadosEntrega, useObterDadosEntrega } from "./dadosEntrega.api";
+import {
+  dadosEntrega,
+  removerDadoEntrega,
+  useObterDadosEntrega,
+} from "./dadosEntrega.api";
 import { useState } from "react";
 import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
-
-const enderecos = [
-  {
-    tipo: "Casa",
-    icone: <Home className="text-blue-500" />,
-    logradouro: "Rua das Flores, 123",
-    bairro: "Jardim América",
-    cidade: "São Paulo",
-    estado: "SP",
-    cep: "06234-567",
-  },
-  {
-    tipo: "Trabalho",
-    icone: <Building2 className="text-blue-500" />,
-    logradouro: "Av. Paulista, 1000",
-    bairro: "Bela Vista",
-    cidade: "São Paulo",
-    estado: "SP",
-    cep: "01310-100",
-  },
-  {
-    tipo: "Casa dos Pais",
-    icone: <Users className="text-blue-500" />,
-    logradouro: "Rua dos Pinhais, 500",
-    bairro: "Pinheiros",
-    cidade: "São Paulo",
-    estado: "SP",
-    cep: "05422-004",
-  },
-];
+import { AdicionarEnderecoSecao } from "./AdicionarEnderecooSection";
 
 const EnderecosEntrega: React.FC = () => {
   const [dados, setDados] = useState<dadosEntrega[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [menuAberto, setMenuAberto] = useState<number | null>(null);
+
+  const onDelete = async (id: number) => {
+    const enviar = await removerDadoEntrega(id);
+
+    if (enviar.status) {
+      window.location.reload();
+    }
+  };
 
   useObterDadosEntrega(setDados, setLoading, setError, []);
 
   return (
-    <div className="min-h-screen bg-white rounded-xl p-6 lex flex-col shadow-md">
+    <div
+      className="min-h-screen bg-white rounded-xl p-6 lex flex-col shadow-md"
+      onClick={() => {
+        if (menuAberto) setMenuAberto(null);
+      }}
+    >
       {/* Cabeçalho */}
       <div className="flex items-center p-4 border-b">
         <ChevronLeft className="text-gray-600 mr-2" />
@@ -60,23 +51,51 @@ const EnderecosEntrega: React.FC = () => {
       {/* Lista de endereços */}
       {!loading && !error && (
         <div className="flex-1 p-4 space-y-4">
-          {enderecos.map((endereco, index) => (
+          {dados.map((endereco, index) => (
             <div
               key={index}
               className="bg-white p-4 rounded-xl shadow-sm flex items-start justify-between"
             >
-              <div className="flex gap-3">
-                <div className="mt-1">{endereco.icone}</div>
+              <div className="flex gap-3 items-center">
+                <div className="mt-1">
+                  <MapPin className="text-blue-500" />
+                </div>
                 <div>
-                  <p className="font-semibold">{endereco.tipo}</p>
-                  <p className="text-sm text-gray-700">{endereco.logradouro}</p>
+                  <p className="font-semibold">{endereco.titulo}</p>
+                  <p className="text-sm text-gray-700">{endereco.nome}</p>
                   <p className="text-sm text-gray-700">
-                    {endereco.bairro} - {endereco.cidade}, {endereco.estado}
+                    Telefone: {endereco.telefone}
                   </p>
-                  <p className="text-sm text-gray-700">CEP: {endereco.cep}</p>
+                  <p className="text-sm text-gray-700">
+                    {endereco.zona.zona} - {endereco.zona.cidade},{" "}
+                    {endereco.zona.ilha}, Cabo Verde
+                  </p>
                 </div>
               </div>
-              <MoreVertical className="text-gray-400 cursor-pointer" />
+              <MoreVertical
+                className="text-gray-400 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMenuAberto(endereco.id);
+                }}
+              />
+              {menuAberto === endereco.id && (
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-lg z-10"
+                >
+                  <button
+                    onClick={() => {
+                      onDelete(endereco.id);
+                      setMenuAberto(null);
+                    }}
+                    className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Deletar
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -92,13 +111,7 @@ const EnderecosEntrega: React.FC = () => {
 
       {/* Botão adicionar novo endereço */}
       <div className="p-4 bg-white border-t">
-        <button
-          disabled={loading}
-          className="w-full bg-orange-500 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-orange-600 transition"
-        >
-          <span className="text-xl">+</span>
-          Adicionar novo endereço
-        </button>
+        {!loading && <AdicionarEnderecoSecao />}
       </div>
     </div>
   );
