@@ -1,4 +1,3 @@
-import SeccaoMarker from "../../(home)/SeccaoMarker";
 import CategoriaProdutos from "./CategoriaProdutos";
 import { obterCategorias } from "@/api/categorias.api";
 import DescricaoCategoria from "./DescricaoCategoria";
@@ -24,8 +23,6 @@ const CategoriaPage = async ({ params }: { params: Promise<PageProps> }) => {
   if (!categoria) {
     return null;
   }
-
-  console.log(categoria);
 
   return (
     <div>

@@ -9,20 +9,29 @@ import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import { useSearch } from "./search.api";
 import Loading from "@/componentes/Loading";
 
-export default function PaginaBusca() {
+interface PageProps {
+  filtro?: Partial<SearchQuery>;
+}
+
+export default function PaginaBusca({ filtro }: PageProps) {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const termo = searchParams.get("termo")?.toLowerCase() || "";
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
-  const [filtros, setFiltros] = useState<Partial<SearchQuery> | null>(null);
+  const [filtros, setFiltros] = useState<Partial<SearchQuery> | null>(
+    filtro || null
+  );
 
   //colocar os filtros aqui
-  useSearch({ q: termo, ...filtros }, setProdutos, setLoading, setError, [
-    termo,
-    filtros,
-  ]);
+  useSearch(
+    { q: termo!, ...filtros },
+    setProdutos,
+    setLoading,
+    setError,
+    filtro ? [] : [termo, filtros]
+  );
 
   return (
     <div className="flex bg-gray-50 min-h-screen pt-5">

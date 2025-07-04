@@ -37,10 +37,11 @@ export interface Categoria {
   subcategorias?: Subcategoria[];
 }
 
-interface Subcategoria {
+export interface Subcategoria {
   id: number;
   nome: string;
   descricao?: string;
+  imagem_url?: string;
 }
 
 export interface AtributosProdutos {
@@ -55,7 +56,7 @@ export interface Carrinho {
 }
 
 export interface SearchQuery {
-  q: string;
+  q?: string;
   categoria?: string;
   subcategoria?: string;
   marca?: string;
