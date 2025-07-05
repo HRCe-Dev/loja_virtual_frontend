@@ -110,13 +110,16 @@ const Header = () => {
           </Link>
 
           {/* Mobile Icons */}
-          <div className="flex md:hidden gap-3 relative">
+          <div className="flex md:hidden gap-3 relative items-center">
             <AuthLinks />
             <Link href="/carrinho">
-              <ShoppingCart className="text-white" />
+              <ShoppingCart
+                className="text-white hover:text-gray-300"
+                size={28}
+              />
             </Link>
             <button onClick={() => setMenuOpen(!menuOpen)}>
-              <Menu className="text-white" />
+              <Menu size={28} className="text-white  hover:text-gray-300" />
             </button>
           </div>
         </div>
