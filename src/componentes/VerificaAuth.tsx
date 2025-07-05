@@ -68,7 +68,7 @@ const AuthLinks = () => {
         </>
       ) : (
         <a href="/login" className="text-white text-sm hover:underline">
-          Login
+          Entrar/Cadastro
         </a>
       )}
     </div>
