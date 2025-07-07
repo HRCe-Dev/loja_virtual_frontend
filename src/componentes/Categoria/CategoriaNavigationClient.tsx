@@ -5,12 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-type Categoria = {
-  id: number;
-  nome: string;
-  imagem_url?: string;
-};
-
 type Props = {
   link: string;
   categorias: { id: number; nome: string; imagem_url?: string }[];

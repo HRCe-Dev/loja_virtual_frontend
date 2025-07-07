@@ -2,7 +2,6 @@ import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import SeccaoMarker from "../../(home)/SeccaoMarker";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import Promocoes from "@/componentes/Promocoes/Promocoes";
-import CategoriaNavigation from "@/componentes/Categoria/CategoriaNavigation";
 import fetchProdutosMaisVendidos from "../../(home)/fetchProdutosMaisVendidos";
 import { Categoria, Produto } from "@/types/Produto";
 import CategoriaNavigationClient from "@/componentes/Categoria/CategoriaNavigationClient";

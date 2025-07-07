@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  ChevronLeft,
-  MoreVertical,
-  Home,
-  Building2,
-  Users,
-  MapPin,
-  Trash2,
-} from "lucide-react";
+import { ChevronLeft, MoreVertical, MapPin, Trash2 } from "lucide-react";
 import {
   dadosEntrega,
   removerDadoEntrega,

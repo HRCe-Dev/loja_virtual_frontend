@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useParams, useRouter } from "next/navigation";
-import { FaUser, FaPhone, FaMapMarkerAlt, FaCreditCard } from "react-icons/fa";
+import { FaUser, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import { HiOutlinePencil } from "react-icons/hi2";
 import { useState } from "react";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
-import { pagarPedido, useGetPedidoDados } from "../checkout.api";
+import { useGetPedidoDados } from "../checkout.api";
 import Image from "next/image";
 import Moeda from "@/componentes/Moeda";
 
@@ -35,15 +35,17 @@ export default function PaymentForm() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = async (formData: FormData) => {
-    setLoading(true);
+  const onSubmit = async () =>
+    // formData: FormData
+    {
+      setLoading(true);
 
-    //if (await pagarPedido(pedido_id, formData.paymentMethod))
-    router.push("/checkout/vinti4/" + pedido_id);
+      //if (await pagarPedido(pedido_id, formData.paymentMethod))
+      router.push("/checkout/vinti4/" + pedido_id);
 
-    setLoading(false);
-    setError("Erro em efectuar pagamento");
-  };
+      setLoading(false);
+      setError("Erro em efectuar pagamento");
+    };
 
   return (
     <form
