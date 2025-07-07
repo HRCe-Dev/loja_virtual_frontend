@@ -1,31 +1,21 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useObterIlhas } from "@/api/localizacao.api";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AuthLinks from "./VerificaAuth";
-import {
-  Search,
-  ShoppingCart,
-  Menu,
-  MapPin,
-  ChevronDown,
-  Ellipsis,
-} from "lucide-react";
+import { Search, ShoppingCart, Menu } from "lucide-react";
 
 const categorias = [
-  { label: "Categoria" },
-  { label: "Vestuarios" },
-  { label: "Eletrônicos" },
-  { label: "Beleza" },
-  { label: "Calçado" },
-  { icon: <Ellipsis /> }, // ícone no lugar do texto
+  { label: "Home", href: "/" },
+  { label: "Promoções", href: "#promocoes" },
+  { label: "Blog", href: "/blog" },
+  { label: "Serviços", href: "https://hrcelda.com/" },
 ];
 
 const Header = () => {
-  const [ilhas, setIlhas] = useState<string[]>([]);
-  useObterIlhas(setIlhas);
+  //const [ilhas, setIlhas] = useState<string[]>([]);
+  //useObterIlhas(setIlhas);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [ilhasOpen, setIlhasOpen] = useState(false);
@@ -35,6 +25,34 @@ const Header = () => {
 
   const router = useRouter();
   const [termoBusca, setTermoBusca] = useState("");
+
+  const [showCategoriaBar, setShowCategoriaBar] = useState(true);
+
+  const topBarRef = useRef<HTMLDivElement | null>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    function updateHeaderHeight() {
+      if (topBarRef.current) {
+        const height = topBarRef.current.getBoundingClientRect().height;
+        setHeaderHeight(height);
+      }
+    }
+
+    updateHeaderHeight();
+
+    window.addEventListener("resize", updateHeaderHeight);
+    return () => window.removeEventListener("resize", updateHeaderHeight);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowCategoriaBar(window.scrollY < 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Fecha menus ao clicar fora
   useEffect(() => {
@@ -73,9 +91,12 @@ const Header = () => {
   };*/
 
   return (
-    <header className="w-full fixed top-0 left-0 right-0 z-50">
+    <header className="w-full z-50">
       {/* Top Orange Bar */}
-      <div className="bg-[#FF7700] w-full px-4 sm:px-6 lg:px-16 py-2 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div
+        ref={topBarRef}
+        className="bg-[#FF7700] fixed top-0 left-0 right-0 px-4 sm:px-6 lg:px-16 py-2 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4 max-md:pb-5 z-50"
+      >
         {/* Logo */}
         <div className="flex items-center w-full md:w-auto justify-between">
           <Link href="/">
@@ -89,13 +110,16 @@ const Header = () => {
           </Link>
 
           {/* Mobile Icons */}
-          <div className="flex md:hidden gap-3 relative">
+          <div className="flex md:hidden gap-3 relative items-center">
             <AuthLinks />
             <Link href="/carrinho">
-              <ShoppingCart className="text-white" />
+              <ShoppingCart
+                className="text-white hover:text-gray-300"
+                size={28}
+              />
             </Link>
             <button onClick={() => setMenuOpen(!menuOpen)}>
-              <Menu className="text-white" />
+              <Menu size={28} className="text-white  hover:text-gray-300" />
             </button>
           </div>
         </div>
@@ -131,8 +155,8 @@ const Header = () => {
         </div>
 
         {/* Right section desktop only */}
-        <div className="hidden md:flex items-center gap-4">
-          {/* Select ilhas */}
+        <div className="hidden md:flex items-center gap-6">
+          {/* Select ilhas 
           <select className="bg-white text-sm px-2 py-1 rounded-md">
             <option value="">Selecione a ilha</option>
             {ilhas.map((ilha) => (
@@ -140,7 +164,7 @@ const Header = () => {
                 {ilha}
               </option>
             ))}
-          </select>
+          </select>*/}
 
           <div className="text-white text-sm hover:underline">
             <AuthLinks />
@@ -152,24 +176,37 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Bottom Category Menu */}
-      <div className="bg-[#265674] text-white">
-        {/* Categorias - apenas desktop */}
-        <div className="hidden md:flex items-center justify-center gap-8 lg:gap-20 text-md font-medium px-4 sm:px-6 lg:px-10 py-3 max-w-7xl mx-auto">
-          {categorias.map((cat, i) => (
-            <button
-              key={i}
-              className={`hover:text-orange-400 transition-colors ${
-                cat.label === "Categoria" && "font-bold"
-              }`}
-            >
-              {cat.label || cat.icon}
-            </button>
-          ))}
-        </div>
+      <div style={{ height: headerHeight }} />
 
-        {/* Mobile: cidade + menu */}
-        <div className="md:hidden w-full flex items-center justify-between text-sm px-4 py-2">
+      {/* Bottom Category Menu */}
+      {showCategoriaBar && (
+        <div
+          className={` flex bg-[#265674] text-white transition-all duration-500 ease-in-out overflow-hidden ${
+            showCategoriaBar
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-full"
+          }`}
+        >
+          {/* Categorias - apenas desktop */}
+          <button className="hidden md:flex relative left-20 hover:text-orange-400 transition-colors items-center gap-2">
+            <Menu size={25} /> Menu
+          </button>
+          <div className="hidden md:flex items-center justify-center gap-8 lg:gap-20 text-md font-medium px-4 sm:px-6 lg:px-10 py-3 max-w-7xl mx-auto">
+            {categorias.map((cat, i) => (
+              <Link
+                key={i}
+                className={`hover:text-orange-400 transition-colors ${
+                  cat.href === "/" && "font-bold"
+                }`}
+                href={cat.href}
+              >
+                {cat.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile: cidade + menu 
+        <div className="md:hidden w-full flex items-center justify-between text-sm px-4 py-2 ">
           <span className="flex items-center gap-1">
             <MapPin className="text-white w-4 h-4" />
             Santiago
@@ -177,8 +214,9 @@ const Header = () => {
           <button onClick={() => setIlhasOpen(!ilhasOpen)}>
             <ChevronDown className="text-white" />
           </button>
+        </div>*/}
         </div>
-      </div>
+      )}
 
       {/* Mobile Menu de Categorias */}
       {menuOpen && (
@@ -191,13 +229,13 @@ const Header = () => {
               key={i}
               className="block w-full text-left text-gray-800 hover:text-orange-500 items-center gap-2"
             >
-              {cat.label || cat.icon}
+              {cat.label}
             </button>
           ))}
         </div>
       )}
 
-      {/* Mobile Menu de Ilhas */}
+      {/* Mobile Menu de Ilhas
       {ilhasOpen && (
         <div
           ref={ilhasRef}
@@ -213,8 +251,8 @@ const Header = () => {
               </button>
             )
           )}
-        </div>
-      )}
+        </div> 
+      )}*/}
     </header>
   );
 };

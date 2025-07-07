@@ -71,6 +71,7 @@ const CadastroForm: React.FC = () => {
         }
       } catch (error) {
         alert("Erro ao cadastrar");
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -215,9 +216,7 @@ const CadastroForm: React.FC = () => {
                   className={inputStyle}
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm">
-                    {errors.email.message}
-                  </p>
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
                 )}
               </div>
 

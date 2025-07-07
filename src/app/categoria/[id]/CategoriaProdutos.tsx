@@ -1,20 +1,29 @@
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
-import SeccaoMarker from "../(home)/SeccaoMarker";
+import SeccaoMarker from "../../(home)/SeccaoMarker";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import Promocoes from "@/componentes/Promocoes/Promocoes";
-import CategoriaNavigation from "@/componentes/Categoria/CategoriaNavigation";
-import fetchProdutosMaisVendidos from "../(home)/fetchProdutosMaisVendidos";
-import { Produto } from "@/types/Produto";
-import DescricaoProduto from "../produto/[id]/DescricaoProduto";
+import fetchProdutosMaisVendidos from "../../(home)/fetchProdutosMaisVendidos";
+import { Categoria, Produto } from "@/types/Produto";
+import CategoriaNavigationClient from "@/componentes/Categoria/CategoriaNavigationClient";
 
-export default async function PaginaCategoria() {
+interface props {
+  categoria: Categoria;
+}
+
+export default async function CategoriaProdutos({ categoria }: props) {
   const produtosMaisVendidos = (await fetchProdutosMaisVendidos()) as Produto[];
   return (
     <div>
       <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-5">
-        <SeccaoMarker>Categorias Populares</SeccaoMarker>
+        <SeccaoMarker>Subcategorias</SeccaoMarker>
       </div>
-      <CategoriaNavigation />
+      {categoria.subcategorias && (
+        <CategoriaNavigationClient
+          categorias={categoria.subcategorias}
+          link={`categoria/${categoria.id}`}
+        />
+      )}
+
       {/* Produtos em Destaque */}
       <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
         <SeccaoMarker href="/destaques">Produtos em Destaque</SeccaoMarker>
@@ -27,7 +36,6 @@ export default async function PaginaCategoria() {
       <div className="flex flex-col gap-10 mb-30 mt-4">
         {/*Produtos em Promoção */}
         <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
-          <SeccaoMarker href="promocoes">Produtos em Promoção</SeccaoMarker>
           <Promocoes />
         </div>
 
@@ -44,10 +52,6 @@ export default async function PaginaCategoria() {
               <ProdutoCard key={prod.id} produto={prod} />
             ))}
           </ProdutoListaLg>
-        </div>
-
-        <div className="px-4 md:px-44">
-          <DescricaoProduto />
         </div>
       </div>
     </div>

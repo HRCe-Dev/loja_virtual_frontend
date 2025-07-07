@@ -70,7 +70,7 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
   };
 
   const onSubmit = async (data: FormData) => {
-    alert(JSON.stringify(data));
+    //alert(JSON.stringify(data));
     onSave(
       data.zona_id,
       `${zonas.find((zo) => zo.id === Number(dados.zona_id))?.zona || ""}, ${
@@ -82,8 +82,14 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
   const selectStyle = "border border-gray-300 rounded-lg px-3 py-2";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 ">
-      <div className="flex flex-col  gap-5 bg-white p-6 rounded-xl shadow-lg relative w-full max-w-md ">
+    <div
+      onClick={onClose}
+      className="fixed top-20 inset-0 z-[60] flex items-center justify-center bg-black/50 "
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="flex flex-col  gap-5 bg-white p-6 rounded-xl shadow-lg relative w-full max-w-md "
+      >
         <div className="flex flex-row items-center justify-between ">
           <h1 className="text-2xl font-bold ">Selecionar Endereço</h1>
           <button
@@ -110,6 +116,7 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
           </div>
           <div>
             <button
+              type="button"
               onClick={obterLocalizacao}
               className="mt-3 flex flex-row  gap-2 font-bold py-2 px-5 border border-dashed border-gray-300 rounded-lg text-orange-500  hover:border-solid hover:bg-blue-500 hover:text-white transition-all duration-300"
             >
@@ -178,10 +185,13 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
                 </div>
 
                 <button
-                  onClick={() => handleSubmit}
-                  className="my-6 text-white font-bold text-lg bg-orange-500 hover:text-orange-500 hover:bg-white border-orange-500 hover:border transition-colors duration-300 rounded-lg px-3 py-2"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault(); // evita o reload
+                    handleSubmit(onSubmit)(); // chama o submit manualmente
+                  }}
                 >
-                  Confirmar o Endereço
+                  Confirmar
                 </button>
               </form>
             ) : (

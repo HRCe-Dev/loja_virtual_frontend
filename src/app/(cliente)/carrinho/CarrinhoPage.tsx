@@ -8,6 +8,7 @@ import { obterProdutosCarrinho, removerCarrinho } from "./carrinho";
 import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
 import { useRouter } from "next/navigation";
+import Moeda from "@/componentes/Moeda";
 
 export default function CarrinhoPage() {
   const [btnLoading, setbtnLoading] = useState<boolean>(false);
@@ -107,10 +108,9 @@ export default function CarrinhoPage() {
         {/* Pre checkout */}
         <div className="ml-4 sm:ml-10 w-full sm:w-auto">
           <p className="text-2xl font-bold">Total:</p>
-          <p className="text-xl font-bold text-gray-500 ml-4">
+          <Moeda className="text-xl font-bold text-gray-500 ml-4">
             {total}
-            <span>$CVE</span>
-          </p>
+          </Moeda>
         </div>
         <div className="w-full sm:w-auto flex justify-center sm:justify-end mt-4 sm:mt-0 sm:mr-20">
           <button

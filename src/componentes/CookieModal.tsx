@@ -1,6 +1,5 @@
 "use client";
 
-import { X } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
@@ -31,29 +30,64 @@ export default function CookieModal({ onFechar }: Props) {
 
       {/* Modal centralizado */}
       <div className="relative z-50 bg-white rounded-xl shadow-xl w-full max-w-xl p-6 text-sm">
-
         <h2 className="text-xl font-bold mb-4">Suas Preferências de Cookies</h2>
 
         <p className="text-gray-600 mb-6">
-          Usamos cookies para melhorar sua experiência neste site. Você pode escolher quais tipos de cookies permitir e alterar suas preferências a qualquer momento. Desativar cookies pode afetar sua experiência neste site. Você pode saber mais consultando nossa <a href="/politica-de-cookies" className="text-orange-500 underline">Política de Cookies</a>.
+          Usamos cookies para melhorar sua experiência neste site. Você pode
+          escolher quais tipos de cookies permitir e alterar suas preferências a
+          qualquer momento. Desativar cookies pode afetar sua experiência neste
+          site. Você pode saber mais consultando nossa{" "}
+          <a href="/politica-de-cookies" className="text-orange-500 underline">
+            Política de Cookies
+          </a>
+          .
         </p>
 
         <div className="space-y-4">
           <div>
             <label className="flex items-center gap-2 font-semibold text-gray-700">
-              <input type="checkbox" checked disabled className="accent-gray-400" />
-              Cookies Essenciais (5) <span className="text-orange-500 underline ml-2 cursor-pointer">Mostrar</span>
+              <input
+                type="checkbox"
+                checked
+                disabled
+                className="accent-gray-400"
+              />
+              Cookies Essenciais (5){" "}
+              <span className="text-orange-500 underline ml-2 cursor-pointer">
+                Mostrar
+              </span>
             </label>
             <p className="text-gray-500 pl-6 text-xs">
-              Cookies necessários para habilitar as funcionalidades básicas do site.
+              Cookies necessários para habilitar as funcionalidades básicas do
+              site.
             </p>
           </div>
 
           {[
-            { label: "Cookies Funcionais", key: "funcionais", qtd: 3, desc: "Cookies usados para aprimorar a funcionalidade do site." },
-            { label: "Cookies de Publicidade", key: "publicidade", qtd: 4, desc: "Cookies usados para veicular anúncios mais relevantes aos seus interesses." },
-            { label: "Cookies de Desempenho", key: "desempenho", qtd: 1, desc: "Cookies usados para entender como o site está sendo usado." },
-            { label: "Não Classificado", key: "naoClassificado", qtd: 0, desc: "Cookies que ainda não foram categorizados." },
+            {
+              label: "Cookies Funcionais",
+              key: "funcionais",
+              qtd: 3,
+              desc: "Cookies usados para aprimorar a funcionalidade do site.",
+            },
+            {
+              label: "Cookies de Publicidade",
+              key: "publicidade",
+              qtd: 4,
+              desc: "Cookies usados para veicular anúncios mais relevantes aos seus interesses.",
+            },
+            {
+              label: "Cookies de Desempenho",
+              key: "desempenho",
+              qtd: 1,
+              desc: "Cookies usados para entender como o site está sendo usado.",
+            },
+            {
+              label: "Não Classificado",
+              key: "naoClassificado",
+              qtd: 0,
+              desc: "Cookies que ainda não foram categorizados.",
+            },
           ].map(({ label, key, qtd, desc }) => (
             <div key={key}>
               <label className="flex items-center gap-2 font-semibold text-gray-700">
@@ -63,7 +97,10 @@ export default function CookieModal({ onFechar }: Props) {
                   checked={preferencias[key as keyof typeof preferencias]}
                   onChange={() => toggle(key as keyof typeof preferencias)}
                 />
-                {label} ({qtd}) <span className="text-orange-500 underline ml-2 cursor-pointer">Mostrar</span>
+                {label} ({qtd}){" "}
+                <span className="text-orange-500 underline ml-2 cursor-pointer">
+                  Mostrar
+                </span>
               </label>
               <p className="text-gray-500 pl-6 text-xs">{desc}</p>
             </div>

@@ -2,10 +2,6 @@
 import { useState } from "react";
 import { Produto } from "@/types/Produto";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
-import {
-  ButtonLaranja,
-  ButtonNoBg,
-  ButtonWhite} from "@/componentes/Buttons/Buttons";
 import { Repeat, ShoppingCart, Star, Truck } from "lucide-react";
 
 interface DetalhesProdutoProps {
@@ -15,12 +11,11 @@ interface DetalhesProdutoProps {
 const coresDisponiveis = ["#000000", "#dc2626"];
 const tamanhosDisponiveis = ["XS", "S", "M", "L", "XL"];
 
-
 export default function DetalhesProduto({ produto }: DetalhesProdutoProps) {
   const [corSelecionada, setCorSelecionada] = useState(coresDisponiveis[0]);
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState("M");
   const [quantidade, setQuantidade] = useState(1);
-  const estoqueDisponivel =produto.estoque ?? 1;
+  const estoqueDisponivel = produto.estoque ?? 1;
 
   const aumentar = () => {
     if (quantidade < estoqueDisponivel) setQuantidade((q) => q + 1);
@@ -40,7 +35,8 @@ export default function DetalhesProduto({ produto }: DetalhesProdutoProps) {
           <Star key={i} fill="orange" strokeWidth={0} className="w-4 h-4" />
         ))}
         <span className="text-sm font-semibold text-black">
-          4.7 <span className="text-gray-400 font-normal">(21,671 Avaliações)</span>
+          4.7{" "}
+          <span className="text-gray-400 font-normal">(21,671 Avaliações)</span>
         </span>
       </div>
 
@@ -90,11 +86,22 @@ export default function DetalhesProduto({ produto }: DetalhesProdutoProps) {
       {/* Quantidade */}
       <div className="flex items-center gap-3">
         <div className="flex border rounded overflow-hidden">
-          <button className="px-3 text-xl text-gray-700" onClick={diminuir}>−</button>
-          <span className="px-4 py-1 border-l border-r text-sm">{quantidade}</span>
-          <button className="px-3 text-xl text-white bg-orange-500" onClick={aumentar}>+</button>
+          <button className="px-3 text-xl text-gray-700" onClick={diminuir}>
+            −
+          </button>
+          <span className="px-4 py-1 border-l border-r text-sm">
+            {quantidade}
+          </span>
+          <button
+            className="px-3 text-xl text-white bg-orange-500"
+            onClick={aumentar}
+          >
+            +
+          </button>
         </div>
-        <span className="text-sm text-gray-600">{estoqueDisponivel} disponíveis</span>
+        <span className="text-sm text-gray-600">
+          {estoqueDisponivel} disponíveis
+        </span>
       </div>
 
       {/* Botões */}

@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useParams, useRouter } from "next/navigation";
-import { FaUser, FaPhone, FaMapMarkerAlt, FaCreditCard } from "react-icons/fa";
+import { FaUser, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import { HiOutlinePencil } from "react-icons/hi2";
 import { useState } from "react";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
-import { pagarPedido, useGetPedidoDados } from "../checkout.api";
+import { useGetPedidoDados } from "../checkout.api";
+import Image from "next/image";
+import Moeda from "@/componentes/Moeda";
 
 const schema = z.object({
   paymentMethod: z.enum(["vinti4", "trasf.bancaria"], {
@@ -33,15 +35,17 @@ export default function PaymentForm() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = async (formData: FormData) => {
-    setLoading(true);
+  const onSubmit = async () =>
+    // formData: FormData
+    {
+      setLoading(true);
 
-    if (await pagarPedido(pedido_id, formData.paymentMethod))
-      router.push("/checkout/confirmacao/" + pedido_id);
+      //if (await pagarPedido(pedido_id, formData.paymentMethod))
+      router.push("/checkout/vinti4/" + pedido_id);
 
-    setLoading(false);
-    setError("Erro em efectuar pagamento");
-  };
+      setLoading(false);
+      setError("Erro em efectuar pagamento");
+    };
 
   return (
     <form
@@ -88,7 +92,12 @@ export default function PaymentForm() {
                     value="vinti4"
                     {...register("paymentMethod")}
                   />
-                  <FaCreditCard className="text-orange-500" />
+                  <Image
+                    src="/pagamento/vinti4.png"
+                    width={25}
+                    height={25}
+                    alt="Logo de Vinti4"
+                  />
                   <span>Vinti4</span>
                 </div>
               </label>
@@ -97,10 +106,50 @@ export default function PaymentForm() {
                 <div className="flex items-center gap-2">
                   <input
                     type="radio"
-                    value="trasf.bancaria"
+                    value="vinti4"
                     {...register("paymentMethod")}
                   />
-                  <span>Transferência Bancária</span>
+                  <Image
+                    src="/pagamento/visa-secure_blu_2021_dkbg.png"
+                    width={25}
+                    height={25}
+                    alt="Logo de Vinti4"
+                  />
+                  <span>Visa</span>
+                </div>
+              </label>
+
+              <label className="flex items-center justify-between border border-gray-300 rounded p-3 cursor-pointer">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    value="vinti4"
+                    {...register("paymentMethod")}
+                  />
+                  <Image
+                    src="/pagamento/mc_symbol.svg"
+                    width={25}
+                    height={25}
+                    alt="Logo de Vinti4"
+                  />
+                  <span>MasterCard</span>
+                </div>
+              </label>
+
+              <label className="flex items-center justify-between border border-gray-300 rounded p-3 cursor-pointer">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    value="vinti4"
+                    {...register("paymentMethod")}
+                  />
+                  <Image
+                    src="/pagamento/American_Express_Square_Logo.png"
+                    width={25}
+                    height={25}
+                    alt="Logo de Pagamento com AMEX"
+                  />
+                  <span>Amex</span>
                 </div>
               </label>
 
@@ -119,10 +168,15 @@ export default function PaymentForm() {
                 <div key={prod.produto_id}>
                   <div className="flex justify-between">
                     <span>{prod.nome}</span>
-                    <span>{prod.preco! * prod.qtd}$00 CVE</span>
+                    <span>
+                      {" "}
+                      <Moeda>{prod.preco! * prod.qtd}</Moeda>
+                    </span>
                   </div>
                   <div className="text-gray-500 text-xs">
-                    {prod.qtd} x {prod.preco}$00 CVE
+                    <Moeda>
+                      {prod.qtd} x {prod.preco}
+                    </Moeda>
                   </div>
                 </div>
               ))}
@@ -133,7 +187,7 @@ export default function PaymentForm() {
             <div className="text-sm text-gray-700 space-y-1">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>{pedidoData.total}$00 CVE</span>
+                <span>{(pedidoData.total * 0.85).toFixed(2)}$00 CVE</span>
               </div>
               <div className="flex justify-between">
                 <span>Envio</span>
@@ -141,7 +195,7 @@ export default function PaymentForm() {
               </div>
               <div className="flex justify-between">
                 <span>IVA (15%)</span>
-                <span>0$00 CVE</span>
+                <span>{(pedidoData.total * 0.15).toFixed(2)}$00 CVE</span>
               </div>
             </div>
 
