@@ -7,6 +7,7 @@ import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
 import { BtnTrash } from "@/componentes/Buttons/Buttons";
 import Image from "next/image";
 import { AlertTriangle } from "lucide-react";
+import Moeda from "@/componentes/Moeda";
 
 interface carrinhoCardProps {
   produto: ProdutoCarrinho;
@@ -47,10 +48,11 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
           {produto.nome}
         </h2>
 
-        <p className="text-sm text-gray-400">Color: Black | Size: 50cm</p>
-        <h3 className="text-lg font-bold text-gray-800 mt-2">
-          {produto.preco}
-          <span className="text-sm ">$CVE</span>
+        {/*<p className="text-sm text-gray-400">Color: Black | Size: 50cm</p> */}
+        <h3 className="">
+          <Moeda className="text-lg font-bold text-gray-800 mt-2">
+            {produto.preco}
+          </Moeda>
         </h3>
       </div>
       <div className="flex flex-row gap-5 items-center sm:ml-10 mt-4 sm:mt-0 pb-5 sm:pb-0">

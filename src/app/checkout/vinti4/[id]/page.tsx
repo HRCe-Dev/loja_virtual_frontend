@@ -1,19 +1,28 @@
-// pages/pagar.tsx
-import { fetchWithAuth } from "@/api/fetch_auth";
+"use client";
 import { url } from "@/api/url";
+import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
 export default function PagamentoPage() {
+  const params = useParams();
+  const pedido_id = params?.id as string;
+
   useEffect(() => {
-    fetchWithAuth(`${url}checkout/pagamento`, {
-      method: "POST",
-    })
-      .then((res) => res.text())
-      .then((html) => {
-        const doc = document.open("text/html", "replace");
-        doc.write(html);
-        doc.close();
-      });
+    if (pedido_id) {
+      fetch(`${url}pagamento/init`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pedido_id }),
+      })
+        .then((res) => res.text())
+        .then((html) => {
+          const doc = document.open("text/html", "replace");
+          doc.write(html);
+          doc.close();
+        });
+    }
   }, []);
 
   return <p>Redirecionando para o pagamento...</p>;

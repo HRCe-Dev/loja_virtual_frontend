@@ -9,6 +9,7 @@ import { useState } from "react";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import { pagarPedido, useGetPedidoDados } from "../checkout.api";
 import Image from "next/image";
+import Moeda from "@/componentes/Moeda";
 
 const schema = z.object({
   paymentMethod: z.enum(["vinti4", "trasf.bancaria"], {
@@ -37,8 +38,8 @@ export default function PaymentForm() {
   const onSubmit = async (formData: FormData) => {
     setLoading(true);
 
-    if (await pagarPedido(pedido_id, formData.paymentMethod))
-      router.push("/checkout/confirmacao/" + pedido_id);
+    //if (await pagarPedido(pedido_id, formData.paymentMethod))
+    router.push("/checkout/vinti4/" + pedido_id);
 
     setLoading(false);
     setError("Erro em efectuar pagamento");
@@ -165,10 +166,15 @@ export default function PaymentForm() {
                 <div key={prod.produto_id}>
                   <div className="flex justify-between">
                     <span>{prod.nome}</span>
-                    <span>{prod.preco! * prod.qtd}$00 CVE</span>
+                    <span>
+                      {" "}
+                      <Moeda>{prod.preco! * prod.qtd}</Moeda>
+                    </span>
                   </div>
                   <div className="text-gray-500 text-xs">
-                    {prod.qtd} x {prod.preco}$00 CVE
+                    <Moeda>
+                      {prod.qtd} x {prod.preco}
+                    </Moeda>
                   </div>
                 </div>
               ))}

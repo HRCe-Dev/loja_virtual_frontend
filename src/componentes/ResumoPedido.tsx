@@ -1,6 +1,7 @@
 "use client";
 
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
+import Moeda from "./Moeda";
 type Props = {
   pedidoData: PedidoDados1;
 };
@@ -19,11 +20,13 @@ export default function ResumoPedido({ pedidoData }: Props) {
               </div>
               <div className="flex-1">
                 <p className="font-medium">{prod.nome}</p>
-                <p className="text-sm text-gray-500">
+                <Moeda className="text-sm text-gray-500">
                   {prod.preco} x {prod.qtd}
-                </p>
+                </Moeda>
               </div>
-              <p className="font-medium">{prod.preco! * prod.qtd}$00 CVE</p>
+              <p className="font-medium">
+                <Moeda>{prod.preco! * prod.qtd}</Moeda>
+              </p>
             </div>
           ))}
       </div>
@@ -31,15 +34,22 @@ export default function ResumoPedido({ pedidoData }: Props) {
       <div className="text-sm text-gray-700 space-y-1 mb-6">
         <div className="flex justify-between">
           <span>Subtotal</span>
-          <span>{pedidoData.total}$00 CVE</span>
+          <span>
+            <Moeda>{pedidoData.total}</Moeda>
+          </span>
         </div>
         <div className="flex justify-between">
           <span>Frete</span>
-          <span>{pedidoData.custo_envio}$00 CVE</span>
+          <span>
+            <Moeda>{pedidoData.custo_envio}</Moeda>
+          </span>
         </div>
         <div className="flex justify-between font-semibold text-base mt-2">
           <span>Total</span>
-          <span>{pedidoData.custo_envio + pedidoData.total}$00 CVE</span>
+          <span>
+            {" "}
+            <Moeda>{pedidoData.custo_envio + pedidoData.total}</Moeda>
+          </span>
         </div>
       </div>
 
