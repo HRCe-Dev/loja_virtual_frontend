@@ -174,9 +174,7 @@ export default function PaymentForm() {
                     </span>
                   </div>
                   <div className="text-gray-500 text-xs">
-                    <Moeda>
-                      {prod.qtd} x {prod.preco}
-                    </Moeda>
+                    {prod.qtd} x {prod.preco} $CVE
                   </div>
                 </div>
               ))}
