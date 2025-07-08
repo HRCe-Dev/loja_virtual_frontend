@@ -20,9 +20,9 @@ export default function ResumoPedido({ pedidoData }: Props) {
               </div>
               <div className="flex-1">
                 <p className="font-medium">{prod.nome}</p>
-                <Moeda className="text-sm text-gray-500">
-                  {prod.preco} x {prod.qtd}
-                </Moeda>
+                <p className="text-sm text-gray-500">
+                  <Moeda>{prod.preco}</Moeda> x {prod.qtd}
+                </p>
               </div>
               <p className="font-medium">
                 <Moeda>{prod.preco! * prod.qtd}</Moeda>
