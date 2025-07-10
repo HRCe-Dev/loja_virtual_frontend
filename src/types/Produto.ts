@@ -4,6 +4,7 @@ export interface Produto {
   preco: number;
   imagem_url: string;
   estoque: number;
+  promocao: PromocaoCard;
 }
 
 export interface ProdutoCarrinho extends Produto {
@@ -17,8 +18,6 @@ export interface ProdutoPromocao extends Produto {
 
 export interface ProdutoDetalhes extends Produto {
   descricao?: string | null;
-  promocao?: number;
-
   imagens: imagensProduto[];
   categoria: Categoria;
   subcategoria: Subcategoria;
@@ -62,4 +61,10 @@ export interface SearchQuery {
   marca?: string;
   precomin?: string;
   precomax?: string;
+}
+
+export interface PromocaoCard {
+  nome: string;
+  desconto: number;
+  data_fim?: string;
 }
