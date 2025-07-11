@@ -64,6 +64,7 @@ export interface SearchQuery {
 }
 
 export interface PromocaoCard {
+  id: string;
   nome: string;
   desconto: number;
   data_fim?: string;

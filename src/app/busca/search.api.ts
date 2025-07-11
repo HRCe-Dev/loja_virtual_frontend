@@ -3,7 +3,8 @@ import { Produto, SearchQuery } from "@/types/Produto";
 import { useEffect } from "react";
 
 export const search = async (query: URLSearchParams) => {
-  alert(JSON.stringify(query));
+  //TODO: corrigir para subcategorias, esta a executar 3x
+  //alert(JSON.stringify(query));
   const res = await fetch(`${url + "produtos/search"}?${query.toString()}`);
 
   const dados = await res.json();

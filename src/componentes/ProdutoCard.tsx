@@ -19,15 +19,15 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
       {produto.promocao && (
         <div
           title={produto.promocao.nome}
-          className="absolute top-4 right-2 z-20 px-3 py-1 rounded-2xl bg-gradient-to-br from-red-600 to-red-400 text-white text-sm font-bold shadow-lg 
-                animate-bounce hover:scale-105 transition-transform duration-300 ease-in-out grup-hover:invisible"
+          className="absolute top-4 max-sm:left-2 md:right-2 z-10 px-3 py-1 rounded-2xl bg-gradient-to-br from-red-600 to-red-400 text-white text-sm font-bold shadow-lg visible  group-hover:invisible
+                animate-bounce hover:scale-105 transition-transform duration-300 ease-in-out "
         >
           <p>- {produto.promocao.desconto}%</p>
         </div>
       )}
 
       {/* Botão de Like (Lista de Desejo) */}
-      <div className="absolute top-2 right-2 z-10 visible md:invisible md:group-hover:visible">
+      <div className="absolute top-2 right-2 z-20 visible md:invisible md:group-hover:visible">
         <BtnListaDesejo produto_id={produto.id} tipo={2} />
       </div>
       {/*Imagem */}
