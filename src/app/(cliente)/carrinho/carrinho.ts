@@ -2,13 +2,20 @@
 
 import fetchProdutosLista from "@/api/fetchProdutosLista";
 import { Carrinho, ProdutoCarrinho } from "@/types/Produto";
+import {
+  adicionarCarrinhoOnline,
+  atualizarCarrinhoOnline,
+  removerdoCarrinhoOnline,
+} from "./carrinho.api";
 
 const ITEM = "carrinho";
 
+//TODO: sincronizar com carrinho online
 export const obterCarrinho = (): Carrinho[] => {
   //obter carrinho
   const carrinhoStr = localStorage.getItem(ITEM);
   const carrinho: Carrinho[] = carrinhoStr ? JSON.parse(carrinhoStr) : [];
+
   return carrinho;
 };
 
@@ -49,6 +56,7 @@ export const adicionarCarrinho = async (
     localStorage.setItem(ITEM, JSON.stringify(carrinho));
 
     //alert(JSON.stringify(carrinho));
+    adicionarCarrinhoOnline(produto_id, qtd);
 
     return true;
   } catch (error) {
@@ -70,6 +78,7 @@ export const removerCarrinho = async (produto_id: string): Promise<boolean> => {
     localStorage.setItem(ITEM, JSON.stringify(novoCarrinho));
 
     //alert(JSON.stringify(novoCarrinho));
+    removerdoCarrinhoOnline(produto_id);
 
     return true;
   } catch (error) {
@@ -93,6 +102,7 @@ export const atualizarCarrinho = async (
     localStorage.setItem(ITEM, JSON.stringify(novoCarrinho));
 
     //alert(JSON.stringify(novoCarrinho));
+    atualizarCarrinhoOnline(produto_id, qtd);
 
     return true;
   } catch (error) {

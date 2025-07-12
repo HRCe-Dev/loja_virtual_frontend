@@ -1,8 +1,13 @@
 import fetchProdutosLista from "@/api/fetchProdutosLista";
 import { Produto } from "@/types/Produto";
+import {
+  adicionarListaDesejoOnline,
+  removerListaDesejoOnline,
+} from "./listadesejo.api";
 
 const ITEM = "listadesejo";
 
+//TODO: obter lista de desejo ONLINE
 const obterListaDesejo = (): string[] => {
   //obter listadesejo
   const listadesejoStr = localStorage.getItem(ITEM);
@@ -39,7 +44,8 @@ export const adicionarListaDesejo = async (
     //guardar no localstorage
     localStorage.setItem(ITEM, JSON.stringify(listadesejo));
 
-    //alert(JSON.stringify(listadesejo));
+    //guardar no backend
+    adicionarListaDesejoOnline(produto_id);
 
     return true;
   } catch (error) {
@@ -60,6 +66,8 @@ export const removerListaDesejo = async (
     //salvar no local storage
     localStorage.setItem(ITEM, JSON.stringify(novaLista));
     //alert(JSON.stringify(novaLista));
+
+    removerListaDesejoOnline(produto_id);
 
     return true;
   } catch (error) {
