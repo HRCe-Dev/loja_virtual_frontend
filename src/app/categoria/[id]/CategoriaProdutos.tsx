@@ -1,17 +1,36 @@
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import SeccaoMarker from "../../(home)/SeccaoMarker";
 import ProdutoCard from "@/componentes/ProdutoCard";
-import Promocoes from "@/componentes/Promocoes/Promocoes";
-import fetchProdutosMaisVendidos from "../../(home)/fetchProdutosMaisVendidos";
 import { Categoria, Produto } from "@/types/Produto";
 import CategoriaNavigationClient from "@/componentes/Categoria/CategoriaNavigationClient";
+import fetchProdutos from "@/api/fetchProdutos";
 
 interface props {
   categoria: Categoria;
 }
 
 export default async function CategoriaProdutos({ categoria }: props) {
-  const produtosMaisVendidos = (await fetchProdutosMaisVendidos()) as Produto[];
+  const produtosMaisVendidos = await fetchProdutos({
+    tipo: "maisvendidos",
+    limit: 10,
+    categoria: categoria.id,
+  });
+  const produtosMaisPopulares = await fetchProdutos({
+    tipo: "maispopulares",
+    limit: 10,
+    categoria: categoria.id,
+  });
+  const novidades = await fetchProdutos({
+    tipo: "novidades",
+    limit: 10,
+    categoria: categoria.id,
+  });
+  const promocoes = await fetchProdutos({
+    tipo: "promocoes",
+    limit: 10,
+    categoria: categoria.id,
+  });
+
   return (
     <div>
       <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-5">
@@ -26,29 +45,47 @@ export default async function CategoriaProdutos({ categoria }: props) {
 
       {/* Produtos em Destaque */}
       <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
-        <SeccaoMarker href="/destaques">Produtos em Destaque</SeccaoMarker>
+        <SeccaoMarker href="/destaques">
+          Novidades de {categoria.nome}
+        </SeccaoMarker>
         <ProdutoListaLg>
-          {produtosMaisVendidos.map((prod) => (
+          {novidades.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
           ))}
         </ProdutoListaLg>
       </div>
       <div className="flex flex-col gap-10 mb-30 mt-4">
-        {/*Produtos em Promoção */}
-        <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
-          <Promocoes />
-        </div>
+        {promocoes.length > 1 && (
+          <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
+            <SeccaoMarker href="/promocoes">
+              Promoções em {categoria.nome}
+            </SeccaoMarker>
+            <ProdutoListaLg>
+              {promocoes.map((prod) => (
+                <ProdutoCard key={prod.id} produto={prod} />
+              ))}
+            </ProdutoListaLg>
+          </div>
+        )}
 
-        {/*Produtos Mais Vendidos*/}
         <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
-          {/*<h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
-          Produtos Mais Vendidos
-        </h1>*/}
           <SeccaoMarker href="/maisvendidos++">
             Produtos Mais Vendidos
           </SeccaoMarker>
           <ProdutoListaLg>
             {produtosMaisVendidos.map((prod) => (
+              <ProdutoCard key={prod.id} produto={prod} />
+            ))}
+          </ProdutoListaLg>
+        </div>
+
+        {/*Produtos Mais Vendidos*/}
+        <div className="flex flex-col gap-10 px-4 md:px-44 mt-4">
+          <SeccaoMarker href="/populares">
+            Populares de {categoria.nome}
+          </SeccaoMarker>
+          <ProdutoListaLg>
+            {produtosMaisPopulares.map((prod) => (
               <ProdutoCard key={prod.id} produto={prod} />
             ))}
           </ProdutoListaLg>

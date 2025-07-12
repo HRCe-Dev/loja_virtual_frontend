@@ -3,11 +3,11 @@ import fetchProductDetalhes from "./produtoDetalhes.api";
 import AvaliacoesPage from "./AvaliacoesPage";
 import DescricaoProduto from "./DescricaoProduto";
 import SeccaoMarker from "@/app/(home)/SeccaoMarker";
-import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
 import { Produto } from "@/types/Produto";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import { url } from "@/api/url";
 import DetalhesProduto from "./DetalhesProduto";
+import fetchProdutos from "@/api/fetchProdutos";
 
 interface PageProps {
   id: string;
@@ -24,7 +24,10 @@ export async function generateStaticParams() {
 const ProdutoPage = async ({ params }: { params: Promise<PageProps> }) => {
   const { id: produto_id } = await params;
   const produto = await fetchProductDetalhes(produto_id);
-  const ProdutosSemelhantes: Produto[] = await fetchProdutosMaisVendidos();
+  const ProdutosSemelhantes: Produto[] = await fetchProdutos({
+    tipo: "maispopulares",
+    limit: 10,
+  });
 
   return (
     <div className="mx-6 md:mx-10 lg:mx-20 xl:mx-40 2xl:mx-60 mt-4 mb-10">

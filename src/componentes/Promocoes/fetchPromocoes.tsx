@@ -1,7 +1,7 @@
-import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
+import fetchProdutos from "@/api/fetchProdutos";
 
 const fetchPromocoes = async () => {
-  return await fetchProdutosMaisVendidos();
+  return await fetchProdutos({ tipo: "promocoes" });
 };
 
 export default fetchPromocoes;

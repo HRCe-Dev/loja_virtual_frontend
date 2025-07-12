@@ -45,10 +45,15 @@ export default function PaginaBusca({ filtro }: PageProps) {
         {/* Cabeçalho responsivo */}
         <div className="bg-white rounded-2xl px-6 py-4 shadow mb-6 space-y-2 md:space-y-0 md:flex md:items-center md:justify-between">
           {/* Título */}
-          <p className="text-lg font-medium">
-            Resultados para:{" "}
-            <span className="font-semibold">{`"${termo}"`}</span>
-          </p>
+
+          {!filtro ? (
+            <p className="text-lg font-medium">
+              Resultados para:{" "}
+              <span className="font-semibold">{`"${termo}"`}</span>
+            </p>
+          ) : (
+            <p className="w-5"></p>
+          )}
 
           {/* Contagem e Ações */}
           <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">

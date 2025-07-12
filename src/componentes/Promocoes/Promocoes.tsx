@@ -1,13 +1,14 @@
-import { ProdutoPromocao } from "@/types/Produto";
 import React from "react";
 import fetchPromocoes from "./fetchPromocoes";
 import PromocoesCard from "./PromocoesCard";
 import SeccaoMarker from "@/app/(home)/SeccaoMarker";
 
 const Promocoes: React.FC = async () => {
-  const promocoes: ProdutoPromocao[] = await fetchPromocoes();
+  const promocoes = await fetchPromocoes();
+
+  if (promocoes.length < 1) return null;
   return (
-    <div className="space-y-6" hidden>
+    <div className="space-y-6">
       <SeccaoMarker href="promocoes">Produtos em Promoção</SeccaoMarker>
       {/* Bloco 1: Primeiras 2 promoções */}
       <div className="overflow-x-auto scrollbar-hide">

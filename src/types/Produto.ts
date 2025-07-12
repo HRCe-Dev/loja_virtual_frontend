@@ -32,7 +32,8 @@ export interface Categoria {
   id: number;
   nome: string;
   descricao?: string;
-  imagem_url?: string;
+  imagem_url?: string | null;
+  banners_categorias?: Banners[];
   subcategorias?: Subcategoria[];
 }
 
@@ -41,6 +42,7 @@ export interface Subcategoria {
   nome: string;
   descricao?: string;
   imagem_url?: string;
+  banners_categorias?: Banners;
 }
 
 export interface AtributosProdutos {
@@ -68,4 +70,26 @@ export interface PromocaoCard {
   nome: string;
   desconto: number;
   data_fim?: string;
+}
+
+export interface ObterProdutsQuery {
+  tipo?:
+    | "destaque"
+    | "promocoes"
+    | "novidades"
+    | "maisvendidos"
+    | "maisgostados"
+    | "maispopulares";
+  categoria?: number;
+  subcategoria?: number;
+  marca?: number;
+  limit?: number;
+}
+
+export interface Banners {
+  url: string;
+  alt?: string;
+  url_mobile?: string;
+  url_tablet?: string;
+  blur_url?: string;
 }

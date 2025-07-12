@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { obterProdutosListaDesejo } from "./listadesejo";
 import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
-import fetchProdutosMaisVendidos from "@/app/(home)/fetchProdutosMaisVendidos";
+import fetchProdutos from "@/api/fetchProdutos";
 
 export default function ListaDesejoPage() {
   //TODO: remover produto de lista de desejo
@@ -19,19 +19,22 @@ export default function ListaDesejoPage() {
   const [ProdutosSemelhantes, setProdutosSemelhantes] = useState<Produto[]>([]);
 
   useEffect(() => {
-    const fetchProdutos = async () => {
+    const getter = async () => {
       setLoading(true);
       const produtos = await obterProdutosListaDesejo();
       if (!produtos) setError(true);
       else setProdutos(produtos);
 
-      const produtos2: Produto[] = await fetchProdutosMaisVendidos();
+      const produtos2 = await fetchProdutos({
+        tipo: "maisgostados",
+        limit: 10,
+      });
       setProdutosSemelhantes(produtos2);
 
       setLoading(false);
     };
 
-    fetchProdutos();
+    getter();
   }, []);
 
   return (
