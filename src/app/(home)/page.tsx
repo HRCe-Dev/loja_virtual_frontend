@@ -6,7 +6,8 @@ import Promocoes from "@/componentes/Promocoes/Promocoes";
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import CategoriaNavigationServer from "@/componentes/Categoria/CategoriaNavigationServer";
 import fetchProdutos from "@/api/fetchProdutos";
-//import CategoriaNavigation from "@/componentes/CategoriaNavigation";
+
+export const revalidate = 86400; //renderizar com dados atualizados em  24horas/24horas
 
 export default async function Home() {
   const produtosMaisVendidos = await fetchProdutos({ tipo: "maisvendidos" });

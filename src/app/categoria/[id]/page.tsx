@@ -8,6 +8,8 @@ interface PageProps {
   id: string;
 }
 
+export const revalidate = 86400; //renderizar com dados atualizados em  24horas/24horas
+
 export async function generateStaticParams() {
   const categorias = await obterCategorias();
 
