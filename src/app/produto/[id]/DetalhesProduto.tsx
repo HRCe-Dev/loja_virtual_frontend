@@ -1,8 +1,7 @@
 "use client";
-import { useState } from "react";
 import { Produto } from "@/types/Produto";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
-import { Repeat, ShoppingCart, Star, Truck } from "lucide-react";
+import { Repeat, Truck } from "lucide-react";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
 import { BtnComprarAgora } from "@/componentes/Buttons/ButtonComprarAgora";
 import { BtnAdicionarCarrinho } from "@/componentes/Buttons/ButtonCarrinho";

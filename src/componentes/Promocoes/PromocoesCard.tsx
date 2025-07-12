@@ -25,7 +25,7 @@ const PromocoesCard2: React.FC<PromocoesCardProps> = ({ produto }) => {
           className="absolute top-1/2 -translate-y-1/2 right-2 bg-black/50 backdrop-blur-sm rounded-md px-3 py-4 shadow-md text-right z-10 w-1/2"
         >
           <p className="text-lg font-bold text-red-600">
-            {produto.promocao.desconto}% Desconto
+            {produto.promocao?.desconto ?? 0}% Desconto
           </p>
           <h2 className="text-sm font-bold text-white line-clamp-2 max-h-[3em]">
             {produto.nome}

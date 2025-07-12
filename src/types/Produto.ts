@@ -4,7 +4,7 @@ export interface Produto {
   preco: number;
   imagem_url: string;
   estoque: number;
-  promocao: PromocaoCard;
+  promocao?: PromocaoCard;
 }
 
 export interface ProdutoCarrinho extends Produto {

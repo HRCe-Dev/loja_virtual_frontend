@@ -1,7 +1,7 @@
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import SeccaoMarker from "../../(home)/SeccaoMarker";
 import ProdutoCard from "@/componentes/ProdutoCard";
-import { Categoria, Produto } from "@/types/Produto";
+import { Categoria} from "@/types/Produto";
 import CategoriaNavigationClient from "@/componentes/Categoria/CategoriaNavigationClient";
 import fetchProdutos from "@/api/fetchProdutos";
 
