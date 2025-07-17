@@ -12,6 +12,7 @@ import { useObterCidades, UseObterZonas } from "@/api/localizacao.api";
 import { LocateFixed } from "lucide-react";
 import obterMinhaLocalizacao from "@/util/obterMinhaLocalizacao";
 import { GetLocalizacao } from "@/api/localizar.api";
+import Moeda from "@/componentes/Moeda";
 
 const schema = z.object({
   island: z.string().min(1, "Obrigatório"),
@@ -31,7 +32,6 @@ export default function DeliveryForm() {
   const [zonas, setZonas] = useState<Zona[]>([]);
   const [loadingZona, setLoadingZona] = useState<boolean>(false);
 
-  useGetMetodosEnvio(setMetodosEnvio, setLoading, setError, []);
   useObterCidades(setCidades, setLoading, []);
 
   const {
@@ -43,6 +43,10 @@ export default function DeliveryForm() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const dados = watch();
+
+  useGetMetodosEnvio(dados.island, setMetodosEnvio, setLoading, setError, [
+    dados.island,
+  ]);
 
   //definir zonas
   UseObterZonas(dados.city, setZonas, setLoadingZona, [dados.city]);
@@ -182,7 +186,7 @@ export default function DeliveryForm() {
                 key={method.id}
                 className="flex justify-between items-center p-3 border border-gray-300 rounded cursor-pointer"
               >
-                <div className="flex items-start gap-2">
+                <div className="flex items-center gap-2">
                   <input
                     type="radio"
                     value={method.id}
@@ -192,8 +196,7 @@ export default function DeliveryForm() {
                   <div>
                     <p className="font-medium">{method.nome}</p>
                     <p className="text-sm text-gray-500">
-                      Tempo estimado: {method.min_tempo_estimado} -{" "}
-                      {method.max_tempo_estimado} dias úteis{" "}
+                      Tempo estimado: {method.max_tempo_estimado} dias úteis{" "}
                     </p>
                   </div>
                 </div>
@@ -202,7 +205,7 @@ export default function DeliveryForm() {
                     method.custo === 0 ? "text-green-500" : "text-gray-800"
                   }`}
                 >
-                  {method.custo}
+                  <Moeda>{method.custo}</Moeda>
                 </span>
               </label>
             ))}

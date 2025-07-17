@@ -3,6 +3,8 @@ import { Produto, SearchQuery } from "@/types/Produto";
 import { useEffect } from "react";
 
 export const search = async (query: URLSearchParams) => {
+  //TODO: corrigir para subcategorias, esta a executar 3x
+  //alert(JSON.stringify(query));
   const res = await fetch(`${url + "produtos/search"}?${query.toString()}`);
 
   const dados = await res.json();
@@ -46,7 +48,7 @@ export const useSearch = (
       }
     };
 
-    if (query.q) {
+    if (query.q || query.subcategoria || query.categoria) {
       getter();
     }
   }, dependencies);

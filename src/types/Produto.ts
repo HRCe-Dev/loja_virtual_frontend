@@ -4,6 +4,7 @@ export interface Produto {
   preco: number;
   imagem_url: string;
   estoque: number;
+  promocao?: PromocaoCard;
 }
 
 export interface ProdutoCarrinho extends Produto {
@@ -17,8 +18,6 @@ export interface ProdutoPromocao extends Produto {
 
 export interface ProdutoDetalhes extends Produto {
   descricao?: string | null;
-  promocao?: number;
-
   imagens: imagensProduto[];
   categoria: Categoria;
   subcategoria: Subcategoria;
@@ -33,14 +32,17 @@ export interface Categoria {
   id: number;
   nome: string;
   descricao?: string;
-  imagem_url?: string;
+  imagem_url?: string | null;
+  banners_categorias?: Banners[];
   subcategorias?: Subcategoria[];
 }
 
-interface Subcategoria {
+export interface Subcategoria {
   id: number;
   nome: string;
   descricao?: string;
+  imagem_url?: string;
+  banners_categorias?: Banners;
 }
 
 export interface AtributosProdutos {
@@ -55,10 +57,39 @@ export interface Carrinho {
 }
 
 export interface SearchQuery {
-  q: string;
+  q?: string;
   categoria?: string;
   subcategoria?: string;
   marca?: string;
   precomin?: string;
   precomax?: string;
+}
+
+export interface PromocaoCard {
+  id: string;
+  nome: string;
+  desconto: number;
+  data_fim?: string;
+}
+
+export interface ObterProdutsQuery {
+  tipo?:
+    | "destaque"
+    | "promocoes"
+    | "novidades"
+    | "maisvendidos"
+    | "maisgostados"
+    | "maispopulares";
+  categoria?: number;
+  subcategoria?: number;
+  marca?: number;
+  limit?: number;
+}
+
+export interface Banners {
+  url: string;
+  alt?: string;
+  url_mobile?: string;
+  url_tablet?: string;
+  blur_url?: string;
 }

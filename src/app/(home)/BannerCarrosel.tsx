@@ -57,7 +57,12 @@ export default function BannerCarousel() {
     <div className="relative min-w-full overflow-hidden">
       {/* Slide */}
       <div
-        className="h-[400px] sm:h-[400px] 3xl:h-[600px] bg-cover bg-center transition-all duration-500"
+        onClick={() => {
+          if (slides[current].id === 2) {
+            window.location.href = "/politicaDevolucoes"; // substitua com a rota desejada
+          }
+        }}
+        className="h-[400px] sm:h-[400px] 3xl:h-[600px] bg-cover bg-center transition-all duration-500 cursor-pointer"
         style={{
           backgroundImage: `url(${getImage(slides[current])})`,
         }}

@@ -1,5 +1,6 @@
 'use client';
 
+import ChatModal from '@/componentes/ChatModal';
 import Stepper from './Stepper';
 import React from 'react';
 
@@ -18,6 +19,7 @@ export default function Wrapper({
       <div className={`${wide ? 'max-w-5xl' : 'max-w-2xl'} mx-auto`}>
         {children}
       </div>
+      <ChatModal/>
     </main>
   );
 }

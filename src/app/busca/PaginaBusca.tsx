@@ -9,20 +9,29 @@ import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import { useSearch } from "./search.api";
 import Loading from "@/componentes/Loading";
 
-export default function PaginaBusca() {
+interface PageProps {
+  filtro?: Partial<SearchQuery>;
+}
+
+export default function PaginaBusca({ filtro }: PageProps) {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const termo = searchParams.get("termo")?.toLowerCase() || "";
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
-  const [filtros, setFiltros] = useState<Partial<SearchQuery> | null>(null);
+  const [filtros, setFiltros] = useState<Partial<SearchQuery> | null>(
+    filtro || null
+  );
 
   //colocar os filtros aqui
-  useSearch({ q: termo, ...filtros }, setProdutos, setLoading, setError, [
-    termo,
-    filtros,
-  ]);
+  useSearch(
+    { q: termo!, ...filtros },
+    setProdutos,
+    setLoading,
+    setError,
+    filtro ? [] : [termo, filtros]
+  );
 
   return (
     <div className="flex bg-gray-50 min-h-screen pt-5">
@@ -36,10 +45,15 @@ export default function PaginaBusca() {
         {/* Cabeçalho responsivo */}
         <div className="bg-white rounded-2xl px-6 py-4 shadow mb-6 space-y-2 md:space-y-0 md:flex md:items-center md:justify-between">
           {/* Título */}
-          <p className="text-lg font-medium">
-            Resultados para:{" "}
-            <span className="font-semibold">{`"${termo}"`}</span>
-          </p>
+
+          {!filtro ? (
+            <p className="text-lg font-medium">
+              Resultados para:{" "}
+              <span className="font-semibold">{`"${termo}"`}</span>
+            </p>
+          ) : (
+            <p className="w-5"></p>
+          )}
 
           {/* Contagem e Ações */}
           <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">

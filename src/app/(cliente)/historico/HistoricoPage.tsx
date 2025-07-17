@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useObterHistoricoPedidos } from "./historico.api";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Moeda from "@/componentes/Moeda";
 
 const HistoricoPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,7 +45,7 @@ const PedidoCard: React.FC<{ pedido: HistoricoPedidos }> = ({ pedido }) => {
           <div className="flex justify-between w-full items-center">
             <PedidoStatus status={pedido.status} />
             <div className="text-right font-semibold">
-              {pedido.total}.00 CVE
+              <Moeda>{pedido.total}</Moeda>
             </div>
           </div>
           <p className="font-bold">Pedido #{pedido.id}</p>

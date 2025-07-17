@@ -40,7 +40,7 @@ export function useListaDesejo() {
   return { produtos, loading, erro };
 }
 
-export const adicionarListaDesejo = async (
+export const adicionarListaDesejoOnline = async (
   produto_id: string
 ): Promise<boolean> => {
   try {
@@ -57,7 +57,7 @@ export const adicionarListaDesejo = async (
   }
 };
 
-export const removerListaDesejo = async (
+export const removerListaDesejoOnline = async (
   produto_id: string
 ): Promise<boolean> => {
   try {

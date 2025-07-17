@@ -48,28 +48,28 @@ const AuthLinks = () => {
   }, [showMenu]);
 
   return (
-    <div className="relative">
+    <div className="relative ">
       {isLoggedIn ? (
-        <>
+        <div className="flex items-center">
           <button ref={buttonRef} onClick={() => setShowMenu((prev) => !prev)}>
             <UserCircle size={28} className="text-white hover:text-gray-300" />
           </button>
-
-          {showMenu && (
-            <div
-              ref={dropdownRef}
-              className="absolute right-0 mt-2 bg-white shadow-xl border rounded-lg z-50"
-            >
-              <div className="w-64 max-h-[90vh] overflow-y-auto">
-                <MenuLateral isOpen={true} />
-              </div>
-            </div>
-          )}
-        </>
+        </div>
       ) : (
         <a href="/login" className="text-white text-sm hover:underline">
-          Login
+          Entrar/Cadastro
         </a>
+      )}
+
+      {showMenu && (
+        <div
+          ref={dropdownRef}
+          className="absolute right-0 mt-2 bg-white shadow-xl border rounded-lg z-50"
+        >
+          <div className="w-64 max-h-[90vh] overflow-y-auto">
+            <MenuLateral isOpen={true} />
+          </div>
+        </div>
       )}
     </div>
   );

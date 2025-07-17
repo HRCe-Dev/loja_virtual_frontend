@@ -1,8 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/componentes/Header";
 import Footer from "@/componentes/Footer";
+import CookieBanner from "@/componentes/BannerCookies";
+
+export const viewport: Viewport = {
+  themeColor: "#FF7700",
+  width: "device-width",
+  initialScale: 1,
+};
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +22,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HRCe Store",
+  title: "HRCe Loja",
   description: "Loja Virtual para Cabo Verdianos",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "HRCe Loja",
+  },
 };
 
 export default function RootLayout({
@@ -34,7 +46,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
-        <main className="flex-grow pt-[164px] md:pt-[126px]">{children}</main>
+        <main className="flex-grow ">{children}</main>
+        <CookieBanner />
         <Footer />
       </body>
     </html>

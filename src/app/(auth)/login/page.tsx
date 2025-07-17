@@ -8,6 +8,7 @@ import { CircleUser, Facebook } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fazerLogin } from "@/api/auth";
+import Loading from "@/componentes/Loading";
 
 interface loginForm {
   email: string;
@@ -22,6 +23,7 @@ export default function Login() {
   } = useForm<loginForm>();
 
   const [next, setNext] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -31,23 +33,25 @@ export default function Login() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
-    console.log("Dados enviados:", data);
+    setLoading(true);
     await fazerLogin(data, router, next!);
+    setLoading(false);
   };
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row min-h-screen w-full">
-        <div className="w-full md:w-1/2">
-          <BannerCadastro />
-        </div>
+    <div className="flex flex-col md:flex-row min-h-screen w-full">
+      <div className="w-full md:w-1/2">
+        <BannerCadastro />
+      </div>
 
-        <main className="w-full md:w-1/2 flex flex-col  gap-20 px-8 py-6 md:py-46 md:px-16 lg:px-24 min-h-screen">
+      {/* Lado direito (formulário ou loading) */}
+      {!loading ? (
+        <main className="w-full md:w-1/2 flex flex-col gap-7 px-8 py-6 md:py-10   md:px-16 lg:px-24 min-h-screen">
           <div className="text-center md:text-left my-2">
             <h1 className="text-3xl md:text-4xl font-bold">
-              Página <span className="text-orange-500"> login</span>
+              Acesse sua <span className="text-orange-500">Conta </span>
             </h1>
-            <p className="text-base md:text-lg text-gray-600 md:mt-4">
+            <p className="text-base md:text-lg text-gray-600 md:mt-2">
               Loga para ver suas compras
             </p>
           </div>
@@ -102,22 +106,34 @@ export default function Login() {
 
             <button
               type="submit"
-              className="mt-6 px-6 py-2 md:mt-10 md:px-8 md:py-4 w-full rounded-full bg-orange-400 hover:bg-orange-500 text-white font-semibold"
+              className="mt-6 px-6 py-2  md:mt-5 md:px-8 md:py-3 w-3/4 mx-auto rounded-full bg-orange-400 hover:bg-orange-500 text-white font-semibold"
             >
               Login
             </button>
+
+            <p className="text-base md:text-lg text-gray-700 text-center">
+              Não tens uma conta?{" "}
+              <Link
+                className="text-orange-500 hover:text-orange-900"
+                href={{
+                  pathname: "/cadastro",
+                  query: next ? { next } : undefined,
+                }}
+              >
+                Cadastrar
+              </Link>
+            </p>
           </form>
 
-          <div className="mt-6 text-center space-y-4">
+          <div className=" text-center space-y-4">
             <div className="flex items-center justify-center text-gray-500 gap-2">
               <div className="h-px bg-gray-300 flex-grow" />
               <span className="text-base md:text-lg whitespace-nowrap">
-                Login via
+                Entrar via
               </span>
               <div className="h-px bg-gray-300 flex-grow" />
             </div>
 
-            {/* Botões sociais */}
             <div className="flex gap-4 justify-center mt-4">
               <button
                 title="Clique para fazer login com sua conta do Google"
@@ -132,22 +148,13 @@ export default function Login() {
                 <Facebook size={20} />
               </button>
             </div>
-
-            <p className="text-base md:text-lg text-gray-700">
-              Não tens uma conta?{" "}
-              <Link
-                className="text-orange-500 hover:text-orange-900"
-                href={{
-                  pathname: "/cadastro",
-                  query: next ? { next } : undefined,
-                }}
-              >
-                Cadastrar
-              </Link>
-            </p>
           </div>
         </main>
-      </div>
-    </>
+      ) : (
+        <main className="w-full md:w-1/2 flex items-center justify-center min-h-screen">
+          <Loading />
+        </main>
+      )}
+    </div>
   );
 }
