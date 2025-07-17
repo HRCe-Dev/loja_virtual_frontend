@@ -7,7 +7,7 @@ import Link from "next/link";
 
 type Props = {
   link: string;
-  categorias: { id: number; nome: string; imagem_url?: string }[];
+  categorias: { id: number; nome: string; imagem_url?: string | null }[];
 };
 
 export default function CategoriaNavigationClient({ categorias, link }: Props) {

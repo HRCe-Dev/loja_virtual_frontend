@@ -95,7 +95,10 @@ const Header = () => {
       {/* Top Orange Bar */}
       <div
         ref={topBarRef}
-        className="bg-[#FF7700] fixed top-0 left-0 right-0 px-4 sm:px-6 lg:px-16 py-2 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4 max-md:pb-5 z-50"
+        className="bg-gradient-to-b from-[#FF7700] via-[#FFB347] to-[#f3b059]
+             fixed top-0 left-0 right-0 px-4 sm:px-6 lg:px-16 py-2 md:py-4
+             flex flex-col md:flex-row items-center justify-between gap-4
+             max-md:pb-5 z-50 shadow-md text-white"
       >
         {/* Logo */}
         <div className="flex items-center w-full md:w-auto justify-between">

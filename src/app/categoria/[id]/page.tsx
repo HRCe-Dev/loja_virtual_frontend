@@ -1,10 +1,14 @@
 import CategoriaProdutos from "./CategoriaProdutos";
 import { obterCategorias } from "@/api/categorias.api";
 import DescricaoCategoria from "./DescricaoCategoria";
+import BannerCarousel from "@/componentes/Banners";
+import { Banners } from "@/types/Produto";
 
 interface PageProps {
   id: string;
 }
+
+export const revalidate = 86400; //renderizar com dados atualizados em  24horas/24horas
 
 export async function generateStaticParams() {
   const categorias = await obterCategorias();
@@ -13,6 +17,10 @@ export async function generateStaticParams() {
     id: String(cat.id),
   }));
 }
+
+const bannerTest: Banners[] = [
+  { url: "/bannercategoria.jpeg", alt: "Banner para categoria" },
+];
 
 const CategoriaPage = async ({ params }: { params: Promise<PageProps> }) => {
   const { id: categoria_id } = await params;
@@ -26,6 +34,13 @@ const CategoriaPage = async ({ params }: { params: Promise<PageProps> }) => {
 
   return (
     <div>
+      {categoria.banners_categorias &&
+      categoria.banners_categorias.length > 0 ? (
+        <BannerCarousel banners={categoria.banners_categorias} />
+      ) : (
+        <BannerCarousel banners={bannerTest} />
+      )}
+      <div></div>
       <div className="flex flex-col gap-10 px-4 md:px-44 mt-6 mb-10">
         <h1 className="text-3xl md:text-5xl font-bold text-center text-gray-800">
           {categoria.nome}

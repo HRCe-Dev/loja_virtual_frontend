@@ -5,7 +5,7 @@ import { fetchWithAuth } from "../../../api/fetch_auth";
 const url_ = url + "protected/carrinho";
 
 //obter produtos do carrinho
-export const obterProdutosCarrinho = async (): Promise<
+export const obterProdutosCarrinhoOnline = async (): Promise<
   ProdutoCarrinho[] | null
 > => {
   try {
@@ -24,7 +24,7 @@ export const obterProdutosCarrinho = async (): Promise<
 };
 
 //adicionar no carrinho
-export const adicionarCarrinho = async (
+export const adicionarCarrinhoOnline = async (
   produto_id: string,
   qtd: number
 ): Promise<boolean> => {
@@ -46,7 +46,7 @@ export const adicionarCarrinho = async (
 };
 
 //remover do carrinho
-export const removerdoCarrinho = async (
+export const removerdoCarrinhoOnline = async (
   produto_id: string
 ): Promise<boolean> => {
   try {
@@ -65,7 +65,7 @@ export const removerdoCarrinho = async (
 };
 
 //atualizar carrinho
-export const atualizarCarrinho = async (
+export const atualizarCarrinhoOnline = async (
   produto_id: string,
   qtd: number
 ): Promise<boolean> => {

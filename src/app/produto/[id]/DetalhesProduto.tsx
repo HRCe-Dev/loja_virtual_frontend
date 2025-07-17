@@ -1,127 +1,83 @@
 "use client";
-import { useState } from "react";
 import { Produto } from "@/types/Produto";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
-import { Repeat, ShoppingCart, Star, Truck } from "lucide-react";
+import { Repeat, Truck } from "lucide-react";
+import SeletorQuantidade from "@/componentes/SeletorQuantidade";
+import { BtnComprarAgora } from "@/componentes/Buttons/ButtonComprarAgora";
+import { BtnAdicionarCarrinho } from "@/componentes/Buttons/ButtonCarrinho";
+import { ButtonNoBg } from "@/componentes/Buttons/Buttons";
+import Moeda from "@/componentes/Moeda";
 
 interface DetalhesProdutoProps {
   produto: Produto;
 }
 
-const coresDisponiveis = ["#000000", "#dc2626"];
-const tamanhosDisponiveis = ["XS", "S", "M", "L", "XL"];
-
 export default function DetalhesProduto({ produto }: DetalhesProdutoProps) {
-  const [corSelecionada, setCorSelecionada] = useState(coresDisponiveis[0]);
-  const [tamanhoSelecionado, setTamanhoSelecionado] = useState("M");
-  const [quantidade, setQuantidade] = useState(1);
-  const estoqueDisponivel = produto.estoque ?? 1;
-
-  const aumentar = () => {
-    if (quantidade < estoqueDisponivel) setQuantidade((q) => q + 1);
-  };
-
-  const diminuir = () => {
-    if (quantidade > 1) setQuantidade((q) => q - 1);
-  };
-
   return (
-    <div className="w-full lg:w-1/2 flex flex-col gap-5">
-      <h1 className="text-3xl font-bold">{produto.nome}</h1>
+    <div className=" relative w-full lg:w-1/2 flex flex-col gap-5 lg:mx-10 px-4 lg:my-10">
+      {/*nome, preco, addlista de desejo, qtd, addcart, buynow, entrega rapida, troca e devolucoes */}
 
-      {/* Avaliações */}
-      <div className="flex items-center gap-2 text-orange-500">
-        {[...Array(5)].map((_, i) => (
-          <Star key={i} fill="orange" strokeWidth={0} className="w-4 h-4" />
-        ))}
-        <span className="text-sm font-semibold text-black">
-          4.7{" "}
-          <span className="text-gray-400 font-normal">(21,671 Avaliações)</span>
-        </span>
-      </div>
-
-      {/* Preço */}
-      <div className="flex items-center gap-3">
-        <p className="text-2xl font-bold text-gray-900">${produto.preco}</p>
-        <p className="line-through text-gray-400">$1999.00</p>
-        <span className="text-sm font-medium text-white bg-orange-500 px-2 py-1 rounded">
-          21% OFF
-        </span>
-        <BtnListaDesejo produto_id={produto.id.toString()} tipo={3} />
-      </div>
-
-      {/* Cor */}
-      <div className="flex items-center gap-3">
-        <span className="text-sm font-semibold">Cor:</span>
-        {coresDisponiveis.map((cor) => (
-          <button
-            key={cor}
-            className={`w-5 h-5 rounded-full border-2 ${
-              corSelecionada === cor ? "border-black" : "border-gray-300"
-            }`}
-            style={{ backgroundColor: cor }}
-            onClick={() => setCorSelecionada(cor)}
-          />
-        ))}
-      </div>
-
-      {/* Tamanhos */}
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-semibold">Tamanho:</span>
-        {tamanhosDisponiveis.map((t) => (
-          <button
-            key={t}
-            onClick={() => setTamanhoSelecionado(t)}
-            className={`border px-3 py-1 rounded text-sm font-medium ${
-              tamanhoSelecionado === t
-                ? "bg-orange-500 text-white border-orange-500"
-                : "text-gray-700"
-            }`}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
-
-      {/* Quantidade */}
-      <div className="flex items-center gap-3">
-        <div className="flex border rounded overflow-hidden">
-          <button className="px-3 text-xl text-gray-700" onClick={diminuir}>
-            −
-          </button>
-          <span className="px-4 py-1 border-l border-r text-sm">
-            {quantidade}
-          </span>
-          <button
-            className="px-3 text-xl text-white bg-orange-500"
-            onClick={aumentar}
-          >
-            +
-          </button>
+      {produto.promocao && (
+        <div
+          title={produto.promocao.nome}
+          className="absolute top-10 right-2 z-20 px-3 py-1 text-2xl font-bold rounded-2xl bg-gradient-to-br from-red-600 to-red-400 text-white shadow-lg 
+                animate-bounce hover:scale-105 transition-transform duration-300 ease-in-out grup-hover:invisible"
+        >
+          <p>- {produto.promocao.desconto}%</p>
         </div>
-        <span className="text-sm text-gray-600">
-          {estoqueDisponivel} disponíveis
-        </span>
+      )}
+
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+        {produto.nome}
+      </h1>
+      <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center border-b border-gray-400 mb-4">
+        {produto.promocao ? (
+          <div className="flex flex-col gap-1 ">
+            <div className="text-lg line-through">
+              <Moeda className=" text-gray-400">{produto.preco}</Moeda>
+            </div>
+            <Moeda className="text-2xl  font-bold">
+              {produto.preco * (1 - produto.promocao.desconto / 100)}
+            </Moeda>
+          </div>
+        ) : (
+          <Moeda className="text-2xl mt-2 font-bold">{produto.preco}</Moeda>
+        )}
+        {/*TODO: considerar se o produto estiver em promoção*/}
+
+        <div className="mt-2 smmt-0">
+          <BtnListaDesejo produto_id={produto.id} tipo={3} />
+        </div>
       </div>
 
-      {/* Botões */}
-      <div className="flex flex-col gap-3 px-12">
-        <button className="w-full bg-orange-500 text-white font-bold py-3 rounded flex items-center justify-center gap-2 text-sm tracking-wide">
-          ADICIONAR AO <ShoppingCart className="w-4 h-4" />
-        </button>
-        <button className="w-full border border-orange-500 text-orange-500 font-bold py-3 rounded text-sm tracking-wide">
-          COMPRAR AGORA
-        </button>
+      <div className="flex flex-row flex-wrap gap-2 items-center mb-2">
+        <SeletorQuantidade produto_id={produto.id} />
+        <p className="text-sm md:text-xl font-bold">
+          {produto.estoque || 1} Disponível
+        </p>
       </div>
 
-      {/* Info adicional */}
-      <div className="flex gap-8 mt-4 text-sm text-gray-800 justify-center">
-        <div className="flex items-center gap-2 text-lg">
-          <Truck className="w-8 h-8" /> Entrega Rápida
-        </div>
-        <div className="flex items-center gap-2 text-lg">
-          <Repeat className="w-8 h-8" /> Troca e Devolução
-        </div>
+      <div className="flex flex-col sm:flex-row gap-4 ">
+        <BtnAdicionarCarrinho
+          produto_id={produto.id}
+          className="flex flex-row items-center justify-center gap-2 md:gap-4 py-1 px-2 md:py-3 md:px-6 bg-orange-500 text-lg font-bold text-white rounded-lg hover:bg-orange-700"
+        />
+        <BtnComprarAgora
+          produto_id={produto.id}
+          styleClass="py-1 px-2 bg-white text-lg font-bold  text-orange-500 rounded-lg border-1 border-orange-500 hover:bg-orange-700 hover:text-white"
+        />
+      </div>
+
+      <div className="mt-5 flex sm:flex-row gap-4 sm:justify-between  sm:items-center">
+        <ButtonNoBg>
+          {" "}
+          <Truck /> Entrega Rápida
+        </ButtonNoBg>
+        <ButtonNoBg>
+          {" "}
+          <Repeat />
+          Trocas e Devolução
+        </ButtonNoBg>
       </div>
     </div>
   );
