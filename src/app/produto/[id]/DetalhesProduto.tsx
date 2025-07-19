@@ -5,7 +5,7 @@ import { Repeat, Truck } from "lucide-react";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
 import { BtnComprarAgora } from "@/componentes/Buttons/ButtonComprarAgora";
 import { BtnAdicionarCarrinho } from "@/componentes/Buttons/ButtonCarrinho";
-import { ButtonNoBg } from "@/componentes/Buttons/Buttons";
+import { ButtonLinkNoBg, ButtonNoBg } from "@/componentes/Buttons/Buttons";
 import Moeda from "@/componentes/Moeda";
 
 interface DetalhesProdutoProps {
@@ -73,11 +73,11 @@ export default function DetalhesProduto({ produto }: DetalhesProdutoProps) {
           {" "}
           <Truck /> Entrega Rápida
         </ButtonNoBg>
-        <ButtonNoBg>
+        <ButtonLinkNoBg href="/politicaDevolucoes">
           {" "}
           <Repeat />
           Trocas e Devolução
-        </ButtonNoBg>
+        </ButtonLinkNoBg>
       </div>
     </div>
   );
