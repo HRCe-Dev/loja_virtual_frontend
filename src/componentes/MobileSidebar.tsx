@@ -13,6 +13,8 @@ interface SidebarProps {
   onClose: () => void;
 }
 
+//TODO: colocar animacao para abrir, talvez colocar como hidden
+
 //TODO: colocar hover para telas touchscreen para expandir categorias
 
 export default function MobileSidebar({ isOpen, onClose }: SidebarProps) {

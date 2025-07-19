@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import AuthLinks from "./VerificaAuth";
 import { Search, ShoppingCart, Menu } from "lucide-react";
 import MobileSidebar from "./MobileSidebar";
+import { obterQtdProdutosCarrinho } from "@/app/(cliente)/carrinho/carrinho";
+import CarrinhoIcon from "./CarrinhoIcon";
 
 const categorias = [
   { label: "Home", href: "/" },
@@ -19,7 +21,7 @@ const categorias = [
 
 const Header = () => {
   //const [ilhas, setIlhas] = useState<string[]>([]);
-  //useObterIlhas(setIlhas);
+  //useObterIlhas(setIlhas)
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [ilhasOpen, setIlhasOpen] = useState(false);
@@ -119,12 +121,11 @@ const Header = () => {
           {/* Mobile Icons */}
           <div className="flex md:hidden gap-3 relative items-center">
             <AuthLinks />
-            <Link href="/carrinho">
-              <ShoppingCart
-                className="text-white hover:text-gray-300"
-                size={28}
-              />
-            </Link>
+            <CarrinhoIcon
+              className="text-white hover:text-gray-300"
+              size={28}
+            />
+
             <button onClick={() => setMenuOpen(!menuOpen)}>
               <Menu size={28} className="text-white  hover:text-gray-300" />
             </button>
@@ -177,9 +178,7 @@ const Header = () => {
             <AuthLinks />
           </div>
 
-          <Link href="/carrinho">
-            <ShoppingCart className="text-white" />
-          </Link>
+          <CarrinhoIcon className="text-white hover:text-gray-300" />
         </div>
       </div>
 
