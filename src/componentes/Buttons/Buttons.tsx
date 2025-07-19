@@ -1,10 +1,12 @@
 import { Trash } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 interface btnProps0 {
   onClick?: () => void;
   title?: string;
   disable?: boolean;
+  href?: string;
 }
 
 interface btnProps extends btnProps0 {
@@ -57,6 +59,25 @@ export const ButtonNoBg: React.FC<btnProps> = ({
     >
       {children}
     </button>
+  );
+};
+
+export const ButtonLinkNoBg: React.FC<btnProps> = ({
+  children,
+  title,
+  href,
+}) => {
+  if (!href) {
+    return null;
+  }
+  return (
+    <Link
+      className="flex flex-row  items-center justify-center md:gap-4 py-1 px-4 font-bold text-sm sm:text-lg md:text-xl hover:bg-gray-200 hover:border-1 border-orange-500 rounded-md"
+      title={title}
+      href={href}
+    >
+      {children}
+    </Link>
   );
 };
 

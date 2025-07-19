@@ -134,3 +134,13 @@ export const esvaziarCarrinho = async (): Promise<boolean> => {
     return false;
   }
 };
+
+export const obterQtdProdutosCarrinho = async (): Promise<number> => {
+  const carr = await obterProdutosCarrinho();
+
+  if (carr) {
+    return carr.length;
+  }
+
+  return 0;
+};

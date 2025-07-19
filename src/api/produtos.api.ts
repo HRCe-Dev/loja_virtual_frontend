@@ -28,3 +28,32 @@ export const useObterAtributosProdutos = (
     getter();
   }, dependencies);
 };
+
+export const useObterCategorias = (
+  setCategorias: React.Dispatch<React.SetStateAction<Categoria[]>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+  dependencies: []
+) => {
+  const hasRun = useRef(false);
+  useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+
+    const getter = async () => {
+      try {
+        setLoading(true);
+        const dados = await obterCategorias();
+
+        setCategorias(dados);
+      } catch (error) {
+        console.error(error);
+        setError("Erro em obter Categorias");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getter();
+  }, dependencies);
+};

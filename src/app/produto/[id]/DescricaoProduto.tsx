@@ -21,7 +21,7 @@ Ideal para estudantes, profissionais e famílias, a HP DeskJet 2774 também se d
         <div
           className="text-base sm:text-lg md:text-xl leading-relaxed text-gray-800 max-w-none"
           dangerouslySetInnerHTML={{
-            __html: descricaoText ? descricaoText : descricaoTextExample,
+            __html: descricaoText ?? "",
           }}
         />
       </div>
