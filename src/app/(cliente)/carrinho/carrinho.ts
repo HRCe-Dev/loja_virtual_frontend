@@ -40,7 +40,8 @@ export const obterProdutosCarrinho = async (): Promise<
 
 export const adicionarCarrinho = async (
   produto_id: string,
-  qtd: number
+  qtd: number,
+  promocao_id?: string
 ): Promise<boolean> => {
   try {
     //obter carrinho
@@ -50,7 +51,7 @@ export const adicionarCarrinho = async (
     if (carrinho.some((prod) => prod.produto_id === produto_id)) return true;
 
     //adicionar no carrinho
-    carrinho.push({ produto_id, qtd });
+    carrinho.push({ produto_id, qtd, promocao_id });
 
     //guardar no localstorage
     localStorage.setItem(ITEM, JSON.stringify(carrinho));

@@ -73,7 +73,10 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
 
       {/*btn de adicionar ao carrinho */}
       <div>
-        <BtnAdicionarCarrinho produto_id={produto.id} />
+        <BtnAdicionarCarrinho
+          produto_id={produto.id}
+          promocao_id={produto.promocao?.id}
+        />
       </div>
     </Link>
   );
