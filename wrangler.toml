@@ -1,9 +1,0 @@
-name = "hrceloja"
-compatibility_date = "2025-07-21"
-
-[build]
-command = "npm run build"
-
-[site]
-bucket = "./out"
-entry-point = "."
