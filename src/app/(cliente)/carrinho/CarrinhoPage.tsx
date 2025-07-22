@@ -23,8 +23,6 @@ export default function CarrinhoPage() {
       setLoading(true);
       const produtos = await obterProdutosCarrinho();
 
-      alert(JSON.stringify(produtos));
-
       if (produtos) setCarrinho(produtos);
       else setError(true);
       setLoading(false);
