@@ -22,6 +22,9 @@ export default function CarrinhoPage() {
     const fetchCarrinho = async () => {
       setLoading(true);
       const produtos = await obterProdutosCarrinho();
+
+      alert(JSON.stringify(produtos));
+
       if (produtos) setCarrinho(produtos);
       else setError(true);
       setLoading(false);
