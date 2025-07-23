@@ -1,10 +1,11 @@
 "use client";
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetPedidoDados } from "../checkout.api";
 import Loading from "@/componentes/Loading";
 import ResumoPedido from "@/componentes/ResumoPedido";
+import { esvaziarCarrinho } from "@/app/(cliente)/carrinho/carrinho";
 
 export default function Confirmation() {
   const params = useParams();
@@ -19,6 +20,15 @@ export default function Confirmation() {
   const handleFinish = () => {
     router.push("/");
   };
+
+  const chamado = useRef(false);
+
+  useEffect(() => {
+    if (!chamado.current) {
+      chamado.current = true;
+      esvaziarCarrinho();
+    }
+  }, []);
 
   return (
     <div className="bg-white p-8 rounded-lg shadow max-w-2xl mx-auto text-gray-800">

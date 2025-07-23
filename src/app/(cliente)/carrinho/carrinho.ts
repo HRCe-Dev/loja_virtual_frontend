@@ -5,6 +5,7 @@ import { Carrinho, ProdutoCarrinho } from "@/types/Produto";
 import {
   adicionarCarrinhoOnline,
   atualizarCarrinhoOnline,
+  esvaziarCarrinhoOnline,
   removerdoCarrinhoOnline,
 } from "./carrinho.api";
 
@@ -127,8 +128,11 @@ export const verificarCarrinho = async (
 
 export const esvaziarCarrinho = async (): Promise<boolean> => {
   try {
-    localStorage.removeItem(ITEM);
-    // TODO: apagar no backend
+    if ((await obterQtdProdutosCarrinho()) > 0) {
+      localStorage.removeItem(ITEM);
+      await esvaziarCarrinhoOnline(); //retorna boolean, TODO: apagar no servidor e depois local
+    }
+
     return true;
   } catch (error) {
     console.error(error);

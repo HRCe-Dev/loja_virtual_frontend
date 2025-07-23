@@ -84,3 +84,23 @@ export const atualizarCarrinhoOnline = async (
     return false;
   }
 };
+
+export const esvaziarCarrinhoOnline = async (): Promise<boolean> => {
+  try {
+    const res = await fetchWithAuth(`${url_}/all`, {
+      method: "DELETE",
+      body: JSON.stringify({}),
+    });
+
+    //const dados = await res.json();
+
+    if (res.ok) {
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
