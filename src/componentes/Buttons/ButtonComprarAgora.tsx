@@ -10,11 +10,13 @@ import React, { useState } from "react";
 interface btnProps {
   produto_id: string;
   styleClass?: string;
+  promocao_id?: string;
 }
 
 export const BtnComprarAgora: React.FC<btnProps> = ({
   produto_id,
   styleClass,
+  promocao_id,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -32,7 +34,7 @@ export const BtnComprarAgora: React.FC<btnProps> = ({
     }
 
     //adicionar este produto
-    const add = await adicionarCarrinho(produto_id, 1); //TODO: associar com qtd da pagina
+    const add = await adicionarCarrinho(produto_id, 1, promocao_id); //TODO: associar com qtd da pagina
 
     if (!add) return;
 

@@ -39,7 +39,9 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
             <span className="text-lg font-extrabold">
               - {produto.promocao.desconto} %
             </span>
-            <Countdown dataFim={produto.promocao?.data_fim!} />
+            {produto.promocao.data_fim && (
+              <Countdown dataFim={produto.promocao.data_fim} />
+            )}
           </div>
         )}
 

@@ -8,16 +8,17 @@ interface ErroMiniModalProps {
 }
 
 export default function ErroMiniModal({ error }: ErroMiniModalProps) {
-  if (!error) return;
-
-  const [visivel, setVisivel] = useState(true);
+  const [visivel, setVisivel] = useState<boolean>(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setVisivel(false), 20000); // 30 segundos
-    return () => clearTimeout(timeout);
-  }, []);
+    if (error) {
+      setVisivel(true); // reinicia visibilidade se novo erro
+      const timeout = setTimeout(() => setVisivel(false), 20000);
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
 
-  if (!visivel) return null;
+  if (!visivel || !error) return null;
 
   return (
     <div className="fixed bottom-10 right-4 z-[51]">

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Hourglass } from "lucide-react";
 
 type CountdownProps = {
   dataFim: Date | string;

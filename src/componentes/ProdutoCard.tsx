@@ -68,7 +68,10 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
 
       {/*btn de comprar agora */}
       <div>
-        <BtnComprarAgora produto_id={produto.id} />
+        <BtnComprarAgora
+          produto_id={produto.id}
+          promocao_id={produto.promocao?.id}
+        />
       </div>
 
       {/*btn de adicionar ao carrinho */}
