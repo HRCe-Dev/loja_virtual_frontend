@@ -214,20 +214,21 @@ export default function DeliveryForm() {
           <p className="text-red-500 text-sm mt-2">
             {errors.deliveryMethod?.message}
           </p>
+
+          <div className="flex justify-end mt-6">
+            {/* Botão */}
+            <button
+              type="submit"
+              className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-1/2 py-2 rounded-md mt-6 transition "
+              disabled={loading}
+            >
+              Continuar para Pagamento →
+            </button>
+          </div>
         </div>
       ) : (
         <Loading />
       )}
-
-      <div className="flex justify-end mt-6">
-        {/* Botão */}
-        <button
-          type="submit"
-          className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-1/2 py-2 rounded-md mt-6 transition "
-        >
-          Continuar para Pagamento →
-        </button>
-      </div>
     </form>
   );
 }
