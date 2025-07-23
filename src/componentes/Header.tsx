@@ -4,9 +4,8 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AuthLinks from "./VerificaAuth";
-import { Search, ShoppingCart, Menu } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import MobileSidebar from "./MobileSidebar";
-import { obterQtdProdutosCarrinho } from "@/app/(cliente)/carrinho/carrinho";
 import CarrinhoIcon from "./CarrinhoIcon";
 
 const categorias = [

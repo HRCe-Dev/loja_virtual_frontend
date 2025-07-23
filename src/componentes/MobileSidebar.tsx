@@ -8,6 +8,7 @@ import { Categoria } from "@/types/Produto";
 import { useObterCategorias } from "@/api/produtos.api";
 
 import { useRouter } from "next/navigation";
+import Loading from "./Loading";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
@@ -106,39 +107,45 @@ export default function MobileSidebar({ isOpen, onClose }: SidebarProps) {
             Blog
           </Link>
 
-          {/* Categoria com hover (subcategorias visíveis) */}
-          {categorias.map((cat, i) => (
-            <div
-              key={i}
-              className="relative"
-              onClick={() => {
-                onClose();
-                router.push(`/categoria/${cat.id}`);
-              }}
-              onMouseEnter={() => setHoverCategoria(cat.nome)}
-              onMouseLeave={() => setHoverCategoria(null)}
-            >
-              <div className="flex items-center justify-between hover:text-[#FF7700]">
-                <span>{cat.nome}</span>
-                <ChevronRight size={18} />
-              </div>
-              {hoverCategoria === cat.nome && (
-                <div className="pl-4 mt-2 space-y-1 text-sm text-gray-600">
-                  {cat.subcategorias &&
-                    cat.subcategorias.map((sub, idx) => (
-                      <Link
-                        key={idx}
-                        href={`/categoria/${cat.id}/${sub.id}`}
-                        onClick={onClose}
-                        className="block hover:text-[#FF7700]"
-                      >
-                        {sub.nome}
-                      </Link>
-                    ))}
-                </div>
-              )}
-            </div>
-          ))}
+          {!loading ||
+            (!error && (
+              <>
+                {/* Categoria com hover (subcategorias visíveis) */}
+                {categorias.map((cat, i) => (
+                  <div
+                    key={i}
+                    className="relative"
+                    onClick={() => {
+                      onClose();
+                      router.push(`/categoria/${cat.id}`);
+                    }}
+                    onMouseEnter={() => setHoverCategoria(cat.nome)}
+                    onMouseLeave={() => setHoverCategoria(null)}
+                  >
+                    <div className="flex items-center justify-between hover:text-[#FF7700]">
+                      <span>{cat.nome}</span>
+                      <ChevronRight size={18} />
+                    </div>
+                    {hoverCategoria === cat.nome && (
+                      <div className="pl-4 mt-2 space-y-1 text-sm text-gray-600">
+                        {cat.subcategorias &&
+                          cat.subcategorias.map((sub, idx) => (
+                            <Link
+                              key={idx}
+                              href={`/categoria/${cat.id}/${sub.id}`}
+                              onClick={onClose}
+                              className="block hover:text-[#FF7700]"
+                            >
+                              {sub.nome}
+                            </Link>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </>
+            ))}
+          {loading && !error && <Loading />}
 
           <hr className="my-4 border-gray-300" />
 

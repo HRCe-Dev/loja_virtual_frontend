@@ -9,6 +9,7 @@ import Loading from "@/componentes/Loading";
 import Error from "@/componentes/Error";
 import { useRouter } from "next/navigation";
 import Moeda from "@/componentes/Moeda";
+import Image from "next/image";
 
 export default function CarrinhoPage() {
   const [btnLoading, setbtnLoading] = useState<boolean>(false);
@@ -22,6 +23,7 @@ export default function CarrinhoPage() {
     const fetchCarrinho = async () => {
       setLoading(true);
       const produtos = await obterProdutosCarrinho();
+
       if (produtos) setCarrinho(produtos);
       else setError(true);
       setLoading(false);
@@ -44,7 +46,12 @@ export default function CarrinhoPage() {
   useEffect(() => {
     setTotal(
       carrinho.reduce(
-        (acc, prod) => acc + prod.preco * (prod.estoque === 0 ? 0 : prod.qtd),
+        (acc, prod) =>
+          acc +
+          (prod.promocao
+            ? prod.preco - prod.preco * (prod.promocao.desconto / 100)
+            : prod.preco) *
+            (prod.estoque === 0 ? 0 : prod.qtd),
         0
       )
     );
@@ -104,15 +111,50 @@ export default function CarrinhoPage() {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row mt-20 border-t border-gray-300 p-5 items-center justify-between sticky bottom-0 shadow-lg z-10">
-        {/* Pre checkout */}
+      <div className="flex flex-col sm:flex-row mt-20 border-t border-gray-300 p-5 items-center justify-between sticky bottom-0 shadow-lg z-10 bg-white">
+        {/* Total */}
         <div className="ml-4 sm:ml-10 w-full sm:w-auto">
           <p className="text-2xl font-bold">Total:</p>
           <Moeda className="text-xl font-bold text-gray-500 ml-4">
             {total}
           </Moeda>
         </div>
-        <div className="w-full sm:w-auto flex justify-center sm:justify-end mt-4 sm:mt-0 sm:mr-20">
+
+        {/* Botão + Logos */}
+        <div className="w-full sm:w-auto flex flex-col sm:flex-row items-center gap-4 mt-4 sm:mt-0 sm:mr-20">
+          {/* Logos dos Métodos de Pagamento */}
+          <div className="flex items-center gap-2">
+            <Image
+              src="/pagamento/vinti4.png"
+              width={30}
+              height={30}
+              alt="Vinti4"
+              title="Vinti4"
+            />
+            <Image
+              src="/pagamento/visa-secure_blu_2021_dkbg.png"
+              width={30}
+              height={30}
+              alt="Visa"
+              title="Visa"
+            />
+            <Image
+              src="/pagamento/mc_symbol.svg"
+              width={30}
+              height={30}
+              alt="MasterCard"
+              title="MasterCard"
+            />
+            <Image
+              src="/pagamento/American_Express_Square_Logo.png"
+              width={30}
+              height={30}
+              alt="Amex"
+              title="American Express"
+            />
+          </div>
+
+          {/* Botão Comprar */}
           <button
             onClick={handleComprarClick}
             className="text-xl font-bold text-white rounded-xl bg-orange-500 px-6 py-3 hover:bg-white hover:text-orange-500 border-orange-500 hover:border-2 w-full sm:w-auto"

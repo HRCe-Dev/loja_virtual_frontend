@@ -35,19 +35,25 @@ const Footer: React.FC = () => {
 
             <div className="flex space-x-3">
               <a
-                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.facebook.com/profile.php?id=61557232143370"
                 className="text-white hover:text-orange-300 transition-colors"
               >
                 <Facebook size={20} />
               </a>
               <a
-                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.instagram.com/hrce.lda/"
                 className="text-white hover:text-orange-300 transition-colors"
               >
                 <Instagram size={20} />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/company/hrce-lda"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white hover:text-orange-300 transition-colors"
               >
                 <Linkedin size={20} />
@@ -59,22 +65,42 @@ const Footer: React.FC = () => {
             <h3 className="font-medium text-lg mb-4">Serviços</h3>
             <ul className="space-y-3 text-sm text-gray-300">
               <li>
-                <a href="#" className="hover:text-white">
+                <a
+                  href="https://hrcelda.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
                   Contabilidade
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <a
+                  href="https://hrcelda.com/tecnologia/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
                   Tecnologia da Informação
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <a
+                  href="https://hrcelda.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
                   Formação
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <a
+                  href="https://hrcelda.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
                   Vendas
                 </a>
               </li>
@@ -111,24 +137,64 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={16} className="mr-2 flex-shrink-0" />
-                <span>geral@hrcelda.com</span>
+                <a href="mailto:geral@hrcelda.com" className="hover:underline">
+                  geral@hrcelda.com
+                </a>
               </li>
               <li className="flex items-center">
                 <Phone size={16} className="mr-2 flex-shrink-0" />
-                <span>+238 9791938 | +238 3478335</span>
+                <a href="tel:+2389791938" className="hover:underline mr-2">
+                  +238 9791938
+                </a>
+                <span>|</span>
+                <a href="tel:+2383478335" className="hover:underline ml-2">
+                  +238 3478335
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-cyan-700 py-4">
+      <div className=" flex flex-col gap-2 sm:flex-row items-center border-t border-cyan-700 py-4">
         <Link
           href="https://hrcelda.com"
+          target="_blank"
+          rel="noopener noreferrer"
           className="container mx-auto px-4 text-center text-sm text-gray-300 hover:text-orange-500"
         >
           <p>© HRCe, LDA 2025 | Todos os Direitos Reservados.</p>
         </Link>
+        <div className="sm:absolute right-5 flex items-center gap-1">
+          <Image
+            src="/pagamento/vinti4.png"
+            width={30}
+            height={30}
+            alt="Vinti4"
+            title="Vinti4"
+          />
+          <Image
+            src="/pagamento/visa-secure_blu_2021_dkbg.png"
+            width={30}
+            height={30}
+            alt="Visa"
+            title="Visa"
+          />
+          <Image
+            src="/pagamento/mc_symbol.svg"
+            width={30}
+            height={30}
+            alt="MasterCard"
+            title="MasterCard"
+          />
+          <Image
+            src="/pagamento/American_Express_Square_Logo.png"
+            width={30}
+            height={30}
+            alt="Amex"
+            title="American Express"
+          />
+        </div>
       </div>
     </footer>
   );

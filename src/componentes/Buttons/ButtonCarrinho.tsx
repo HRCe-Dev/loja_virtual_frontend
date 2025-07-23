@@ -10,11 +10,15 @@ import React, { useEffect, useState } from "react";
 
 interface btnProps {
   produto_id: string;
+  promocao_id?: string;
+  qtd?: number;
   className?: string;
 }
 
 export const BtnAdicionarCarrinho: React.FC<btnProps> = ({
   produto_id,
+  promocao_id,
+  qtd = 1,
   className,
 }) => {
   const [noCarrinho, setNoCarrinho] = useState<boolean>(false);
@@ -37,7 +41,7 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({
 
     setLoading(true);
     if (!noCarrinho) {
-      setNoCarrinho(await adicionarCarrinho(produto_id, 1));
+      setNoCarrinho(await adicionarCarrinho(produto_id, qtd, promocao_id));
     }
 
     setLoading(false);
