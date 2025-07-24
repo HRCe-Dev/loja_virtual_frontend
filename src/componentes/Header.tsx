@@ -195,11 +195,11 @@ const Header = () => {
           {/* Categorias - apenas desktop */}
           <button
             onClick={() => setMenuOpen(true)}
-            className="hidden md:flex relative left-20 hover:text-orange-400 transition-colors items-center gap-2"
+            className="hidden md:flex relative  left-5 lg:left-20 hover:text-orange-400 transition-colors items-center gap-2 "
           >
             <Menu size={25} /> Menu
           </button>
-          <div className="hidden md:flex items-center justify-center gap-8 lg:gap-15 text-md font-medium px-4 sm:px-6 lg:px-10 py-3 max-w-7xl mx-auto">
+          <div className="hidden md:flex items-center justify-center gap-4 lg:gap-15 text-md font-medium px-4 sm:px-6 lg:px-10 py-3 max-w-7xl mx-auto">
             {categorias.map((cat, i) => (
               <Link
                 key={i}

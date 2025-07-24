@@ -14,7 +14,7 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
   return (
     <Link
       href={"/produto/" + produto.id}
-      className="group relative w-full px-3 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300"
+      className="group relative w-full px-4 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-shadow duration-300"
     >
       {produto.promocao && (
         <div
@@ -43,22 +43,17 @@ const ProdutoCard: React.FC<ProdutoCardProps> = ({ produto }) => {
       {/* indicação da loja */}
       <p className="text-sm font-bold text-[#FF7700]">Vendido por HRCe</p>
 
-      {/*Preco 
-      <h3 className="text-2xl mt-2 font-bold ">
-        {produto.preco}
-        <span className="text-sm">$CVE</span>
-      </h3>*/}
       {produto.promocao ? (
         <div className="flex flex-col ">
           <div className="line-through">
-            <Moeda className=" text-gray-400">{produto.preco}</Moeda>
+            <Moeda className=" text-gray-400 text-xs">{produto.preco}</Moeda>
           </div>
           <Moeda className="text-xl  font-bold">
             {produto.preco * (1 - produto.promocao.desconto / 100)}
           </Moeda>
         </div>
       ) : (
-        <Moeda className="text-2xl mt-2 font-bold">{produto.preco}</Moeda>
+        <Moeda className="text-2xl mt-3 font-bold">{produto.preco}</Moeda>
       )}
 
       {/*nome + descricao do produto */}

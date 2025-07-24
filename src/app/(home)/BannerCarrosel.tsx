@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+//TODO: usar/migrar para  o componentes/banners.tsx
+
 interface Slide {
   id: number;
   desktop: string;
@@ -35,11 +37,23 @@ export default function BannerCarousel() {
   const [current, setCurrent] = useState(0);
   const [screenWidth, setScreenWidth] = useState(0);
 
+  const AUTO_PLAY_INTERVAL = 10000;
+
   useEffect(() => {
     const updateSize = () => setScreenWidth(window.innerWidth);
     updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  useEffect(() => {
+    if (slides.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, AUTO_PLAY_INTERVAL);
+
+    return () => clearInterval(interval);
   }, []);
 
   const getImage = (slide: Slide): string => {
@@ -59,7 +73,7 @@ export default function BannerCarousel() {
       <div
         onClick={() => {
           if (slides[current].id === 2) {
-            window.location.href = "/politicaDevolucoes"; // substitua com a rota desejada
+            window.location.href = "/politicaDevolucoes";
           }
         }}
         className="h-[400px] sm:h-[400px] 3xl:h-[600px] bg-cover bg-center transition-all duration-500 cursor-pointer"
