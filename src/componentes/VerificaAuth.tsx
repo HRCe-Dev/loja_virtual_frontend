@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { UserCircle } from "lucide-react";
+import { User2, UserCircle } from "lucide-react";
 import { verifyAuth } from "@/api/auth";
 import MenuLateral from "./MenuLateral";
 
@@ -56,8 +56,10 @@ const AuthLinks = () => {
           </button>
         </div>
       ) : (
-        <a href="/login" className="text-white text-sm hover:underline">
-          Entrar/Cadastro
+        <a href="/login" className="text-white text-sm hover:text-gray-300">
+          <span className="flex items-center ">
+            <User2 className="sm:h-10 sm:w-10 sm: gap-0.5" /> Minha Conta
+          </span>
         </a>
       )}
 

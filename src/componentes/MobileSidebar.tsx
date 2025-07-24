@@ -7,7 +7,6 @@ import { useState } from "react";
 import { Categoria } from "@/types/Produto";
 import { useObterCategorias } from "@/api/produtos.api";
 
-import { useRouter } from "next/navigation";
 import Loading from "./Loading";
 interface SidebarProps {
   isOpen: boolean;
@@ -23,7 +22,6 @@ export default function MobileSidebar({ isOpen, onClose }: SidebarProps) {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   useObterCategorias(setCategorias, setLoading, setError, []);
 
@@ -107,44 +105,50 @@ export default function MobileSidebar({ isOpen, onClose }: SidebarProps) {
             Blog
           </Link>
 
-          {!loading ||
-            (!error && (
-              <>
-                {/* Categoria com hover (subcategorias visíveis) */}
-                {categorias.map((cat, i) => (
-                  <div
-                    key={i}
-                    className="relative"
-                    onClick={() => {
-                      onClose();
-                      router.push(`/categoria/${cat.id}`);
-                    }}
-                    onMouseEnter={() => setHoverCategoria(cat.nome)}
-                    onMouseLeave={() => setHoverCategoria(null)}
-                  >
-                    <div className="flex items-center justify-between hover:text-[#FF7700]">
-                      <span>{cat.nome}</span>
-                      <ChevronRight size={18} />
-                    </div>
-                    {hoverCategoria === cat.nome && (
-                      <div className="pl-4 mt-2 space-y-1 text-sm text-gray-600">
-                        {cat.subcategorias &&
-                          cat.subcategorias.map((sub, idx) => (
+          {!loading && !error && (
+            <>
+              {/* Categoria com hover (subcategorias visíveis) */}
+              {categorias.map((cat, i) => (
+                <div
+                  key={i}
+                  className="relative"
+                  onMouseEnter={() => setHoverCategoria(cat.nome)}
+                  onMouseLeave={() => setHoverCategoria(null)}
+                >
+                  <div className="flex items-center justify-between hover:text-[#FF7700]">
+                    <Link
+                      className="flex items-center justify-between"
+                      href={`/categoria/${cat.id}`}
+                    >
+                      <span>{cat.nome}</span> <ChevronRight size={18} />
+                    </Link>
+                  </div>
+                  {hoverCategoria === cat.nome && (
+                    <div className="pl-4 mt-2 space-y-1 text-sm text-gray-600">
+                      {cat.subcategorias &&
+                        cat.subcategorias.map((sub, idx) => (
+                          <div
+                            key={idx}
+                            onClick={(e: React.MouseEvent) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              onClose();
+                            }}
+                          >
                             <Link
-                              key={idx}
                               href={`/categoria/${cat.id}/${sub.id}`}
-                              onClick={onClose}
                               className="block hover:text-[#FF7700]"
                             >
                               {sub.nome}
                             </Link>
-                          ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </>
-            ))}
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </>
+          )}
           {loading && !error && <Loading />}
 
           <hr className="my-4 border-gray-300" />

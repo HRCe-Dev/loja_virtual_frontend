@@ -12,12 +12,24 @@ export default function BannerCarousel({ banners }: props) {
   const [current, setCurrent] = useState(0);
   const [screenWidth, setScreenWidth] = useState(0);
 
+  const AUTO_PLAY_INTERVAL = 2000; // ⏱ Tempo em milissegundos (2 segundos)
+
   useEffect(() => {
     const updateSize = () => setScreenWidth(window.innerWidth);
     updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
   }, []);
+
+  useEffect(() => {
+    if (banners.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
+    }, AUTO_PLAY_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [banners.length]);
 
   const getImage = (slide: Banners): string => {
     if (screenWidth < 658 && slide.url_mobile) return slide.url_mobile;
@@ -41,7 +53,7 @@ export default function BannerCarousel({ banners }: props) {
       />
 
       {/* Setas */}
-      {banners.length > 2 && (
+      {banners.length > 1 && (
         <>
           <button
             onClick={goToPrev}

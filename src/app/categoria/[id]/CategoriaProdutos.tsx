@@ -1,7 +1,7 @@
 import { ProdutoListaLg } from "@/componentes/ProdutoLista";
 import SeccaoMarker from "../../(home)/SeccaoMarker";
 import ProdutoCard from "@/componentes/ProdutoCard";
-import { Categoria} from "@/types/Produto";
+import { Categoria } from "@/types/Produto";
 import CategoriaNavigationClient from "@/componentes/Categoria/CategoriaNavigationClient";
 import fetchProdutos from "@/api/fetchProdutos";
 
@@ -33,7 +33,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
 
   return (
     <div>
-      <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-5">
+      <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44 mt-4 mb-5">
         <SeccaoMarker>Subcategorias</SeccaoMarker>
       </div>
       {categoria.subcategorias && (
@@ -44,7 +44,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
       )}
 
       {/* Produtos em Destaque */}
-      <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
+      <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44 mt-4 mb-10">
         <SeccaoMarker href="/destaques">
           Novidades de {categoria.nome}
         </SeccaoMarker>
@@ -56,7 +56,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
       </div>
       <div className="flex flex-col gap-10 mb-30 mt-4">
         {promocoes.length > 1 && (
-          <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
+          <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44 mt-4 mb-10">
             <SeccaoMarker href="/promocoes">
               Promoções em {categoria.nome}
             </SeccaoMarker>
@@ -68,7 +68,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
           </div>
         )}
 
-        <div className="flex flex-col gap-10 px-4 md:px-44 mt-4 mb-10">
+        <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44 mt-4 mb-10">
           <SeccaoMarker href="/maisvendidos++">
             Produtos Mais Vendidos
           </SeccaoMarker>
@@ -80,7 +80,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
         </div>
 
         {/*Produtos Mais Vendidos*/}
-        <div className="flex flex-col gap-10 px-4 md:px-44 mt-4">
+        <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44 mt-4">
           <SeccaoMarker href="/populares">
             Populares de {categoria.nome}
           </SeccaoMarker>

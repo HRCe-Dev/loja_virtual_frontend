@@ -41,7 +41,7 @@ const CategoriaPage = async ({ params }: { params: Promise<PageProps> }) => {
         <BannerCarousel banners={bannerTest} />
       )}
       <div></div>
-      <div className="flex flex-col gap-10 px-4 md:px-44 mt-6 mb-10">
+      <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44 mt-6 mb-10">
         <h1 className="text-3xl md:text-5xl font-bold text-center text-gray-800">
           {categoria.nome}
         </h1>
@@ -50,12 +50,14 @@ const CategoriaPage = async ({ params }: { params: Promise<PageProps> }) => {
       <div>
         <CategoriaProdutos categoria={categoria} />
       </div>
-      <div className="px-4 md:px-44 mb-10">
-        <DescricaoCategoria
-          titulo={categoria.nome}
-          descricaoText={categoria.descricao}
-        />
-      </div>
+      {categoria.descricao && (
+        <div className="px-4  md:px-10 lg:px-44 mb-10">
+          <DescricaoCategoria
+            titulo={categoria.nome}
+            descricaoText={categoria.descricao}
+          />
+        </div>
+      )}
     </div>
   );
 };

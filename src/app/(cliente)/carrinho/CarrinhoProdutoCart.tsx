@@ -9,6 +9,7 @@ import Image from "next/image";
 import { AlertTriangle } from "lucide-react";
 import Moeda from "@/componentes/Moeda";
 import Countdown from "@/componentes/Countdown";
+import Link from "next/link";
 
 interface carrinhoCardProps {
   produto: ProdutoCarrinho;
@@ -24,7 +25,10 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
   setProdutoQtd,
 }) => {
   return (
-    <div className="px-5 sm:px-10 mx-auto flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10 border border-gray-300 rounded-lg">
+    <Link
+      href={`/produto/${produto.id}`}
+      className="px-5 sm:px-10 mx-auto flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10 border border-gray-300 rounded-lg"
+    >
       <div className="relative flex items-center justify-center w-40 h-48">
         {produto.estoque === 0 && (
           <div className="absolute flex flex-col items-center justify-center gap-1">
@@ -79,7 +83,13 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
           )}
         </h3>
       </div>
-      <div className="flex flex-row gap-5 items-center sm:ml-10 mt-4 sm:mt-0 pb-5 sm:pb-0">
+      <div
+        onClick={(e: React.MouseEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        className="flex flex-row gap-5 items-center sm:ml-10 mt-4 sm:mt-0 pb-5 sm:pb-0"
+      >
         {/* acoes */}
         <BtnListaDesejo tipo={1} produto_id={produto.id} />
         <SeletorQuantidade
@@ -97,7 +107,7 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
           disable={btnLoading}
         />
       </div>
-    </div>
+    </Link>
   );
 };
 

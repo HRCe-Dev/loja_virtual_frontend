@@ -13,6 +13,7 @@ import fetchProdutos from "@/api/fetchProdutos";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Loading from "@/componentes/Loading";
+import Link from "next/link";
 
 const ProdutoPage: React.FC = () => {
   const params = useParams();
@@ -53,11 +54,20 @@ const ProdutoPage: React.FC = () => {
           {produto && (
             <div>
               {/*Categoria / Subcategoria */}
-              <div className="my-10 group text-lg font-bold hover:text-orange-500 transition-colors duration-200">
-                <p className="text-gray-700 group-hover:text-orange-500 text-lg sm:text-xl md:text-3xl text-center md:text-left">
-                  {produto.categoria.nome} /{" "}
-                  <span className=" group-hover:text-orange-500">
-                    {produto.subcategoria.nome}
+              <div className="my-10 group text-lg font-bold transition-colors duration-200">
+                <p className="text-gray-700  text-lg sm:text-xl md:text-3xl text-center md:text-left">
+                  <Link
+                    href={`/categoria/${produto.categoria.id}`}
+                    className="group-hover:text-orange-500"
+                  >
+                    {produto.categoria.nome} /{" "}
+                  </Link>
+                  <span className=" hover:text-orange-500">
+                    <Link
+                      href={`/categoria/${produto.categoria.id}/${produto.subcategoria.id}`}
+                    >
+                      {produto.subcategoria.nome}
+                    </Link>
                   </span>
                 </p>
               </div>

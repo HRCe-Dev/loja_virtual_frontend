@@ -58,13 +58,9 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({
         onClick={(e) => onClick(e)}
         disabled={loading}
       >
-        {className ? (
-          <span className="flex gap-4">
-            Adicionar <ShoppingCart />
-          </span>
-        ) : (
-          "Adicionar ao Carrinho"
-        )}
+        <span className="flex gap-4 justify-center">
+          Adicionar <ShoppingCart />
+        </span>
       </button>
     );
   else
