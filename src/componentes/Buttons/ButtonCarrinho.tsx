@@ -80,3 +80,73 @@ export const BtnAdicionarCarrinho: React.FC<btnProps> = ({
       </button>
     );
 };
+
+export const BtnAdicionarCarrinho2: React.FC<btnProps> = ({
+  produto_id,
+  promocao_id,
+  qtd = 1,
+  className,
+}) => {
+  const [noCarrinho, setNoCarrinho] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const verifyCarrinho = async () => {
+      setLoading(true);
+      setNoCarrinho(await verificarCarrinho(produto_id));
+      setLoading(false);
+    };
+
+    verifyCarrinho();
+  }, []);
+
+  const onClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    setLoading(true);
+    if (!noCarrinho) {
+      setNoCarrinho(await adicionarCarrinho(produto_id, qtd, promocao_id));
+    }
+
+    setLoading(false);
+  };
+
+  if (!noCarrinho)
+    return (
+      <button
+        onClick={(e) => onClick(e)}
+        disabled={loading}
+        className={`h-8 w-8 bg-[#FF7000] rounded-full group-hover:bg-white hover:border hover:border-[#FF7000] mr-2 ${
+          className ?? " "
+        }`}
+        title="Adicionar ao carrinho"
+      >
+        <ShoppingCart
+          size={18}
+          className="mx-auto text-white group-hover:text-[#FF7000] "
+        />
+      </button>
+    );
+  else
+    return (
+      <button
+        className={`h-8 w-8 bg-[#265674] rounded-full group-hover:bg-white hover:border hover:border-[#FF7000] mr-2 ${
+          className ?? " "
+        }`}
+        disabled={loading}
+        onClick={(e: React.MouseEvent) => {
+          e.stopPropagation();
+          e.preventDefault();
+          router.push("/carrinho");
+        }}
+        title="Ver carrinho"
+      >
+        <ShoppingCart
+          size={18}
+          className="mx-auto text-white group-hover:text-[#FF7000]"
+        />
+      </button>
+    );
+};
