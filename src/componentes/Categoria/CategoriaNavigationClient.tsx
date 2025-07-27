@@ -64,14 +64,14 @@ export default function CategoriaNavigationClient({ categorias, link }: Props) {
               key={cat.id}
               className="flex flex-col group items-center justify-between  px-2 py-3 hover:bg-[#FFF] text-gray-600  "
             >
-              <div className="">
+              <div className="my-auto">
                 {cat.imagem_url ? (
                   <Image
                     src={cat.imagem_url}
                     alt={cat.nome}
                     width={150}
                     height={150}
-                    className="object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
+                    className="object-contain  transition-transform duration-500 ease-in-out group-hover:scale-110"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                       const fallback = e.currentTarget
@@ -81,14 +81,13 @@ export default function CategoriaNavigationClient({ categorias, link }: Props) {
                   />
                 ) : null}
                 <BoxIcon
-                  size={100}
-                  className="transition-transform duration-500 ease-in-out group-hover:scale-110 text-gray-400"
+                  className="transition-transform duration-500 ease-in-out group-hover:scale-110 text-gray-400 w-20 h-20 sm:w-25 sm:h-25"
                   style={{
                     display: !cat.imagem_url ? "flex" : "none",
                   }}
                 />
               </div>
-              <span className="mt-2 text-md text-center font-bold transition-transform duration-500 ease-in-out group-hover:scale-110">
+              <span className="mt-2 line-clamp-2 min-h-[3.5rem] text-md text-center font-bold transition-transform duration-500 ease-in-out group-hover:scale-110">
                 {cat.nome}
               </span>
             </Link>
