@@ -48,7 +48,7 @@ const AuthLinks = () => {
   }, [showMenu]);
 
   return (
-    <div className="relative ">
+    <div className="relative">
       {isLoggedIn ? (
         <div className="flex items-center">
           <button ref={buttonRef} onClick={() => setShowMenu((prev) => !prev)}>
@@ -56,10 +56,12 @@ const AuthLinks = () => {
           </button>
         </div>
       ) : (
-        <a href="/login" className="text-white text-sm hover:text-gray-300">
-          <span className="flex items-center ">
-            <User2 className="sm:h-10 sm:w-10 sm: gap-0.5" /> Minha Conta
-          </span>
+        <a
+          href="/login"
+          className="text-white text-sm hover:text-gray-300 flex items-center gap-0.5"
+        >
+          <User2 size={28} />
+          <p className="max-sm:hidden w-20 ">Minha Conta</p>
         </a>
       )}
 

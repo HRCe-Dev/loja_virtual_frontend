@@ -17,14 +17,14 @@ export default async function Home() {
   return (
     <div className=" ">
       <BannerCarousel />
-      <div className="flex flex-col gap-5 px-4  md:px-10 lg:px-44 ">
+      <div className="flex flex-col gap-5 mt-10 px-4  lg:px-10 ">
         <SeccaoMarker>Categorias Populares</SeccaoMarker>
         <CategoriaNavigationServer />
       </div>
 
       <div className="flex flex-col gap-10 mb-30 mt-10">
         {produtosDestaque.length > 1 && (
-          <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44  ">
+          <div className="flex flex-col gap-10 px-4 lg:px-10 ">
             <SeccaoMarker href="/destaques">Destaques</SeccaoMarker>
             <ProdutoListaLg>
               {produtosDestaque.map((prod) => (
@@ -34,7 +34,7 @@ export default async function Home() {
           </div>
         )}
         {/*Produtos Novidade*/}
-        <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44 ">
+        <div className="flex flex-col gap-10 px-4  lg:px-10  ">
           <SeccaoMarker href="/top">Novidades</SeccaoMarker>
           <ProdutoListaLg>
             {novidades.map((prod) => (
@@ -44,12 +44,12 @@ export default async function Home() {
         </div>
 
         {/*Produtos em Promoção */}
-        <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44 ">
+        <div className="flex flex-col gap-10 px-4  lg:px-10 ">
           <Promocoes />
         </div>
 
         {/*Produtos Mais Vendidos*/}
-        <div className="flex flex-col gap-10 px-4  md:px-10 lg:px-44  ">
+        <div className="flex flex-col gap-10 px-4  lg:px-10  ">
           {/*<h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
           Produtos Mais Vendidos
         </h1>*/}
@@ -63,7 +63,7 @@ export default async function Home() {
           </ProdutoListaLg>
         </div>
 
-        <div className="px-4 md:px-10 lg:px-44">
+        <div className="px-4   lg:px-44">
           <NewsletterForm />
         </div>
       </div>
