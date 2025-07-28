@@ -3,6 +3,8 @@
 import { proximoRoute } from "@/util/proximoPage";
 import { url } from "./url";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { ITEM } from "@/app/(cliente)/carrinho/carrinho";
+import { ITEMLISTADESJ } from "@/app/(cliente)/listadesejo/listadesejo";
 
 export type UserType = {
   id: string;
@@ -68,6 +70,9 @@ export const verifyAuth = async (): Promise<boolean> => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem(ITEM);
+  localStorage.removeItem(ITEMLISTADESJ);
+  localStorage.removeItem("user");
   window.location.href = "/";
 };
 

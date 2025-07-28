@@ -5,12 +5,12 @@ import {
   removerListaDesejoOnline,
 } from "./listadesejo.api";
 
-const ITEM = "listadesejo";
+export const ITEMLISTADESJ = "listadesejo";
 
 //TODO: obter lista de desejo ONLINE
 const obterListaDesejo = (): string[] => {
   //obter listadesejo
-  const listadesejoStr = localStorage.getItem(ITEM);
+  const listadesejoStr = localStorage.getItem(ITEMLISTADESJ);
   const listadesejo: string[] = listadesejoStr
     ? JSON.parse(listadesejoStr)
     : [];
@@ -42,7 +42,7 @@ export const adicionarListaDesejo = async (
     listadesejo.push(produto_id);
 
     //guardar no localstorage
-    localStorage.setItem(ITEM, JSON.stringify(listadesejo));
+    localStorage.setItem(ITEMLISTADESJ, JSON.stringify(listadesejo));
 
     //guardar no backend
     adicionarListaDesejoOnline(produto_id);
@@ -64,7 +64,7 @@ export const removerListaDesejo = async (
     const novaLista = listadesejo.filter((prod) => prod !== produto_id);
 
     //salvar no local storage
-    localStorage.setItem(ITEM, JSON.stringify(novaLista));
+    localStorage.setItem(ITEMLISTADESJ, JSON.stringify(novaLista));
     //alert(JSON.stringify(novaLista));
 
     removerListaDesejoOnline(produto_id);

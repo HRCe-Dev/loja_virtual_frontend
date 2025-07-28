@@ -9,7 +9,7 @@ import {
   removerdoCarrinhoOnline,
 } from "./carrinho.api";
 
-const ITEM = "carrinho";
+export const ITEM = "carrinho";
 
 //TODO: sincronizar com carrinho online
 export const obterCarrinho = (): Carrinho[] => {
@@ -28,6 +28,13 @@ export const obterProdutosCarrinho = async (): Promise<
   const produtos = await fetchProdutosLista(carrinho);
 
   if (!produtos) return null;
+
+  //verificar se algum produto do carrinho nao foi retornado
+  for (const item of carrinho) {
+    if (!produtos.find((prod) => prod.id === item.produto_id)) {
+      removerCarrinho(item.produto_id);
+    }
+  }
 
   const out: ProdutoCarrinho[] = produtos.map((prod) => {
     return {
