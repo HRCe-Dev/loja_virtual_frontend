@@ -44,7 +44,6 @@ const ProductGallery: React.FC<productGaleryProps> = ({
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!imgContainerRef.current || !imgRef.current) return;
 
-    const container = imgContainerRef.current;
     const img = imgRef.current;
     const imgRect = img.getBoundingClientRect();
 
