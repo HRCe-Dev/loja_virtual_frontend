@@ -1,29 +1,26 @@
 "use client";
 
-import { X, ChevronRight } from "lucide-react";
+import { X, ChevronRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Categoria } from "@/types/Produto";
-import { useObterCategorias } from "@/api/produtos.api";
-
-import Loading from "./Loading";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  categorias: Categoria[];
 }
 
 //TODO: colocar animacao para abrir, talvez colocar como hidden
 
 //TODO: colocar hover para telas touchscreen para expandir categorias
 
-export default function MobileSidebar({ isOpen, onClose }: SidebarProps) {
+export default function MobileSidebar({
+  isOpen,
+  onClose,
+  categorias,
+}: SidebarProps) {
   const [hoverCategoria, setHoverCategoria] = useState<string | null>(null);
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useObterCategorias(setCategorias, setLoading, setError, []);
 
   const servicos = [
     {
@@ -83,77 +80,87 @@ export default function MobileSidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* Navegação principal */}
         <nav className="flex-1 px-4 py-4 text-[#265674] font-medium text-base space-y-2 overflow-y-auto">
-          <Link
-            href="/"
-            onClick={onClose}
-            className="block hover:text-[#FF7700]"
-          >
-            Home
-          </Link>
-          <Link
-            href="/promocoes"
-            onClick={onClose}
-            className="block hover:text-[#FF7700]"
-          >
-            Promoções
-          </Link>
-          <Link
-            href="/blog"
-            onClick={onClose}
-            className="block hover:text-[#FF7700]"
-          >
-            Blog
-          </Link>
+          <div className="space-y-2 sm:hidden">
+            <Link
+              href="/"
+              onClick={onClose}
+              className="block hover:text-[#FF7700]"
+            >
+              Home
+            </Link>
+            <Link
+              href="/promocoes"
+              onClick={onClose}
+              className="block hover:text-[#FF7700]"
+            >
+              Promoções
+            </Link>
+            <Link
+              href="/blog"
+              onClick={onClose}
+              className="block hover:text-[#FF7700]"
+            >
+              Blog
+            </Link>
+          </div>
+          <h2 className="font-bold text-xl text-gray-800 max-sm:hidden text-center">
+            Categorias
+          </h2>
+          <hr className="my-4 border-gray-300" />
+          <h2 className="font-bold text-xl text-gray-900 sm:hidden ">
+            Categorias
+          </h2>
 
-          {!loading && !error && (
-            <>
-              {/* Categoria com hover (subcategorias visíveis) */}
-              {categorias.map((cat, i) => (
-                <div
-                  key={i}
-                  className="relative"
-                  onMouseEnter={() => setHoverCategoria(cat.nome)}
-                  onMouseLeave={() => setHoverCategoria(null)}
-                >
-                  <div className="flex items-center justify-between hover:text-[#FF7700]">
-                    <Link
-                      className="flex items-center justify-between"
-                      href={`/categoria/${cat.id}`}
-                    >
-                      <span>{cat.nome}</span> <ChevronRight size={18} />
-                    </Link>
-                  </div>
-                  {hoverCategoria === cat.nome && (
-                    <div className="pl-4 mt-2 space-y-1 text-sm text-gray-600">
-                      {cat.subcategorias &&
-                        cat.subcategorias.map((sub, idx) => (
-                          <div
-                            key={idx}
-                            onClick={(e: React.MouseEvent) => {
-                              e.stopPropagation();
-                              e.preventDefault();
-                              onClose();
-                            }}
-                          >
-                            <Link
-                              href={`/categoria/${cat.id}/${sub.id}`}
-                              className="block hover:text-[#FF7700]"
-                            >
-                              {sub.nome}
-                            </Link>
-                          </div>
-                        ))}
-                    </div>
-                  )}
+          <>
+            {/* Categoria com hover (subcategorias visíveis) */}
+            {categorias.map((cat, i) => (
+              <div
+                key={i}
+                className="relative"
+                onMouseEnter={() => setHoverCategoria(cat.nome)}
+                onMouseLeave={() => setHoverCategoria(null)}
+              >
+                <div className="flex items-center justify-between hover:text-[#FF7700]">
+                  <Link
+                    className="flex items-center justify-between"
+                    href={`/categoria/${cat.id}`}
+                  >
+                    <span>{cat.nome}</span>
+                    {hoverCategoria === cat.nome ? (
+                      <ChevronDown size={18} />
+                    ) : (
+                      <ChevronRight size={18} />
+                    )}
+                  </Link>
                 </div>
-              ))}
-            </>
-          )}
-          {loading && !error && <Loading />}
+                {hoverCategoria === cat.nome && (
+                  <div className="pl-4 mt-2 space-y-1 text-sm text-gray-600">
+                    {cat.subcategorias &&
+                      cat.subcategorias.map((sub, idx) => (
+                        <div
+                          key={idx}
+                          onClick={(e: React.MouseEvent) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            onClose();
+                          }}
+                        >
+                          <Link
+                            href={`/categoria/${cat.id}/${sub.id}`}
+                            className="block hover:text-[#FF7700]"
+                          >
+                            {sub.nome}
+                          </Link>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </>
 
           <hr className="my-4 border-gray-300" />
-
-          <div className="text-[#265674] space-y-2">
+          <div className="text-[#265674] space-y-2 sm:hidden">
             <span className="font-semibold text-sm uppercase text-gray-500">
               Serviços
             </span>

@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/componentes/Header";
 import Footer from "@/componentes/Footer";
 import CookieBanner from "@/componentes/BannerCookies";
+import { obterCategorias } from "@/api/categorias.api";
 
 export const viewport: Viewport = {
   themeColor: "#FF7700",
@@ -31,11 +32,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const categorias = await obterCategorias();
   return (
     <html lang="pt">
       <head>
@@ -45,7 +47,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
+        <Header categorias={categorias} />
         <main className="flex-grow ">{children}</main>
         <CookieBanner />
         <Footer />
