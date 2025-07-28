@@ -5,10 +5,11 @@ import { Carrinho, ProdutoCarrinho } from "@/types/Produto";
 import {
   adicionarCarrinhoOnline,
   atualizarCarrinhoOnline,
+  esvaziarCarrinhoOnline,
   removerdoCarrinhoOnline,
 } from "./carrinho.api";
 
-const ITEM = "carrinho";
+export const ITEM = "carrinho";
 
 //TODO: sincronizar com carrinho online
 export const obterCarrinho = (): Carrinho[] => {
@@ -28,6 +29,13 @@ export const obterProdutosCarrinho = async (): Promise<
 
   if (!produtos) return null;
 
+  //verificar se algum produto do carrinho nao foi retornado
+  for (const item of carrinho) {
+    if (!produtos.find((prod) => prod.id === item.produto_id)) {
+      removerCarrinho(item.produto_id);
+    }
+  }
+
   const out: ProdutoCarrinho[] = produtos.map((prod) => {
     return {
       ...prod,
@@ -40,7 +48,8 @@ export const obterProdutosCarrinho = async (): Promise<
 
 export const adicionarCarrinho = async (
   produto_id: string,
-  qtd: number
+  qtd: number,
+  promocao_id?: string
 ): Promise<boolean> => {
   try {
     //obter carrinho
@@ -50,7 +59,7 @@ export const adicionarCarrinho = async (
     if (carrinho.some((prod) => prod.produto_id === produto_id)) return true;
 
     //adicionar no carrinho
-    carrinho.push({ produto_id, qtd });
+    carrinho.push({ produto_id, qtd, promocao_id });
 
     //guardar no localstorage
     localStorage.setItem(ITEM, JSON.stringify(carrinho));
@@ -126,11 +135,24 @@ export const verificarCarrinho = async (
 
 export const esvaziarCarrinho = async (): Promise<boolean> => {
   try {
-    localStorage.removeItem(ITEM);
-    // TODO: apagar no backend
+    if ((await obterQtdProdutosCarrinho()) > 0) {
+      localStorage.removeItem(ITEM);
+      await esvaziarCarrinhoOnline(); //retorna boolean, TODO: apagar no servidor e depois local
+    }
+
     return true;
   } catch (error) {
     console.error(error);
     return false;
   }
+};
+
+export const obterQtdProdutosCarrinho = async (): Promise<number> => {
+  const carr = await obterProdutosCarrinho();
+
+  if (carr) {
+    return carr.length;
+  }
+
+  return 0;
 };

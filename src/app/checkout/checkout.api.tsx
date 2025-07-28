@@ -21,7 +21,15 @@ export function useGetMetodosEnvio(
     const getter = async () => {
       setLoading(true);
 
-      const res = await fetch(url + `envio/metodos?ilha=${ilha}&peso=${100}`);
+      const carrinho = obterCarrinho();
+
+      const res = await fetch(url + `envio/metodos?ilha=${ilha}`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(carrinho),
+      });
 
       if (!res.ok) {
         setError("Erro em obter metodos de Envio");

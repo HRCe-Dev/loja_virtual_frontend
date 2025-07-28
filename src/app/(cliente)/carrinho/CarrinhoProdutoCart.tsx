@@ -8,6 +8,8 @@ import { BtnTrash } from "@/componentes/Buttons/Buttons";
 import Image from "next/image";
 import { AlertTriangle } from "lucide-react";
 import Moeda from "@/componentes/Moeda";
+import Countdown from "@/componentes/Countdown";
+import Link from "next/link";
 
 interface carrinhoCardProps {
   produto: ProdutoCarrinho;
@@ -23,7 +25,10 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
   setProdutoQtd,
 }) => {
   return (
-    <div className="px-5 sm:px-10 mx-auto flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10 border border-gray-300 rounded-lg">
+    <Link
+      href={`/produto/${produto.id}`}
+      className="px-5 sm:px-10 mx-auto flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10 border border-gray-300 rounded-lg"
+    >
       <div className="relative flex items-center justify-center w-40 h-48">
         {produto.estoque === 0 && (
           <div className="absolute flex flex-col items-center justify-center gap-1">
@@ -33,6 +38,17 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
             </span>
           </div>
         )}
+        {produto.promocao && (
+          <div className="absolute  flex flex-col items-center  bg-red-600/60 rounded-2xl text-gray-800 animate-pulse">
+            <span className="text-lg font-extrabold">
+              - {produto.promocao.desconto} %
+            </span>
+            {produto.promocao.data_fim && (
+              <Countdown dataFim={produto.promocao.data_fim} />
+            )}
+          </div>
+        )}
+
         {/* imagem */}
         <Image
           src={produto.imagem_url}
@@ -50,12 +66,30 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
 
         {/*<p className="text-sm text-gray-400">Color: Black | Size: 50cm</p> */}
         <h3 className="">
-          <Moeda className="text-lg font-bold text-gray-800 mt-2">
-            {produto.preco}
-          </Moeda>
+          {produto.promocao ? (
+            <span className="flex flex-col">
+              <Moeda className="text-sm text-gray-500 mt-1 line-through">
+                {produto.preco}
+              </Moeda>
+              <Moeda className="text-lg font-bold text-gray-800 ">
+                {produto.preco -
+                  produto.preco * (produto.promocao.desconto / 100)}
+              </Moeda>
+            </span>
+          ) : (
+            <Moeda className="text-lg font-bold text-gray-800 mt-2">
+              {produto.preco}
+            </Moeda>
+          )}
         </h3>
       </div>
-      <div className="flex flex-row gap-5 items-center sm:ml-10 mt-4 sm:mt-0 pb-5 sm:pb-0">
+      <div
+        onClick={(e: React.MouseEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        className="flex flex-row gap-5 items-center sm:ml-10 mt-4 sm:mt-0 pb-5 sm:pb-0"
+      >
         {/* acoes */}
         <BtnListaDesejo tipo={1} produto_id={produto.id} />
         <SeletorQuantidade
@@ -73,7 +107,7 @@ const CarrinhoProdutoCart: React.FC<carrinhoCardProps> = ({
           disable={btnLoading}
         />
       </div>
-    </div>
+    </Link>
   );
 };
 

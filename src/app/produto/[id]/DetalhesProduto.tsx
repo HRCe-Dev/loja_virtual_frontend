@@ -1,11 +1,11 @@
 "use client";
 import { Produto } from "@/types/Produto";
 import { BtnListaDesejo } from "@/componentes/Buttons/ButtonListaDesejo";
-import { Repeat, Truck } from "lucide-react";
+import { Ban, Repeat, Truck } from "lucide-react";
 import SeletorQuantidade from "@/componentes/SeletorQuantidade";
 import { BtnComprarAgora } from "@/componentes/Buttons/ButtonComprarAgora";
 import { BtnAdicionarCarrinho } from "@/componentes/Buttons/ButtonCarrinho";
-import { ButtonNoBg } from "@/componentes/Buttons/Buttons";
+import { ButtonLinkNoBg, ButtonNoBg } from "@/componentes/Buttons/Buttons";
 import Moeda from "@/componentes/Moeda";
 
 interface DetalhesProdutoProps {
@@ -17,13 +17,25 @@ export default function DetalhesProduto({ produto }: DetalhesProdutoProps) {
     <div className=" relative w-full lg:w-1/2 flex flex-col gap-5 lg:mx-10 px-4 lg:my-10">
       {/*nome, preco, addlista de desejo, qtd, addcart, buynow, entrega rapida, troca e devolucoes */}
 
-      {produto.promocao && (
+      {produto.promocao && produto.estoque > 0 && (
         <div
           title={produto.promocao.nome}
           className="absolute top-10 right-2 z-20 px-3 py-1 text-2xl font-bold rounded-2xl bg-gradient-to-br from-red-600 to-red-400 text-white shadow-lg 
                 animate-bounce hover:scale-105 transition-transform duration-300 ease-in-out grup-hover:invisible"
         >
           <p>- {produto.promocao.desconto}%</p>
+        </div>
+      )}
+
+      {produto.estoque === 0 && (
+        <div
+          className="absolute top-10 right-2 z-30 px-3 py-1 text-2xl font-bold rounded-2xl bg-gradient-to-br  from-zinc-500 to-zinc-300 text-red-700 shadow-lg 
+                animate-bounce hover:scale-105 transition-transform duration-300 ease-in-out grup-hover:invisible"
+        >
+          <span className="flex gap-2 items-center">
+            <Ban />
+            ESGOTADO
+          </span>
         </div>
       )}
 
@@ -73,11 +85,11 @@ export default function DetalhesProduto({ produto }: DetalhesProdutoProps) {
           {" "}
           <Truck /> Entrega Rápida
         </ButtonNoBg>
-        <ButtonNoBg>
+        <ButtonLinkNoBg href="/politicaDevolucoes">
           {" "}
           <Repeat />
           Trocas e Devolução
-        </ButtonNoBg>
+        </ButtonLinkNoBg>
       </div>
     </div>
   );

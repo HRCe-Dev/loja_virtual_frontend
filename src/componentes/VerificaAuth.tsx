@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { UserCircle } from "lucide-react";
+import { User2, UserCircle } from "lucide-react";
 import { verifyAuth } from "@/api/auth";
 import MenuLateral from "./MenuLateral";
 
@@ -48,7 +48,7 @@ const AuthLinks = () => {
   }, [showMenu]);
 
   return (
-    <div className="relative ">
+    <div className="relative">
       {isLoggedIn ? (
         <div className="flex items-center">
           <button ref={buttonRef} onClick={() => setShowMenu((prev) => !prev)}>
@@ -56,8 +56,12 @@ const AuthLinks = () => {
           </button>
         </div>
       ) : (
-        <a href="/login" className="text-white text-sm hover:underline">
-          Entrar/Cadastro
+        <a
+          href="/login"
+          className="text-white text-sm hover:text-gray-300 flex items-center gap-0.5"
+        >
+          <User2 size={28} />
+          <p className="max-sm:hidden w-20 ">Minha Conta</p>
         </a>
       )}
 

@@ -62,16 +62,16 @@ export default function CategoriaNavigationClient({ categorias, link }: Props) {
             <Link
               href={`/${link}/${cat.id}`}
               key={cat.id}
-              className="flex flex-col items-center justify-center px-4 py-6 md:px-6 md:py-8 min-w-[130px] min-h-[130px] border border-gray-300 hover:border-[] rounded bg-white text-black hover:bg-[#FF7700] hover:text-white hover:shadow-xl transition-all duration-300"
+              className="flex flex-col group items-center justify-between  px-2 py-3 hover:bg-[#FFF] text-gray-600  "
             >
-              <div className="w-[48px] h-[48px] flex items-center justify-center mb-2 relative">
+              <div className="my-auto">
                 {cat.imagem_url ? (
                   <Image
                     src={cat.imagem_url}
                     alt={cat.nome}
-                    width={48}
-                    height={48}
-                    className="object-contain"
+                    width={150}
+                    height={150}
+                    className="object-contain  transition-transform duration-500 ease-in-out group-hover:scale-110"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                       const fallback = e.currentTarget
@@ -81,14 +81,15 @@ export default function CategoriaNavigationClient({ categorias, link }: Props) {
                   />
                 ) : null}
                 <BoxIcon
-                  size={32}
-                  className="absolute text-gray-400"
+                  className="transition-transform duration-500 ease-in-out group-hover:scale-110 text-gray-400 w-20 h-20 sm:w-25 sm:h-25"
                   style={{
                     display: !cat.imagem_url ? "flex" : "none",
                   }}
                 />
               </div>
-              <span className="mt-1 text-md text-center">{cat.nome}</span>
+              <span className="mt-2 line-clamp-2 min-h-[3.5rem] text-md text-center font-bold transition-transform duration-500 ease-in-out group-hover:scale-110">
+                {cat.nome}
+              </span>
             </Link>
           ))}
         </div>

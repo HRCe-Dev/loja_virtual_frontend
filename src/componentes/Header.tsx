@@ -4,18 +4,24 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AuthLinks from "./VerificaAuth";
-import { Search, ShoppingCart, Menu } from "lucide-react";
+import { Search, Menu } from "lucide-react";
+import MobileSidebar from "./MobileSidebar";
+import CarrinhoIcon from "./CarrinhoIcon";
+import { Categoria } from "@/types/Produto";
 
-const categorias = [
+const itens = [
   { label: "Home", href: "/" },
   { label: "Promoções", href: "#promocoes" },
   { label: "Blog", href: "/blog" },
   { label: "Serviços", href: "https://hrcelda.com/" },
+  { label: "HRCe Contabilidade", href: "https://hrcelda.com/" },
+  { label: "HRCe Tecnologia", href: "https://hrcelda.com/tecnologia/" },
+  { label: "Contacto", href: "/contacto" },
 ];
 
-const Header = () => {
+const Header = ({ categorias }: { categorias: Categoria[] }) => {
   //const [ilhas, setIlhas] = useState<string[]>([]);
-  //useObterIlhas(setIlhas);
+  //useObterIlhas(setIlhas)
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [ilhasOpen, setIlhasOpen] = useState(false);
@@ -115,12 +121,11 @@ const Header = () => {
           {/* Mobile Icons */}
           <div className="flex md:hidden gap-3 relative items-center">
             <AuthLinks />
-            <Link href="/carrinho">
-              <ShoppingCart
-                className="text-white hover:text-gray-300"
-                size={28}
-              />
-            </Link>
+            <CarrinhoIcon
+              className="text-white hover:text-gray-300"
+              size={28}
+            />
+
             <button onClick={() => setMenuOpen(!menuOpen)}>
               <Menu size={28} className="text-white  hover:text-gray-300" />
             </button>
@@ -173,9 +178,7 @@ const Header = () => {
             <AuthLinks />
           </div>
 
-          <Link href="/carrinho">
-            <ShoppingCart className="text-white" />
-          </Link>
+          <CarrinhoIcon className="text-white hover:text-gray-300" />
         </div>
       </div>
 
@@ -191,11 +194,14 @@ const Header = () => {
           }`}
         >
           {/* Categorias - apenas desktop */}
-          <button className="hidden md:flex relative left-20 hover:text-orange-400 transition-colors items-center gap-2">
+          <button
+            onClick={() => setMenuOpen(true)}
+            className="hidden md:flex relative  left-5 lg:left-20 hover:text-orange-400 transition-colors items-center gap-2 "
+          >
             <Menu size={25} /> Menu
           </button>
-          <div className="hidden md:flex items-center justify-center gap-8 lg:gap-20 text-md font-medium px-4 sm:px-6 lg:px-10 py-3 max-w-7xl mx-auto">
-            {categorias.map((cat, i) => (
+          <div className="hidden md:flex items-center justify-center gap-4 lg:gap-15 text-md font-medium px-4 sm:px-6 lg:px-10 py-3 max-w-7xl mx-auto">
+            {itens.map((cat, i) => (
               <Link
                 key={i}
                 className={`hover:text-orange-400 transition-colors ${
@@ -223,19 +229,11 @@ const Header = () => {
 
       {/* Mobile Menu de Categorias */}
       {menuOpen && (
-        <div
-          ref={menuRef}
-          className="md:hidden absolute top-14 right-4 w-1/2 bg-white shadow-lg z-50 px-4 py-3 space-y-2 text-sm"
-        >
-          {categorias.map((cat, i) => (
-            <button
-              key={i}
-              className="block w-full text-left text-gray-800 hover:text-orange-500 items-center gap-2"
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
+        <MobileSidebar
+          isOpen={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          categorias={categorias}
+        />
       )}
 
       {/* Mobile Menu de Ilhas

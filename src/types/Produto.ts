@@ -10,6 +10,7 @@ export interface Produto {
 export interface ProdutoCarrinho extends Produto {
   qtd: number;
   updated_at?: Date;
+  promocao_id?: number;
 }
 
 export interface ProdutoPromocao extends Produto {
@@ -54,6 +55,7 @@ export interface AtributosProdutos {
 export interface Carrinho {
   produto_id: string;
   qtd?: number;
+  promocao_id?: string;
 }
 
 export interface SearchQuery {

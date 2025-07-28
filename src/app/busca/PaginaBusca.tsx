@@ -2,12 +2,12 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import ProdutoCard from "@/componentes/ProdutoCard";
 import FiltroSidebar from "@/componentes/FiltroSidebar";
 import { Produto, SearchQuery } from "@/types/Produto";
-import { ProdutoListaLg } from "@/componentes/ProdutoLista";
+import { ProdutoLista2 } from "@/componentes/ProdutoLista";
 import { useSearch } from "./search.api";
 import Loading from "@/componentes/Loading";
+import ProdutoCard2 from "@/componentes/ProdutoCard2";
 
 interface PageProps {
   filtro?: Partial<SearchQuery>;
@@ -34,14 +34,16 @@ export default function PaginaBusca({ filtro }: PageProps) {
   );
 
   return (
-    <div className="flex bg-gray-50 min-h-screen pt-5">
+    <div className="flex bg-gray-50 min-h-screen pt-5 mb-10">
       {" "}
       {/* min-h-screen garante altura */}
-      <aside className="hidden md:block w-1/5 px-4 sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto">
-        <FiltroSidebar filtros={filtros} setFiltros={setFiltros} />
-      </aside>
+      {!filtro && (
+        <aside className="hidden md:block w-1/5 px-4 sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto">
+          <FiltroSidebar filtros={filtros} setFiltros={setFiltros} />
+        </aside>
+      )}
       {/* Conteúdo principal */}
-      <main className="flex-1 px-4 md:px-8">
+      <div className="flex-1 px-4 md:px-8">
         {/* Cabeçalho responsivo */}
         <div className="bg-white rounded-2xl px-6 py-4 shadow mb-6 space-y-2 md:space-y-0 md:flex md:items-center md:justify-between">
           {/* Título */}
@@ -76,25 +78,29 @@ export default function PaginaBusca({ filtro }: PageProps) {
           </div>
         </div>
 
-        {/* Lista de produtos */}
-        {!loading && !error && (
-          <ProdutoListaLg>
-            {produtos.length === 0 ? (
-              <p className="text-gray-600">Nenhum produto encontrado.</p>
-            ) : (
-              produtos.map((prod) => (
-                <ProdutoCard key={prod.id} produto={prod} />
-              ))
-            )}
-          </ProdutoListaLg>
-        )}
+        <div className="">
+          {/* Lista de produtos */}
+          {!loading && !error && (
+            <>
+              {produtos.length === 0 ? (
+                <p className="text-gray-600">Nenhum produto encontrado.</p>
+              ) : (
+                <ProdutoLista2>
+                  {produtos.map((prod) => (
+                    <ProdutoCard2 key={prod.id} produto={prod} />
+                  ))}
+                </ProdutoLista2>
+              )}
+            </>
+          )}
+        </div>
 
         {loading && !error && <Loading />}
         {error && <p>{error}</p>}
-      </main>
+      </div>
       {/* Sidebar em mobile como overlay opcional */}
       {mostrarFiltro && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-start">
+        <div className="fixed inset-0 bg-black/25 bg-opacity-50 z-50 flex justify-start">
           <div className="bg-white w-64 h-full p-4">
             <button
               onClick={() => setMostrarFiltro(false)}
