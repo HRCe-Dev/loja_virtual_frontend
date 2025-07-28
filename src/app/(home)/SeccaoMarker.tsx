@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+//import Link from "next/link";
 
 interface SeccaoMarkerProps {
   children: React.ReactNode;
@@ -16,14 +16,14 @@ const SeccaoMarker: React.FC<SeccaoMarkerProps> = ({ children, href }) => {
       </div>
 
       {/* Botão "View All" se href estiver definido */}
-      {href && (
+      {/*href && (
         <Link
           href={href}
           className="hidden md:inline-block bg-[#FF7700] text-white text-sm font-medium px-4 py-1 rounded hover:bg-orange-600 transition-colors"
         >
           Ver Tudo
         </Link>
-      )}
+      )*/}
     </div>
   );
 };

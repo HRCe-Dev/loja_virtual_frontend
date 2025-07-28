@@ -7,8 +7,9 @@ import AuthLinks from "./VerificaAuth";
 import { Search, Menu } from "lucide-react";
 import MobileSidebar from "./MobileSidebar";
 import CarrinhoIcon from "./CarrinhoIcon";
+import { Categoria } from "@/types/Produto";
 
-const categorias = [
+const itens = [
   { label: "Home", href: "/" },
   { label: "Promoções", href: "#promocoes" },
   { label: "Blog", href: "/blog" },
@@ -18,7 +19,7 @@ const categorias = [
   { label: "Contacto", href: "/contacto" },
 ];
 
-const Header = () => {
+const Header = ({ categorias }: { categorias: Categoria[] }) => {
   //const [ilhas, setIlhas] = useState<string[]>([]);
   //useObterIlhas(setIlhas)
 
@@ -200,7 +201,7 @@ const Header = () => {
             <Menu size={25} /> Menu
           </button>
           <div className="hidden md:flex items-center justify-center gap-4 lg:gap-15 text-md font-medium px-4 sm:px-6 lg:px-10 py-3 max-w-7xl mx-auto">
-            {categorias.map((cat, i) => (
+            {itens.map((cat, i) => (
               <Link
                 key={i}
                 className={`hover:text-orange-400 transition-colors ${
@@ -228,7 +229,11 @@ const Header = () => {
 
       {/* Mobile Menu de Categorias */}
       {menuOpen && (
-        <MobileSidebar isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+        <MobileSidebar
+          isOpen={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          categorias={categorias}
+        />
       )}
 
       {/* Mobile Menu de Ilhas
