@@ -6,7 +6,9 @@ interface SeccaoMarkerProps {
   href?: string; // se existir, mostra o botão "View All"
 }
 
-const SeccaoMarker: React.FC<SeccaoMarkerProps> = ({ children, href }) => {
+//TODO: implementar pagina de vertodo para cada seccao
+
+const SeccaoMarker: React.FC<SeccaoMarkerProps> = ({ children }) => {
   return (
     <div className="flex items-center justify-between w-full">
       {/* Marcador e Título */}
