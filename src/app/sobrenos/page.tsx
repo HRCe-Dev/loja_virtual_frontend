@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Sobrenos() {
     return (
         <div className="w-full">
-     
+
             <div className="flex">
                 <Image
                     src="img/banner2.jpeg"
@@ -16,7 +16,7 @@ export default function Sobrenos() {
                 />
             </div>
 
-          
+
             <div className="flex flex-col sm:flex-row items-center justify-center text-center gap-8 w-full px-4 mb-10">
                 <div className="w-full sm:w-1/5">
                     <Image
@@ -34,7 +34,7 @@ export default function Sobrenos() {
                 </div>
             </div>
 
-            
+
             <div className="flex justify-center py-4">
                 <p className="text-3xl font-extrabold text-[#265674]">A História da Marca</p>
             </div>
@@ -58,7 +58,7 @@ export default function Sobrenos() {
                 </div>
             </div>
 
-           
+
             <div className="flex flex-col sm:flex-row items-center justify-center text-center gap-10 w-full px-4">
                 <div className="w-full sm:w-1/4">
                     <Image
@@ -78,7 +78,7 @@ export default function Sobrenos() {
                 </div>
             </div>
 
-           
+
             <div className="flex flex-col items-center justify-center text-center w-full py-10">
                 <div className="w-full sm:w-1/3">
                     <p className="text-2xl sm:text-3xl font-bold text-[#265674]">O que fazemos com excelência</p>
@@ -95,7 +95,7 @@ export default function Sobrenos() {
                 </div>
             </div>
 
-     
+
             <div className="flex flex-col sm:flex-row items-center justify-center text-center gap-8 w-full pb-20 px-4">
                 <div className="w-full sm:w-1/3 text-left">
                     <p className="text-xl sm:text-2xl font-bold text-[#265674] pb-4">Crescimento com confiança</p>
@@ -134,43 +134,54 @@ export default function Sobrenos() {
                 </div>
             </div>
 
-        
+
             <div className="flex flex-col items-center justify-center text-center w-full py-10">
+
                 <div className="w-full sm:w-1/3">
                     <p className="text-2xl sm:text-3xl font-extrabold text-[#265674] pb-4">Nosso time</p>
                 </div>
-
-                <div className="w-full px-10 flex  justify-center flex-wrap">
-                    <Image
-                        src="img/logo.png"
-                        alt="Logo"
-                        width={200}
-                        height={100}
-                        className="w-1/2 sm:w-1/4"
-                    />
-                    <Image
-                        src="img/logo.png"
-                        alt="Logo"
-                        width={200}
-                        height={100}
-                        className="w-1/2 sm:w-1/4"
-                    />
-                    <Image
-                        src="img/logo.png"
-                        alt="Logo"
-                        width={200}
-                        height={100}
-                        className="w-1/2 sm:w-1/4"
-                    />
-                    <Image
-                        src="img/logo.png"
-                        alt="Logo"
-                        width={200}
-                        height={100}
-                        className="w-1/2 sm:w-1/4"
-                    />
-                </div>
             </div>
+
+            <div className="w-full px-10 flex flex-wrap ">
+
+                <Image
+                    src="https://hrcelda.com/wp-content/uploads/2024/03/cropped-team1.png"
+                    alt="Logo"
+                    width={100}
+                    height={100}
+                    className="sm:w-1/4 border-2 border-gray-200"
+                />
+
+                <Image
+                    src="https://hrcelda.com/wp-content/uploads/2024/03/cropped-team2.png"
+                    alt="Logo"
+                    width={100}
+                    height={100}
+                    className="w-1/2 sm:w-1/4 border-2 border-gray-200"
+                />
+
+                <Image
+                    src="https://hrcelda.com/wp-content/uploads/2024/03/cropped-team3.png"
+                    alt="Logo"
+                    width={100}
+                    height={100}
+                    className="w-1/2 sm:w-1/4 border-2 border-gray-200"
+                />
+
+
+
+                <Image
+                    src="https://hrcelda.com/wp-content/uploads/2024/03/cropped-team4.png"
+                    alt="Logo"
+                    width={100}
+                    height={100}
+                    className="w-1/2 sm:w-1/4 border-2 border-gray-200"
+                />
+
+
+            </div>
+
+
         </div>
     );
 }
