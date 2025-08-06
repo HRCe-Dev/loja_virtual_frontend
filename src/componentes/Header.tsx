@@ -11,7 +11,7 @@ import { Categoria } from "@/types/Produto";
 
 const itens = [
   { label: "Home", href: "/" },
-  { label: "Promoções", href: "#promocoes" },
+  { label: "Super Ofertas", href: "#" },
   { label: "Blog", href: "/blog" },
   { label: "Serviços", href: "https://hrcelda.com/" },
   { label: "HRCe Contabilidade", href: "https://hrcelda.com/" },

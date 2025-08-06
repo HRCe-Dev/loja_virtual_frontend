@@ -89,11 +89,11 @@ export default function MobileSidebar({
               Home
             </Link>
             <Link
-              href="/promocoes"
+              href="/#"
               onClick={onClose}
               className="block hover:text-[#FF7700]"
             >
-              Promoções
+              Super Ofertas
             </Link>
             <Link
               href="/blog"
@@ -101,6 +101,20 @@ export default function MobileSidebar({
               className="block hover:text-[#FF7700]"
             >
               Blog
+            </Link>
+            <Link
+              href="/contacto"
+              onClick={onClose}
+              className="block hover:text-[#FF7700]"
+            >
+              Contacto
+            </Link>
+            <Link
+              href="/sobrenos"
+              onClick={onClose}
+              className="block hover:text-[#FF7700]"
+            >
+              Sobre nós
             </Link>
           </div>
           <h2 className="font-bold text-xl text-gray-800 max-sm:hidden text-center">
