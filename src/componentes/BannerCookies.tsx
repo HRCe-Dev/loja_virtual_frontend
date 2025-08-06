@@ -47,7 +47,7 @@ export default function CookieBanner() {
                 setVisivel(false); // fecha o banner
                 setMostrarModal(true); // abre o modal
               }}
-              className="bg-[#265674] hover:bg-blue-400 text-white text-sm font-semibold px-5 rounded-3xl"
+              className="bg-[#265674] hover:bg-blue-400 text-white text-sm font-semibold px-5 py-3 rounded-3xl"
             >
               Configurar
             </button>
@@ -56,7 +56,7 @@ export default function CookieBanner() {
                 localStorage.setItem("cookies_aceitos", "sim");
                 setVisivel(false);
               }}
-              className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-5 rounded-3xl"
+              className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-5 py-3 rounded-3xl"
             >
               Aceitar
             </button>
