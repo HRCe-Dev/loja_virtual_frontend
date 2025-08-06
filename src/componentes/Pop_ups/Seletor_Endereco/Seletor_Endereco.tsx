@@ -153,6 +153,7 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
                     <option value="">Selecione a cidade</option>
                     {cidades
                       .filter((cidade) => cidade.ilha === dados.ilha)
+                      .sort((a, b) => a.nome.localeCompare(b.nome))
                       .map((cidade) => (
                         <option key={cidade.id} value={cidade.id}>
                           {cidade.nome}
@@ -173,11 +174,13 @@ const SeletorEndereco: React.FC<SeletorEnderecoProps> = ({
                       {loadingZona ? "Carregando Zonas..." : "Selecione a zona"}
                     </option>
                     {Array.isArray(zonas) &&
-                      zonas.map((zona) => (
-                        <option key={zona.id} value={zona.id}>
-                          {zona.zona}
-                        </option>
-                      ))}
+                      zonas
+                        .sort((a, b) => a.zona.localeCompare(b.zona))
+                        .map((zona) => (
+                          <option key={zona.id} value={zona.id}>
+                            {zona.zona}
+                          </option>
+                        ))}
                   </select>
                   <p className="text-red-500 text-sm">
                     {errors.zona_id?.message}
