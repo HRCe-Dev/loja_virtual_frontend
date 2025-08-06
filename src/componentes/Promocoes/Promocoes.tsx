@@ -9,7 +9,7 @@ const Promocoes: React.FC = async () => {
   if (promocoes.length < 1) return null;
   return (
     <div className="space-y-6">
-      <SeccaoMarker href="promocoes">Produtos em Promoção</SeccaoMarker>
+      <SeccaoMarker href="promocoes">Super Ofertas</SeccaoMarker>
       {/* Bloco 1: Primeiras 2 promoções */}
       <div className="overflow-x-auto scrollbar-hide">
         <div className="flex gap-4 md:grid md:grid-cols-2 md:gap-4 w-max md:w-full">
