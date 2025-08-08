@@ -62,6 +62,7 @@ export default function CategoriaNavigationClient({ categorias, link }: Props) {
             <Link
               href={`/${link}/${cat.id}`}
               key={cat.id}
+              title={cat.nome}
               className="flex flex-col  group items-center justify-between  px-2 py-3 hover:bg-[#FFF] text-gray-600  "
             >
               <div className="my-auto">
