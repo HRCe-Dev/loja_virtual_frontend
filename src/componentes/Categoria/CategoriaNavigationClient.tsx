@@ -62,7 +62,7 @@ export default function CategoriaNavigationClient({ categorias, link }: Props) {
             <Link
               href={`/${link}/${cat.id}`}
               key={cat.id}
-              className="flex flex-col group items-center justify-between  px-2 py-3 hover:bg-[#FFF] text-gray-600  "
+              className="flex flex-col  group items-center justify-between  px-2 py-3 hover:bg-[#FFF] text-gray-600  "
             >
               <div className="my-auto">
                 {cat.imagem_url ? (
@@ -71,7 +71,7 @@ export default function CategoriaNavigationClient({ categorias, link }: Props) {
                     alt={cat.nome}
                     width={150}
                     height={150}
-                    className="object-contain  transition-transform duration-500 ease-in-out group-hover:scale-110"
+                    className="w-20 h-20 sm:w-25 sm:h-25  object-contain  transition-transform duration-500 ease-in-out group-hover:scale-110"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                       const fallback = e.currentTarget
@@ -87,7 +87,7 @@ export default function CategoriaNavigationClient({ categorias, link }: Props) {
                   }}
                 />
               </div>
-              <span className="mt-2 line-clamp-2 min-h-[3.5rem] text-md text-center font-bold transition-transform duration-500 ease-in-out group-hover:scale-110">
+              <span className="mt-2 w-27 line-clamp-2 min-h-[3.5rem] text-md text-center font-bold transition-transform duration-500 ease-in-out group-hover:scale-110">
                 {cat.nome}
               </span>
             </Link>
