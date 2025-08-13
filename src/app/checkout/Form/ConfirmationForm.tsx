@@ -2,7 +2,7 @@
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useGetPedidoDados } from "../checkout.api";
+import { abrirReciboPagamento, useGetPedidoDados } from "../checkout.api";
 import Loading from "@/componentes/Loading";
 import ResumoPedido from "@/componentes/ResumoPedido";
 import { esvaziarCarrinho } from "@/app/(cliente)/carrinho/carrinho";
@@ -47,8 +47,15 @@ export default function Confirmation() {
       {loading && !error && <Loading />}
 
       <button
+        onClick={() => abrirReciboPagamento(pedido_id)}
+        className="bg-[#265674] hover:bg-[#265674]/50 text-white font-medium w-full py-2 rounded-md mt-6 transition"
+      >
+        Ver Recibo
+      </button>
+
+      <button
         onClick={handleFinish}
-        className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-full py-2 rounded-md mt-6 transition"
+        className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-full py-2 rounded-md mt-2 transition"
       >
         Voltar à Página Inicial
       </button>
