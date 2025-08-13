@@ -2,7 +2,7 @@
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { abrirReciboPagamento, useGetPedidoDados } from "../checkout.api";
+import { useGetPedidoDados } from "../checkout.api";
 import Loading from "@/componentes/Loading";
 import ResumoPedido from "@/componentes/ResumoPedido";
 import { esvaziarCarrinho } from "@/app/(cliente)/carrinho/carrinho";
