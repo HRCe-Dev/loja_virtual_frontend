@@ -47,13 +47,6 @@ export default function Confirmation() {
       {loading && !error && <Loading />}
 
       <button
-        onClick={() => abrirReciboPagamento(pedido_id)}
-        className="bg-[#265674] hover:bg-[#265674]/50 text-white font-medium w-full py-2 rounded-md mt-6 transition"
-      >
-        Ver Recibo
-      </button>
-
-      <button
         onClick={handleFinish}
         className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-full py-2 rounded-md mt-2 transition"
       >
