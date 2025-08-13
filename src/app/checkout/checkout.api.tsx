@@ -142,3 +142,36 @@ export async function pagarPedido(
     return false;
   }
 }
+
+export async function abrirReciboPagamento(pedido_id: string): Promise<void> {
+  try {
+    const res = await fetchWithAuth(
+      `${url}protected/checkout/recibo/${pedido_id}`,
+      {
+        method: "GET",
+        headers: {
+          // Não definir "Content-Type" para não conflitar com retorno binário
+          Accept: "application/pdf",
+        },
+      }
+    );
+
+    if (!res.ok) {
+      alert("Erro em buscar recibo");
+      throw new Error(`Erro ao buscar PDF: ${res.status}`);
+    }
+
+    const blob = await res.blob();
+
+    // Criar uma URL temporária
+    const pdfUrl = URL.createObjectURL(blob);
+
+    window.open(pdfUrl, "_blank");
+
+    // Opcional: liberar a URL após 10 minutos
+    setTimeout(() => URL.revokeObjectURL(pdfUrl), 600000);
+  } catch (error) {
+    alert("Erro em abrir recibo");
+    console.error("Erro ao abrir PDF:", error);
+  }
+}
