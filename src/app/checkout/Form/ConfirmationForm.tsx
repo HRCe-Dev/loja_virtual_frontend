@@ -48,7 +48,7 @@ export default function Confirmation() {
 
       <button
         onClick={handleFinish}
-        className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-full py-2 rounded-md mt-6 transition"
+        className="bg-orange-400 hover:bg-orange-500 text-white font-medium w-full py-2 rounded-md mt-2 transition"
       >
         Voltar à Página Inicial
       </button>

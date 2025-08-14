@@ -137,6 +137,7 @@ export default function DeliveryForm() {
               <option value="">Selecione a cidade</option>
               {cidades
                 .filter((cidade) => cidade.ilha === dados.island)
+                .sort((a, b) => a.nome.localeCompare(b.nome)) // <-- ordena pelo nome
                 .map((cidade) => (
                   <option key={cidade.id} value={cidade.id}>
                     {cidade.nome}
@@ -154,11 +155,13 @@ export default function DeliveryForm() {
                 {loadingZona ? "Carregando Zonas..." : "Selecione a zona"}
               </option>
               {Array.isArray(zonas) &&
-                zonas.map((zona) => (
-                  <option key={zona.id} value={zona.id}>
-                    {zona.zona}
-                  </option>
-                ))}
+                zonas
+                  .sort((a, b) => a.zona.localeCompare(b.zona)) // <-- ordena pelo campo zona
+                  .map((zona) => (
+                    <option key={zona.id} value={zona.id}>
+                      {zona.zona}
+                    </option>
+                  ))}
             </select>
             <p className="text-red-500 text-sm">{errors.zone?.message}</p>
           </div>

@@ -13,6 +13,7 @@ import Moeda from "@/componentes/Moeda";
 
 const schema = z.object({
   paymentMethod: z.enum(["vinti4", "trasf.bancaria"], {
+    invalid_type_error: "Escolha um método de pagamento",
     required_error: "Escolha um método de pagamento",
   }),
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { X, ChevronRight, ChevronDown } from "lucide-react";
+import { X, ChevronRight, ChevronDown, BoxIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
@@ -139,7 +139,10 @@ export default function MobileSidebar({
                     className="flex items-center justify-between"
                     href={`/categoria/${cat.id}`}
                   >
-                    <span>{cat.nome}</span>
+                    <span className="flex gap-1 items-center">
+                      {" "}
+                      <BoxIcon className="h-6 w-6" /> {cat.nome}
+                    </span>
                     {hoverCategoria === cat.nome ? (
                       <ChevronDown size={18} />
                     ) : (

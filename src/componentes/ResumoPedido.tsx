@@ -2,6 +2,7 @@
 
 import { PedidoDados1 } from "@/types/PedidoDadosTypes";
 import Moeda from "./Moeda";
+import { abrirReciboPagamento } from "@/app/checkout/checkout.api";
 type Props = {
   pedidoData: PedidoDados1;
 };
@@ -60,6 +61,15 @@ export default function ResumoPedido({ pedidoData }: Props) {
         <br />
         <p>{pedidoData.endereco || ""}</p>
       </div>
+
+      {pedidoData.status !== "NAO PAGO" && (
+        <button
+          onClick={() => abrirReciboPagamento(pedidoData.id)}
+          className="bg-[#265674] hover:bg-[#265674]/50 text-white font-medium w-full py-2 rounded-md mt-6 transition"
+        >
+          Ver Recibo
+        </button>
+      )}
     </>
   );
 }
