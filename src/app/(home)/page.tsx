@@ -35,7 +35,7 @@ export default async function Home() {
         )}
         {/*Produtos Novidade*/}
         <div className="flex flex-col gap-10 px-4  lg:px-10  ">
-          <SeccaoMarker href="/top">Novidades</SeccaoMarker>
+          <SeccaoMarker href="/novidades">Novidades</SeccaoMarker>
           <ProdutoListaLg>
             {novidades.map((prod) => (
               <ProdutoCard key={prod.id} produto={prod} />
@@ -53,7 +53,7 @@ export default async function Home() {
           {/*<h1 className="inline bg-orange-500 text-gray-800 p-2 text-2xl font-bold pl-10 pr-5 left-2 rounded-r-lg">
           Produtos Mais Vendidos
         </h1>*/}
-          <SeccaoMarker href="/maisvendidos++">
+          <SeccaoMarker href="/maisvendidos">
             Produtos Mais Vendidos
           </SeccaoMarker>
           <ProdutoListaLg>

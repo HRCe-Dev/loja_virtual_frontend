@@ -16,6 +16,11 @@ interface PageType {
 
 const pages: PageType[] = [
   { titulo: "Super Ofertas", slug: "superofertas", tipo: "promocoes" },
+  { titulo: "Mais Vendidos", slug: "maisvendidos", tipo: "maisvendidos" },
+  { titulo: "Novidades", slug: "novidades", tipo: "novidades" },
+  { titulo: "Destaques", slug: "destaques", tipo: "destaque" },
+  { titulo: "Mais Gostados", slug: "gostados", tipo: "maisgostados" },
+  { titulo: "Mais Populares", slug: "populares", tipo: "maispopulares" },
 ];
 
 export const revalidate = 86400; //renderizar com dados atualizados em  24horas/24horas
