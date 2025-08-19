@@ -82,7 +82,8 @@ export function useGetPedidoDados(
   setPedidoData: React.Dispatch<React.SetStateAction<PedidoDados1 | null>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setError: React.Dispatch<React.SetStateAction<string | null>>,
-  dependencies: React.DependencyList = []
+  dependencies: React.DependencyList = [],
+  pagamento_page?: boolean // para indicar se o uso vem da pagina de pagamento
 ) {
   useEffect(() => {
     const getData = async () => {
@@ -98,6 +99,9 @@ export function useGetPedidoDados(
 
       const dados: PedidoDados1 = await res.json();
 
+      if (dados.status !== "NAO PAGO" && pagamento_page) {
+        return (window.location.href = `/checkout/confirmacao/${dados.id}`);
+      }
       setPedidoData({
         ...dados,
       });

@@ -28,7 +28,7 @@ export default function PaymentForm() {
   const [pedidoData, setPedidoData] = useState<PedidoDados1 | null>(null);
   const router = useRouter();
 
-  useGetPedidoDados(pedido_id, setPedidoData, setLoading, setError, []);
+  useGetPedidoDados(pedido_id, setPedidoData, setLoading, setError, [], true);
 
   const {
     register,
