@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 interface Props {
@@ -37,9 +38,12 @@ export default function CookieModal({ onFechar }: Props) {
           escolher quais tipos de cookies permitir e alterar suas preferências a
           qualquer momento. Desativar cookies pode afetar sua experiência neste
           site. Você pode saber mais consultando nossa{" "}
-          <a href="/politica-de-cookies" className="text-orange-500 underline">
+          <Link
+            href="/politica-de-cookies"
+            className="text-orange-500 underline"
+          >
             Política de Cookies
-          </a>
+          </Link>
           .
         </p>
 
