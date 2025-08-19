@@ -74,14 +74,16 @@ export interface PromocaoCard {
   data_fim?: string;
 }
 
+export type ProdutoTipo =
+  | "destaque"
+  | "promocoes"
+  | "novidades"
+  | "maisvendidos"
+  | "maisgostados"
+  | "maispopulares";
+
 export interface ObterProdutsQuery {
-  tipo?:
-    | "destaque"
-    | "promocoes"
-    | "novidades"
-    | "maisvendidos"
-    | "maisgostados"
-    | "maispopulares";
+  tipo?: ProdutoTipo;
   categoria?: number;
   subcategoria?: number;
   marca?: number;
