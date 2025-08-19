@@ -45,9 +45,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
 
       {/* Produtos em Destaque */}
       <div className="flex flex-col gap-10 px-4  lg:px-10 mt-4 mb-10">
-        <SeccaoMarker href="/destaques">
-          Novidades de {categoria.nome}
-        </SeccaoMarker>
+        <SeccaoMarker>Novidades de {categoria.nome}</SeccaoMarker>
         <ProdutoListaLg>
           {novidades.map((prod) => (
             <ProdutoCard key={prod.id} produto={prod} />
@@ -57,9 +55,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
       <div className="flex flex-col gap-10 mb-30 mt-4">
         {promocoes.length > 1 && (
           <div className="flex flex-col gap-10 px-4  lg:px-10 mt-4 mb-10">
-            <SeccaoMarker href="/promocoes">
-              Promoções em {categoria.nome}
-            </SeccaoMarker>
+            <SeccaoMarker>Promoções em {categoria.nome}</SeccaoMarker>
             <ProdutoListaLg>
               {promocoes.map((prod) => (
                 <ProdutoCard key={prod.id} produto={prod} />
@@ -69,9 +65,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
         )}
 
         <div className="flex flex-col gap-10 px-4  lg:px-10 mt-4 mb-10">
-          <SeccaoMarker href="/maisvendidos++">
-            Produtos Mais Vendidos
-          </SeccaoMarker>
+          <SeccaoMarker>Produtos Mais Vendidos</SeccaoMarker>
           <ProdutoListaLg>
             {produtosMaisVendidos.map((prod) => (
               <ProdutoCard key={prod.id} produto={prod} />
@@ -81,9 +75,7 @@ export default async function CategoriaProdutos({ categoria }: props) {
 
         {/*Produtos Mais Vendidos*/}
         <div className="flex flex-col gap-10 px-4  lg:px-10 mt-4">
-          <SeccaoMarker href="/populares">
-            Populares de {categoria.nome}
-          </SeccaoMarker>
+          <SeccaoMarker>Populares de {categoria.nome}</SeccaoMarker>
           <ProdutoListaLg>
             {produtosMaisPopulares.map((prod) => (
               <ProdutoCard key={prod.id} produto={prod} />

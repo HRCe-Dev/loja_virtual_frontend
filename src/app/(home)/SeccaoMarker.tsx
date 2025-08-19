@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 //import Link from "next/link";
 
@@ -8,7 +9,7 @@ interface SeccaoMarkerProps {
 
 //TODO: implementar pagina de vertodo para cada seccao
 
-const SeccaoMarker: React.FC<SeccaoMarkerProps> = ({ children }) => {
+const SeccaoMarker: React.FC<SeccaoMarkerProps> = ({ children, href }) => {
   return (
     <div className="flex items-center justify-between w-full">
       {/* Marcador e Título */}
@@ -18,14 +19,14 @@ const SeccaoMarker: React.FC<SeccaoMarkerProps> = ({ children }) => {
       </div>
 
       {/* Botão "View All" se href estiver definido */}
-      {/*href && (
+      {href && (
         <Link
           href={href}
           className="hidden md:inline-block bg-[#FF7700] text-white text-sm font-medium px-4 py-1 rounded hover:bg-orange-600 transition-colors"
         >
           Ver Tudo
         </Link>
-      )*/}
+      )}
     </div>
   );
 };
