@@ -1,4 +1,3 @@
-import { obterCategorias } from "@/api/categorias.api";
 import BannerCarousel from "@/componentes/Banners";
 import { Banners, ProdutoTipo } from "@/types/Produto";
 import { notFound } from "next/navigation";

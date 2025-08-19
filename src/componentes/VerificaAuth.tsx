@@ -6,6 +6,7 @@ import { verifyAuth } from "@/api/auth";
 import MenuLateral from "./MenuLateral";
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const AuthLinks = () => {
   const pathname = usePathname();
@@ -56,13 +57,13 @@ const AuthLinks = () => {
           </button>
         </div>
       ) : (
-        <a
+        <Link
           href="/login"
           className="text-white text-sm hover:text-gray-300 flex items-center gap-0.5"
         >
           <User2 size={28} />
           <p className="max-sm:hidden w-20 ">Minha Conta</p>
-        </a>
+        </Link>
       )}
 
       {showMenu && (

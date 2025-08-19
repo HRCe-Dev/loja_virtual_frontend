@@ -1,14 +1,15 @@
-import { ProdutoListaGrande, ProdutoListaLg } from "@/componentes/ProdutoLista";
+import { ProdutoListaGrande } from "@/componentes/ProdutoLista";
 import ProdutoCard from "@/componentes/ProdutoCard";
 import fetchProdutos from "@/api/fetchProdutos";
+import { ProdutoTipo } from "@/types/Produto";
 
 interface props {
-  page_slug: string;
+  page_slug: ProdutoTipo;
 }
 
 export default async function PageProdutos({ page_slug }: props) {
   const produtos = await fetchProdutos({
-    tipo: page_slug as any,
+    tipo: page_slug,
     limit: 50,
   });
 
